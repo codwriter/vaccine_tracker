@@ -4,11 +4,13 @@ var Schema = mongoose.Schema;
 var User = new Schema({
     firstname: {
         type: String,
-        default: ''
+        default: '',
+        required:true
     },
     lastname: {
         type: String,
-        default: ''
+        default: '',
+        required:true
     },
     admin: {
         type: Boolean,
