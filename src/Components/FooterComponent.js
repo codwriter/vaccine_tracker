@@ -1,12 +1,9 @@
-import React, { Component } from 'react';
-import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
-import Footer from './FooterComponent';
-import Header from './HeaderComponent';
-import { connect } from 'react-redux';
-import { actions } from 'react-redux-form';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-class Main extends Component {
-    render() {
-        return ();
-       
-    }
+function Footer(props) {
+    return (
+        <div className="footer"></div>
+    );
+}
+export default Footer;
