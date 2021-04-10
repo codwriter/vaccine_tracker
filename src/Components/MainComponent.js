@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
-import { Navbar, NavbarBrand, Nav } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
 import Footer from './FooterComponent';
 import Header from './HeaderComponent';
 import Home from './HomeComponent';
