@@ -6,9 +6,9 @@ const Patients = require('../models/patients');
 
 const patientsRouter = express.Router();
 
-dishRouter.use(express.json());
+patientsRouter.use(express.json());
 
-dishRouter.route('/')
+patientsRouter.route('/')
     .get((req, res, next) => {
         Patients.find({})
             .then((patients) => {
@@ -41,3 +41,5 @@ dishRouter.route('/')
             }, (err) => next(err))
             .catch((err) => next(err));
     });
+
+module.exports = patientsRouter;
