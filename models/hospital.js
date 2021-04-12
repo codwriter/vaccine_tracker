@@ -14,6 +14,10 @@ var hospitalsSchema = new Schema({
     },
     numberOfDosesAvailable: {
         type: Number,
+    },
+    doctor: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 }, {
     timestamps: true

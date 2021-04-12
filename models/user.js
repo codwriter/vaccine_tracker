@@ -10,6 +10,15 @@ var User = new Schema({
         type: String,
         default: ''
     },
+    emai: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
     admin: {
         type: Boolean,
         default: false
