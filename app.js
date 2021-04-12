@@ -10,16 +10,12 @@ var patientsRouter = require('./routes/patientsRouter');
 var hospitalRouter = require('./routes/hospitalRouter');
 var vaccineRouter = require('./routes/vaccineRouter');
 
-var config = require('./config');
-
-const mongoose = require('mongoose');
-const url = config.mongoUrl;
-const connect = mongoose.connect(url);
-connect.then((db) => {
-  console.log('Connected correctly to server');
-}, (err) => { console.log(err); });
+const connectDB = require('./config/db');
 
 var app = express();
+
+// Connect  Database
+connectDB();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
