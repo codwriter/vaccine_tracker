@@ -42,7 +42,6 @@ vaccineRouter.route('/')
             .catch((err) => next(err));
     });
 
-
 vaccineRouter.route('/:vaccineId')
     .get((req, res, next) => {
         Vaccines.findById(req.params.vaccineId)
