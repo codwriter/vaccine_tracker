@@ -10,6 +10,6 @@ var vaccinesSchema = new Schema({
     }
 });
 
-var Vaccines = mongoos.model('Vaccine', vaccinesSchema);
+var Vaccines = mongoose.model('Vaccine', vaccinesSchema);
 
 module.exports = Vaccines;

@@ -43,7 +43,7 @@ vaccineRouter.route('/')
     });
 
 
-vaccnineRouter.route('/:vaccineId')
+vaccineRouter.route('/:vaccineId')
     .get((req, res, next) => {
         Vaccines.findById(req.params.vaccineId)
             .then((vaccine) => {
