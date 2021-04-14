@@ -10,7 +10,7 @@ var User = new Schema({
         type: String,
         default: ''
     },
-    emai: {
+    email: {
         type: String,
         required: true,
         unique: true
