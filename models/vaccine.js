@@ -4,9 +4,6 @@ var Schema = mongoose.Schema;
 var vaccinesSchema = new Schema({
     vaccineBrand: {
         type: String,
-    },
-    vaccineNumber: {
-        type:Number
     }
 });
 
