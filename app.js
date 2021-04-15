@@ -10,6 +10,8 @@ var patientsRouter = require('./routes/patientsRouter');
 var hospitalRouter = require('./routes/hospitalRouter');
 var vaccineRouter = require('./routes/vaccineRouter');
 
+var config = require('./config');
+
 const connectDB = require('./config/db');
 
 var app = express();
