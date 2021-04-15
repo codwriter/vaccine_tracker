@@ -9,9 +9,7 @@ var usersRouter = require('./routes/users');
 var patientsRouter = require('./routes/patientsRouter');
 var hospitalRouter = require('./routes/hospitalRouter');
 var vaccineRouter = require('./routes/vaccineRouter');
-
-var config = require('./config');
-
+var authRouter = require('./routes/auth');
 const connectDB = require('./config/db');
 
 var app = express();
@@ -34,6 +32,8 @@ app.use('/users', usersRouter);
 app.use('/vaccines', vaccineRouter);
 app.use('/hospital', hospitalRouter);
 app.use('/patients', patientsRouter);
+app.use('/auth', authRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
