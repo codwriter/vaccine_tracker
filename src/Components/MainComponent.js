@@ -1,3 +1,4 @@
+import  Alert  from './Alert';
 import React, { Component } from 'react';
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
 import Footer from './FooterComponent';
@@ -9,7 +10,8 @@ class Main extends Component {
     render() {
         return (
         <div className="App">
-            <Header />
+                <Header />
+                <Alert/>
             <Switch>
                     <Route path="/home" component={Home} />
                     <Redirect to="/home" />
