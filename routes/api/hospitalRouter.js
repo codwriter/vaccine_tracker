@@ -2,7 +2,7 @@ const { application } = require('express');
 const express = require('express');
 const mongoose = require('mongoose');
 
-const Hospitals = require('../models/hospital');
+const Hospitals = require('../../models/hospital');
 
 const hospitalRouter = express.Router();
 

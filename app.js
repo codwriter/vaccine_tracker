@@ -4,12 +4,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var patientsRouter = require('./routes/patientsRouter');
-var hospitalRouter = require('./routes/hospitalRouter');
-var vaccineRouter = require('./routes/vaccineRouter');
-var authRouter = require('./routes/auth');
+var indexRouter = require('./routes/api/index');
+var usersRouter = require('./routes/api/users');
+var patientsRouter = require('./routes/api/patientsRouter');
+var hospitalRouter = require('./routes/api/hospitalRouter');
+var vaccineRouter = require('./routes/api/vaccineRouter');
+var authRouter = require('./routes/api/auth');
 const connectDB = require('./config/db');
 
 var app = express();

@@ -2,14 +2,14 @@ const { application } = require('express');
 const express = require('express');
 const mongoose = require('mongoose');
 
-const Vaccines = require('../models/vaccine');
+const Vaccines = require('../../models/vaccine');
 
 const vaccineRouter = express.Router();
 
 vaccineRouter.use(express.json());
 
 vaccineRouter.route('/')
-    .get(auth,(req, res, next) => {
+    .get((req, res, next) => {
         Vaccines.find({})
             .then((vaccine) => {
                 res.statusCode = 200;

@@ -2,8 +2,8 @@ const { application } = require('express');
 const express = require('express');
 const mongoose = require('mongoose');
 
-const auth = require('../middleware/auth');
-const Patients = require('../models/patients');
+const auth = require('../../middleware/auth');
+const Patients = require('../../models/patients');
 
 const patientsRouter = express.Router();
 
