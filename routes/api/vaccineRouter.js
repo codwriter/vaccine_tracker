@@ -9,7 +9,7 @@ const vaccineRouter = express.Router();
 vaccineRouter.use(express.json());
 
 vaccineRouter.route('/')
-    .get((req, res, next) => {
+    .get(auth,(req, res, next) => {
         Vaccines.find({})
             .then((vaccine) => {
                 res.statusCode = 200;
