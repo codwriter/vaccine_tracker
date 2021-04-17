@@ -6,16 +6,15 @@ import { Provider } from 'react-redux';
 import { ConfigureStore } from './redux/configureStore';
 
 const store = ConfigureStore();
-
 const App = () => {
   return (
-    <Provider store={store}>
+    <Provider store={store}>   
       <BrowserRouter>
-        <Fragment>
-          <Main />
-        </Fragment>
+          <Fragment>
+            <Main />
+          </Fragment>
       </BrowserRouter>
-    </Provider>
+    </Provider> 
   );
 }
 
