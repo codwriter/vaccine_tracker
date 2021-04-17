@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component ,Fragment} from 'react';
 import {
     Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem,
     Button, Modal, ModalHeader, ModalBody, FormGroup, Form, Label, Input
@@ -12,13 +12,13 @@ class Header extends Component {
     }
     render() {
         return (
-            <React.Fragment >
-                    <Navbar dark expand="md" color="primary">
+            <Fragment >
+                    <Navbar  dark expand="md" color="primary">
                         <div className="container">
                             <NavbarBrand href="/">Vaccine Tracker</NavbarBrand>
                         </div>
                     </Navbar>
-            </React.Fragment >
+            </Fragment >
         );
     }
 }

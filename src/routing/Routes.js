@@ -3,6 +3,8 @@ import { Route, Switch } from 'react-router-dom';
 import Alert from '../layout/Alert';
 import NotFound from '../layout/NotFound';
 import PrivateRoute from './PrivateRoute';
+import Login from '../components/auth/Login';
+import Register from '../components/auth/Register';
 
 
 const Routes = props => {
@@ -10,8 +12,8 @@ const Routes = props => {
         <section className="container">
             <Alert />
             <Switch>
-                {/* <Route exact path="/register" component={} /> */}
-                {/* <Route exact path="/login" component={} /> */}
+                <Route exact path="/register" component={ Register } />
+                <Route exact path="/login" component={ Login } />
                 {/* <PrivateRoute exact path="/dashboard" component={} /> */}
                 {/* <PrivateRoute exact path="/create-profile" component={} /> */}
                 {/* <PrivateRoute exact path="/edit-profile" component={} /> */}
@@ -19,7 +21,7 @@ const Routes = props => {
                 {/* <PrivateRoute exact path="/add-education" component={} /> */}
                 {/* <PrivateRoute exact path="/posts" component={} /> */}
                 {/* <PrivateRoute exact path="/posts/:id" component={} /> */}
-                {/* <Route component={NotFound} /> */}
+                <Route component={NotFound} /> 
             </Switch>
         </section>
     );
