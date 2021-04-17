@@ -1,20 +1,36 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import Main from './components/MainComponent';
-import { Provider } from 'react-redux';
-import { ConfigureStore } from './redux/configureStore';
+import { LOGOUT } from './redux/action/types';
 
-const store = ConfigureStore();
+import { loadUser } from './redux/action/auth';
+import setAuthToken from './utils/setAuthToken';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+
 const App = () => {
+  useEffect(() => {
+    // check for token in LS
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+    store.dispatch(loadUser());
+
+    // log user out from all tabs if they log out in one tab
+    window.addEventListener('storage', () => {
+      if (!localStorage.token) store.dispatch({ type: LOGOUT });
+    });
+  }, []);
+
   return (
-    <Provider store={store}>   
+    <Provider store={store}>
       <BrowserRouter>
-          <Fragment>
-            <Main />
-          </Fragment>
+        <Fragment>
+          <Main />
+        </Fragment>
       </BrowserRouter>
-    </Provider> 
+    </Provider>
   );
 }
 
