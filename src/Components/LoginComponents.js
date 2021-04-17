@@ -4,8 +4,8 @@ import { login, authenticate } from '../authentic/auth';
 
 class Login extends Component {
     constructor() {
-        super(); 
-        this.state = { 
+        super();
+        this.state = {
             email: "",
             password: "",
             error: "",
@@ -16,12 +16,12 @@ class Login extends Component {
 
     handleChange = name => event => {
         this.setState({ error: "" });
-        this.setState({ [name]: event.target.value });  
-    };    
+        this.setState({ [name]: event.target.value });
+    };
 
     clickSubmit = event => {
-        event.preventDefault();  
-        this.setState({loading: true}) 
+        event.preventDefault();
+        this.setState({ loading: true })
         const { email, password } = this.state;
         const user = {
             email,
@@ -30,16 +30,16 @@ class Login extends Component {
 
         console.log(user);
         login(user)
-        .then(data => {
-            if(data.error) {
-                this.setState({error: data.error, loading: false})
-            } else {
-                authenticate(data, () => {
-                    this.setState({redirect: true})
-                })
-        
-            }
-        });
+            .then(data => {
+                if (data.error) {
+                    this.setState({ error: data.error, loading: false })
+                } else {
+                    authenticate(data, () => {
+                        this.setState({ redirect: true })
+                    })
+
+                }
+            });
     };
 
     loginForm = (email, password) => (
@@ -57,12 +57,12 @@ class Login extends Component {
                         />
                     </div>
                 </div>
-            
+
                 <div className="form-group">
                     <div class="col-sm-8 my-1 mx-auto text-left">
                         <label className="text-muted">Password</label>
                         <input
-                            onChange={this.handleChange("password")} 
+                            onChange={this.handleChange("password")}
                             type="password"
                             placeholder="Your Password"
                             className="form-control"
@@ -73,7 +73,7 @@ class Login extends Component {
 
                 <div className="form-group">
                     <div class="col-sm-8 my-1 mx-auto text-left">
-                        <button onClick={this.clickSubmi} className="btn btn-raised btn-dark ">
+                        <button onClick={this.clickSubmit} className="btn btn-raised btn-dark ">
                             Sign In
                         </button>
                     </div>
@@ -104,7 +104,7 @@ class Login extends Component {
                         <div class="col-sm-8 my-1 mx-auto text-left">
                             <h2 className="mt-5 mb-5" >Sign In</h2>
                             <h4 className="mt-5 mb-5" ><i className="fas fa-user" ></i>     Sign into Your Account</h4>
-                            
+
                         </div>
                     </div>
 
@@ -117,13 +117,13 @@ class Login extends Component {
                     {loading ? (
                         <div className="jumbotron text-center">
                             <h2>Loading...</h2>
-                    </div>
+                        </div>
                     ) : (
                         ""
                     )}
 
                     {this.loginForm(email, password)}
-                    
+
                 </div>
             </body>
         );

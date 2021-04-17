@@ -1,10 +1,13 @@
-import React, {Component} from 'react';
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import { setAlert } from '../redux/action/alert';
+//import { register } from '../redux/action/auth';
+import PropTypes from 'prop-types';
 import { register } from '../authentic/auth';
 
-
 class Register extends Component {
-    constructor(){
+    constructor() {
         super();
         this.state = {
             name: "",
@@ -12,45 +15,45 @@ class Register extends Component {
             password: "",
             error: "",
             open: false
-            
-    };
-}
+
+        };
+    }
 
     handleChange = (name) => (event) => {
-        this.setState({ error: ""});
+        this.setState({ error: "" });
         this.setState({ [name]: event.target.value });
 
     };
 
     clickSubmit = event => {
         event.preventDefault()
-        const {email, password, password2} = this.state
+        const { email, password, password2 } = this.state
         const user = {
             email,
             password,
             password2
         };
 
-    register(user).then(data => {
-        if(data.error) this.setState({ error: data.error });
+        register(user).then(data => {
+            if (data.error) this.setState({ error: data.error });
             else this.setState({
                 error: "",
                 email: "",
                 password: "",
-                password2:"",
+                password2: "",
                 open: true
             });
         });
     };
-    
+
     registerForm = (email, password, password2) => (
         <form>
             <body class="text-center">
                 <div className="form-group">
                     <div class="col-sm-8 my-1 mx-auto text-left">
                         <label className="text-muted">Email</label>
-                        <input onChange={this.handleChange("email")} 
-                            type="email" 
+                        <input onChange={this.handleChange("email")}
+                            type="email"
                             placeholder="Your Email"
                             className="form-control"
                             value={email}
@@ -61,9 +64,9 @@ class Register extends Component {
                 <div className="form-group">
                     <div class="col-sm-8 my-1 mx-auto text-left">
                         <label className="text-muted">Password</label>
-                        <input 
-                            onChange={this.handleChange("password")} 
-                            type="password" 
+                        <input
+                            onChange={this.handleChange("password")}
+                            type="password"
                             placeholder="Your Password"
                             className="form-control"
                             value={password}
@@ -77,9 +80,9 @@ class Register extends Component {
                 <div className="form-group">
                     <div class="col-sm-8 my-1 mx-auto text-left">
                         <label className="text-muted">Confirm Password</label>
-                        <input 
-                            onChange={this.handleChange("password2")} 
-                            type="password" 
+                        <input
+                            onChange={this.handleChange("password2")}
+                            type="password"
                             placeholder="Confirm Your Password"
                             className="form-control"
                             value={password2}
@@ -97,7 +100,7 @@ class Register extends Component {
                         </button>
                     </div>
                 </div>
-                
+
                 <br></br>
 
                 <div className="form-group">
@@ -106,21 +109,21 @@ class Register extends Component {
                     </div>
                 </div>
             </body>
-    </form>
+        </form>
     )
     render() {
-        const {email, password, password2, error, open} = this.state;
+        const { email, password, password2, error, open } = this.state;
         return (
             <body >
                 <div className="container text-secondary">
-                
-                <div className="form-group">
-                    <div class="col-sm-8 my-1 mx-auto text-left">
-                    <h2 className="mt-5 mb-5">Sign Up</h2>
-                    <h4 className="mt-5 mb-5"><i className="fas fa-user" ></i>     Create Your Account</h4>
+
+                    <div className="form-group">
+                        <div class="col-sm-8 my-1 mx-auto text-left">
+                            <h2 className="mt-5 mb-5">Sign Up</h2>
+                            <h4 className="mt-5 mb-5"><i className="fas fa-user" ></i>     Create Your Account</h4>
+                        </div>
                     </div>
-                    </div>
-                    
+
                     <div
                         className="alert alert-danger"
                         style={{ display: error ? "" : "none" }}
@@ -128,18 +131,18 @@ class Register extends Component {
                         {error}
                     </div>
 
-                    <div 
-                        className="alert alert-info" 
+                    <div
+                        className="alert alert-info"
                         style={{ display: open ? "" : "none" }}
                     >
                         New account is successfully created! Please {" "} <Link to="/signin">Sign In</Link>.
-                        
+
                     </div>
-                        
+
                     {this.registerForm(email, password, password2)}
-                    
+
                 </div>
-               
+
             </body>
         );
     };
