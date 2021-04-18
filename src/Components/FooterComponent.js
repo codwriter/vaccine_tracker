@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function Footer(props) {
     return (
-        <div className="footer">Copyright 2021</div>
+        <div className=""></div>
     );
 }
 export default Footer;
