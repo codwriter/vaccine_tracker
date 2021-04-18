@@ -12,7 +12,7 @@ const initialState = {
     patient: null,
     loading: true,
     error: {}
-}
+};
 
 function patientReducer(state = initialState, action) {
     const { type, payload } = action;
@@ -56,6 +56,8 @@ function patientReducer(state = initialState, action) {
                 error: payload,
                 loading: false
             };
+        default:
+            return state;
     }
 }
-export default patientReducer;
+    export default patientReducer;
