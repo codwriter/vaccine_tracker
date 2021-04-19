@@ -23,3 +23,5 @@ export const ADD_VACCINE = 'ADD_VACCINE';
 export const UPDATE_VACCINE = 'UPDATE_VACCINE';
 export const REMOVE_VACCINE = 'REMOVE_VACCINE';
 export const VACCINE_ERROR = 'VACCINE_ERROR';
+
+
