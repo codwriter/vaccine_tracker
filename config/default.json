@@ -1,0 +1,4 @@
+{
+   "mongoURI": "mongodb+srv://user:RuUoi220M95bAX9q@cluster0.kotqd.mongodb.net/storage?retryWrites=true&w=majority",
+   "jwtSecret": "HelloWorldSecretTeamKeySkgCodeProject2021"
+}
