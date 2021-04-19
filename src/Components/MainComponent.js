@@ -1,9 +1,10 @@
-import  Alert  from './Alert';
+import  Alert  from '../layout/Alert';
 import React, { Component } from 'react';
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
 import Footer from './FooterComponent';
 import Header from './HeaderComponent';
 import Home from './HomeComponent';
+import Routes from '../routing/Routes';
 
 class Main extends Component {
 
@@ -13,8 +14,8 @@ class Main extends Component {
                 <Header />
                 <Alert/>
             <Switch>
-                    <Route path="/home" component={Home} />
-                    <Redirect to="/home" />
+                    <Route exact path="/" component={Home} />
+                    <Route component={Routes} />
             </Switch>
             <Footer />
         </div>

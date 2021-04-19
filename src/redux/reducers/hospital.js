@@ -40,6 +40,6 @@ import {
         return state;
     }
   }
-  
+  //
   export default hospitalReducer;
   
