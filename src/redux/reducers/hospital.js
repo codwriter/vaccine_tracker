@@ -11,6 +11,7 @@ import {
     loading: true,
     error: {}
   };
+  //
   
   function hospitalReducer(state = initialState, action) {
     const { type, payload } = action;
