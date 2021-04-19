@@ -15,7 +15,7 @@ var hospitalsSchema = new Schema({
     numberOfDosesAvailable: {
         type: Number,
     },
-    doctor: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }

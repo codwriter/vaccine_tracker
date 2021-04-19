@@ -1,7 +1,7 @@
 const { application } = require('express');
 const express = require('express');
 const mongoose = require('mongoose');
-
+const auth = require('../../middleware/auth');
 const Vaccines = require('../../models/vaccine');
 
 const vaccineRouter = express.Router();
@@ -9,7 +9,7 @@ const vaccineRouter = express.Router();
 vaccineRouter.use(express.json());
 
 vaccineRouter.route('/')
-    .get((req, res, next) => {
+    .get(auth,(req, res, next) => {
         Vaccines.find({})
             .then((vaccine) => {
                 res.statusCode = 200;
@@ -18,7 +18,7 @@ vaccineRouter.route('/')
             }, (err) => next(err))
             .catch((err) => next(err));
     })
-    .post((req, res, next) => {
+    .post(auth,(req, res, next) => {
         Vaccines.create(req.body)
             .then((vaccine) => {
                 console.log("The vaccine created", vaccine);
@@ -28,11 +28,11 @@ vaccineRouter.route('/')
             }, (err) => next(err))
             .catch((err) => next(err));
     })
-    .put((req, res, next) => {
+    .put(auth,(req, res, next) => {
         res.statusCode = 403;
         res.end('PUT operation not supported on /vaccine');
     })
-    .delete((req, res, next) => {
+    .delete(auth,(req, res, next) => {
         Vaccines.remove({})
             .then((resp) => {
                 res.statusCode = 200;
@@ -43,7 +43,7 @@ vaccineRouter.route('/')
     });
 
 vaccineRouter.route('/:vaccineId')
-    .get((req, res, next) => {
+    .get(auth,(req, res, next) => {
         Vaccines.findById(req.params.vaccineId)
             .then((vaccine) => {
                 res.statusCode = 200;
@@ -52,11 +52,11 @@ vaccineRouter.route('/:vaccineId')
             }, (err) => next(err))
             .catch((err) => next(err));
     })
-    .post((req, res, next) => {
+    .post(auth,(req, res, next) => {
         res.statusCode = 403;
         res.end('POST operation not supported on /patients/' + req.params.vaccineId);
     })
-    .put((req, res, next) => {
+    .put(auth,(req, res, next) => {
         Vaccines.findByIdAndUpdate(req.params.vaccine, {
             $set: req.body
         }, { new: true })
@@ -67,7 +67,7 @@ vaccineRouter.route('/:vaccineId')
             }, (err) => next(err))
             .catch((err) => next(err));
     })
-    .delete((req, res, next) => {
+    .delete(auth,(req, res, next) => {
         Vaccines.findByIdAndRemove(req.params.vaccineId)
             .then((resp) => {
                 res.statusCode = 200;

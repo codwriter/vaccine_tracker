@@ -16,6 +16,14 @@ var patientsSchema = new Schema({
         type: String,
         required: true
     },
+    city: {
+        type: String,
+        required:true
+    },
+    country: {
+        type: String,
+        required: true
+    },
     vaccineStatus: {
         type: Number,
         min: 0,
