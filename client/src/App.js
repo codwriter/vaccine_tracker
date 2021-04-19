@@ -1,8 +1,11 @@
 import React, { Fragment, useEffect } from 'react';
 import './App.css';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Main from './components/MainComponent';
 import { LOGOUT } from './redux/action/types';
+import Footer from './components/FooterComponent';
+import Header from './components/HeaderComponent';
+import Routes from './routing/Routes';
 
 import { loadUser } from './redux/action/auth';
 import setAuthToken from './utils/setAuthToken';
@@ -27,7 +30,12 @@ const App = () => {
     <Provider store={store}>
       <BrowserRouter>
         <Fragment>
-          <Main />
+          <Header />
+          <Switch>
+            <Route exact path="/" component={Main} />
+            <Route component={Routes} />
+          </Switch>
+          <Footer />
         </Fragment>
       </BrowserRouter>
     </Provider>

@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../../models/user');
-// if we create user profile add an avatar;
-//const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
