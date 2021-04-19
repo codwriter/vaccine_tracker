@@ -10,7 +10,7 @@ import {
     CLEAR_HOSPITAL,
     DELETE_HOSPITAL
 }from  './Types';
-
+//
 //Get current users Hospital profile info
 export const getCurrentHospital = () => async dispatch => { // () σημαίνει οτι είναι μια συνάρτηση κενή με καθόλου ορίσματα 
     try {
