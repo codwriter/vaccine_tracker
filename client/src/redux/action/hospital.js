@@ -9,7 +9,7 @@ import {
  //   UPDATE_HOSPITAL,      ΔΕΝ ΧΡΗΣΙΜΟΠΟΙΕΊΤΑΙ ΓΙΑΤΙ ΕΙΝΑΙ ΣΥΜΠΤΙΓΜΕΝΑ ΟΛΑ ΣΕ ΜΙΑ ΣΥΝΑΡΤΗΣΗ 
     CLEAR_HOSPITAL,
     DELETE_HOSPITAL
-}from  './Types';
+}from  './types';
 //
 //Get current users Hospital profile info
 export const getCurrentHospital = () => async dispatch => { // () σημαίνει οτι είναι μια συνάρτηση κενή με καθόλου ορίσματα 
