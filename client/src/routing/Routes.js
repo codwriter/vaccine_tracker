@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Alert from '../layout/Alert';
-import NotFound from '../layout/NotFound';
+import Alert from '../components/layout/Alert';
+import NotFound from '../components/layout/NotFound';
 import PrivateRoute from './PrivateRoute';
 import Login from '../components/auth/Login';
 import Register from '../components/auth/Register';

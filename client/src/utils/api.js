@@ -8,6 +8,7 @@ const api = axios.create({
     'Content-Type': 'application/json'
   }
 });
+
 /**
  intercept any error responses from the api
  and check if the token is no longer valid.
@@ -18,12 +19,12 @@ const api = axios.create({
 
 api.interceptors.response.use(
   res => res,
-  err => {
+ err => {
     if (err.response.status === 401) {
       store.dispatch({ type: LOGOUT });
     }
     return Promise.reject(err);
-  }
+  } 
 );
 
 export default api;
