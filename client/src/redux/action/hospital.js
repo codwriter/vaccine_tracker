@@ -1,8 +1,7 @@
-import axios from "axios" 
 //axios είναι για την χρήση των async/await 
 //παίρνει/διαγράφει διευθύνσεις URL μέσω τις GET/DELETE 
-import { set_alert } from './alert'
-
+import api from '../../utils/api';
+import { setAlert } from './alert';
 import {
     GET_HOSPITAL,
     HOSPITAL_ERROR,
@@ -14,7 +13,7 @@ import {
 //Get current users Hospital profile info
 export const getCurrentHospital = () => async dispatch => { // () σημαίνει οτι είναι μια συνάρτηση κενή με καθόλου ορίσματα 
     try {
-        const res = await axios.get('/hospital'); //ΕΓΙΝΕ ΑΛΛΑΓΗ ΑΠΟ ΤΟ ΠΡΟΤΥΠΟ /api/hospital/me
+        const res = await api.get('/hospital'); //ΕΓΙΝΕ ΑΛΛΑΓΗ ΑΠΟ ΤΟ ΠΡΟΤΥΠΟ /api/hospital/me
 
         dispatch({
             type: GET_HOSPITAL,
@@ -34,14 +33,14 @@ export const getCurrentHospital = () => async dispatch => { // () σημαίνε
 export const createHospital = (formData, history, edit = false) => async dispatch => {  //H edit μπαινει για να γνωρίζω αμα δημιουργω η κανω edit καποιο νοσοκομειο
     try {
      
-     const res = await axios.post('/hospital',formData);    //η διαδρομή που παίρνει για να κάνει update η να δημιουργήσει το καινουργιο profile νοσοκομειου
+     const res = await api.post('/hospital',formData);    //η διαδρομή που παίρνει για να κάνει update η να δημιουργήσει το καινουργιο profile νοσοκομειου
                                                                         
      dispatch({
         type: GET_HOSPITAL,
         payload: res.data
      });
      //στην περίπτωση που έχουν γίνει edit τα στοιχεία του Hospital κάνει display το πρώτο αλλίως το δεύτερο
-     dispatch(set_alert(edit ? 'Hospital Info Updated' : 'Hospital Created'));
+     dispatch(setAlert(edit ? 'Hospital Info Updated' : 'Hospital Created'));
 
     
      if(!edit){      //Αν δημιουργήσω ενα καινιούργιο νοσοκομείο θα πρέπει να κάνει redirect 
