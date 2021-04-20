@@ -7,6 +7,10 @@ var hospitalsSchema = new Schema({
         default: '',
         required: true
     },
+    afm: {
+        type: Number,
+        required:true
+    },
     address: {
         type: String,
         default: '',
