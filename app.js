@@ -28,11 +28,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/vaccines', vaccineRouter);
-app.use('/hospital', hospitalRouter);
-app.use('/patients', patientsRouter);
-app.use('/auth', authRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/vaccines', vaccineRouter);
+app.use('/api/hospital', hospitalRouter);
+app.use('/api/patients', patientsRouter);
+app.use('/api/auth', authRouter);
 
 
 // catch 404 and forward to error handler
