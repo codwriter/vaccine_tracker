@@ -3,10 +3,9 @@ import { Route, Switch } from 'react-router-dom';
 import Alert from '../layout/Alert';
 import NotFound from '../layout/NotFound';
 import PrivateRoute from './PrivateRoute';
-//import Login from '../components/auth/Login';
-//import Register from '../components/auth/Register';
-import Register from '../components/RegisterComponents';
-import Login from '../components/LoginComponents';
+import Login from '../components/auth/Login';
+import Register from '../components/auth/Register';
+
 
 const Routes = props => {
     return (

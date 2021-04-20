@@ -4,7 +4,7 @@ import {
     CLEAR_HOSPITAL,
     UPDATE_HOSPITAL,
     DELETE_HOSPITAL
-  } from '../action/Types';
+  } from '../action/types';
   
   const initialState = {
     hospital: null,

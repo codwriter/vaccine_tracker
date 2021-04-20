@@ -9,6 +9,7 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const GET_HOSPITAL = 'GET_HOSPITAL';
 export const ADD_HOSPITAL = 'ADD_HOSPITAL';
+export const CLEAR_HOSPITAL = 'CLEAR_HOSPITAL';
 export const HOSPITAL_ERROR = 'HOSPITAL_ERROR';
 export const UPDATE_HOSPITAL = 'UPDATE_HOSPITAL';
 export const ADD_PATIENT = 'ADD_PATIENT';
