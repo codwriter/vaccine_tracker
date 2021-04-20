@@ -28,24 +28,18 @@ export const loadUser = () => async dispatch => {
 };
 
 //Register user
-export const register = ({ email, password }) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type':'application/json'
-        }
-    }
-
-    const body = JSON.stringify({ email, password });
-
+export const register = formData => async dispatch => {
     try {
-        const res = await api.post('/users/signup', body, config);
+        const res = await api.post('/users/signup',formData);
 
         dispatch({
             type: REGISTER_SUCCESS,
             payload: res.data
         });
+        
+        dispatch(loadUser());
     } catch (err) {
-        const errors = err.response.data.errorsl
+        const errors = err.response.data.errors;
         if (errors) {
             errors.forEach( error => {
                 dispatch(setAlert(error.msg, 'danger'))
@@ -70,6 +64,7 @@ export const login = (email, password) => async dispatch => {
         });
 
         dispatch(loadUser());
+
     } catch (err) {
         const errors = err.response.data.errors;
 

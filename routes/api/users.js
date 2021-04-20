@@ -99,7 +99,8 @@ router.post('/login',
       jwt.sign(
         payload,
         config.get('jwtSecret'),
-        { expiresIn: 3600 },
+        //TODO://Change Expiration day
+        { expiresIn: '5 days' },
         (err, token) => {
           if (err) throw err;
           res.json({ token });
@@ -109,18 +110,4 @@ router.post('/login',
       res.status(500).send('Server error');
     }
   });
-
- router.get('/logout', (req, res,next) => {
-     if (req.session) {
-       req.session.destroy();
-       res.clearCookie('session-id');
-       res.redirect('/');
-     }
-   else {
-    var err = new Error('You are not logged in!');
-    err.status = 403;
-    next(err);
-  } 
-}); 
-
 module.exports = router;
