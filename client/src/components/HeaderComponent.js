@@ -15,21 +15,7 @@ class Header extends Component {
         return (
             <Fragment >
                     <Navbar  dark expand="md" color="primary">
-                        <div className="container">
-                            <NavbarBrand href="/home">Vaccine Tracker</NavbarBrand>
-                        </div>
-
-                        <div className="coll-1 ">
-                            <div className="navbar-nav mr-auto">
-                                <a href="/login" className="btn btn-dark" >Login</a>
-                            </div>
-                        </div>
-
-                        <div className="coll-1 ">
-                            <div className="navbar-nav mr-auto">
-                                <a href="/register" className="btn btn-dark">Register</a>
-                            </div>
-                        </div>
+                       
                     </Navbar>
             </Fragment >
         );

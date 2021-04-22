@@ -5,6 +5,7 @@ import Main from './components/MainComponent';
 import { LOGOUT } from './redux/action/types';
 import Footer from './components/FooterComponent';
 import Header from './components/HeaderComponent';
+import Navbar from './components/layout/Navbar';
 import Routes from './routing/Routes';
 
 import { loadUser } from './redux/action/auth';
@@ -30,7 +31,7 @@ const App = () => {
     <Provider store={store}>
       <BrowserRouter>
         <Fragment>
-          <Header />
+          <Navbar />
           <Switch>
             <Route exact path="/" component={Main} />
             <Route component={Routes} />

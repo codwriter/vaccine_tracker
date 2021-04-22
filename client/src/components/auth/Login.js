@@ -27,24 +27,27 @@ const Login = ({ login, isAuthenticated }) => {
   return (
     <Fragment>
       <h1 className="large text-primary">Sign In</h1>
-      <p className="lead">
+      <p className="lead text-secondary">
         <i className="fas fa-user" /> Sign Into Your Account
       </p>
       <form className="form" onSubmit={onSubmit}>
         <div className="form-group">
+        <h5><label className="text-muted">Email</label></h5>
           <input
             type="email"
-            placeholder="Email Address"
+            placeholder="Your Email"
             name="email"
             value={email}
             onChange={onChange}
             required
           />
         </div>
+
         <div className="form-group">
+        <h5><label className="text-muted">Password</label></h5>
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Your Password"
             name="password"
             value={password}
             onChange={onChange}
