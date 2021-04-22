@@ -2,6 +2,7 @@ const express = require('express');
 const auth = require('../../middleware/auth');
 
 const Hospitals = require('../../models/hospital');
+const User = require('../../models/user');
 
 const hospitalRouter = express.Router();
 
@@ -10,7 +11,7 @@ hospitalRouter.use(express.json());
 hospitalRouter.route('/')
     .get(auth, (req, res, next) => {
         Hospitals.find(req.query)
-            .populate('user')
+            .populate('user','email')
             .then((hospital) => {
                 res.statusCode = 200;
                 res.setHeader('Content-type', 'application/json');

@@ -26,6 +26,7 @@ exports.createPatient = (patient, userID) => {
                 //Sign the transaction
                 const assetCreateTxSigned = driver.Transaction.signTransaction(assetCreateTx, user.privateKey);
                 console.log('\n\nPosting signed create transaction for User:\n', assetCreateTxSigned);
+                //Send the transaction
                 conn.postTransactionCommit(assetCreateTxSigned).then(postedTransaction => {
 
                     //Let the promice resolve the created transaction.
