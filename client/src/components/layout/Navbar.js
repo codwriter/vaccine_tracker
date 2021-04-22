@@ -8,10 +8,10 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   const authLinks = (
     <ul>
       <li>
-        <Link to="/">Dashboard</Link>
+        <Link to="/dashboard">Dashboard</Link>
       </li>
       <li>
-        <Link to="/">Hospital</Link>
+        <Link to="/Profile">Hospital</Link>
       </li>
       <li>
         <a onClick={logout} href="#!">
@@ -37,7 +37,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   return (
     <nav className="navbar bg-primary text-white">
       <h1>
-        <a  href="/home">
+        <a  href="/">
           Vaccine Tracker
         </a>
       </h1>
