@@ -1,10 +1,11 @@
 import React, { Fragment, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+//import Landing from './components/LandingComponent';
 import Main from './components/MainComponent';
 import { LOGOUT } from './redux/action/types';
 import Footer from './components/FooterComponent';
-import Header from './components/HeaderComponent';
+//import Header from './components/HeaderComponent';
 import Navbar from './components/layout/Navbar';
 import Routes from './routing/Routes';
 
