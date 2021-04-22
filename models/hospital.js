@@ -8,7 +8,10 @@ var hospitalsSchema = new Schema({
         required: true
     },
     afm: {
-        type: Number,
+        match: [/^[0-9]+$/i, "Only numbers are allowed!"],
+        trim: true,
+        minLength: 9,
+        maxLength: 9,
         required: true,
         unique: true
     },
