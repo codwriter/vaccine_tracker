@@ -1,28 +1,40 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+/* var validate = require('mongoose-validator');
+var amkaValidator = [
+
+]; */
 
 var patientsSchema = new Schema({
     fullname: {
         type: String,
+        trim: true,
         required: true
     },
     amka: {
         type: String,
-        required:true
+        match: [/^[0-9]+$/i, "Only numbers are allowed!"],
+        trim: true,
+        minLength: 11,
+        maxLength: 11,
+        required: true,
+        unigue:true
     },
     age: {
         type: Number,
         min: 1,
-        max:120,    
+        max: 120,
         required: true
     },
     address: {
         type: String,
+        trim: true,
         required: true
     },
     city: {
         type: String,
-        required:true
+        trim: true,
+        required: true
     },
     country: {
         type: String,
@@ -37,7 +49,8 @@ var patientsSchema = new Schema({
     },
     vaccineBrand: {
         type: String,
-        default:"0"
+        trim: true,
+        default: "0"
     },
     numberOfDoses: {
         type: Number,
