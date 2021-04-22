@@ -6,6 +6,10 @@ var patientsSchema = new Schema({
         type: String,
         required: true
     },
+    amka: {
+        type: String,
+        required:true
+    },
     age: {
         type: Number,
         min: 1,
@@ -24,6 +28,7 @@ var patientsSchema = new Schema({
         type: String,
         required: true
     },
+    // 0: 1: 2:
     vaccineStatus: {
         type: Number,
         min: 0,
@@ -31,7 +36,8 @@ var patientsSchema = new Schema({
         default: 0
     },
     vaccineBrand: {
-        type: Number,
+        type: String,
+        default:"0"
     }
 }, {
     timestamps: true

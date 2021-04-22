@@ -9,14 +9,17 @@ const conn = new driver.Connection(API_PATH);
 exports.createPatient = (patient, user) => {
     var userKeys;
     return new Promise((resolve, reject) => {
+        //const patientMeta = (({ vaccineStatus, vaccineBrand }) => ({ vaccineStatus, vaccineBrand }))(patient);
+        //console.log("The patient Meta",patient,patientMeta);
         const metadata = {
             "action": "introduced",
             "date": new Date().toISOString()
         };
+
+        var patientAssetData = patient[0];
+        var patientMetaData = (({ vaccineStatus, vaccineBrand }) => ({ vaccineStatus, vaccineBrand }))(patientAssetData);
         const assetdata = {
-            "patient": {
-               patient
-            }
+            "patient": patientAssetData
         }
         Users.findById(user.id)
             .then(user => {
@@ -24,7 +27,7 @@ exports.createPatient = (patient, user) => {
                     console.log(user, userKeys)
                 const assetCreateTx = driver.Transaction.makeCreateTransaction(
                     assetdata,
-                    metadata,
+                    patientMetaData,
                     // Every transaction which you make requires an output
                     [driver.Transaction.makeOutput(driver.Transaction.makeEd25519Condition(userKeys.publicKey))
                     ],
