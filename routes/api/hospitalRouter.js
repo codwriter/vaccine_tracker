@@ -1,6 +1,4 @@
-const { application } = require('express');
 const express = require('express');
-const mongoose = require('mongoose');
 const auth = require('../../middleware/auth');
 
 const Hospitals = require('../../models/hospital');
@@ -12,7 +10,7 @@ hospitalRouter.use(express.json());
 hospitalRouter.route('/')
     .get(auth, (req, res, next) => {
         Hospitals.find(req.query)
-            .populate('hospital.user')
+            .populate('user')
             .then((hospital) => {
                 res.statusCode = 200;
                 res.setHeader('Content-type', 'application/json');
@@ -45,7 +43,7 @@ hospitalRouter.route('/')
             .catch((err) => next(err));
     });
 
-hospitalRouter.route('/:HospitalId')
+hospitalRouter.route('/:hospitalId')
     .get(auth, (req, res, next) => {
         Hospitals.findById(req.params.hospitalId)
             .then((hospital) => {
@@ -60,7 +58,7 @@ hospitalRouter.route('/:HospitalId')
         res.end('POST operation not supported on /hospitals/' + req.params.hospitalId);
     })
     .put(auth, (req, res, next) => {
-        Hospitals.findByIdAndUpdate(req.params.patientId, {
+        Hospitals.findByIdAndUpdate(req.params.hospitalId, {
             $set: req.body
         }, { new: true })
             .then((hospital) => {

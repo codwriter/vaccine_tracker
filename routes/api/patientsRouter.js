@@ -25,7 +25,7 @@ patientsRouter.route('/')
                 console.log("The patient created", patient);
                 res.statusCode = 200;
                 res.setHeader('Content-type', 'application/json');
-                bgchain.createPatient(patient, req.user);
+                bgchain.createPatient(patient, req.user.id);
                 res.json(patient);
             }, (err) => next(err))
             .catch((err) => next(err));

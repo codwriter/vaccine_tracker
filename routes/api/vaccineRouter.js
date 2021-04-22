@@ -57,7 +57,7 @@ vaccineRouter.route('/:vaccineId')
         res.end('POST operation not supported on /patients/' + req.params.vaccineId);
     })
     .put(auth,(req, res, next) => {
-        Vaccines.findByIdAndUpdate(req.params.vaccine, {
+        Vaccines.findByIdAndUpdate(req.params.vaccineId, {
             $set: req.body
         }, { new: true })
             .then((vaccine) => {

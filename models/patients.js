@@ -28,16 +28,22 @@ var patientsSchema = new Schema({
         type: String,
         required: true
     },
-    // 0: 1: 2:
+    // 0: Pending, 1:Completed, 2: Cancelled, -1: Not Scheduled
     vaccineStatus: {
         type: Number,
-        min: 0,
+        min: -1,
         max: 2,
-        default: 0
+        default: -1
     },
     vaccineBrand: {
         type: String,
         default:"0"
+    },
+    numberOfDoses: {
+        type: Number,
+        min: 0,
+        max: 2, // 
+        default: 0
     }
 }, {
     timestamps: true
