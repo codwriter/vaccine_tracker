@@ -13,7 +13,6 @@ hospitalRouter.route('/')
     .get(auth,(req, res, next) => {
         Hospitals.find({})
             .then((hospital) => {
-                
                 res.statusCode = 200;
                 res.setHeader('Content-type', 'application/json');
                 res.json(hospital);
