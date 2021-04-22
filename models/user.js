@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+
 var User = new Schema({
     email: {
         type: String,
@@ -11,10 +12,13 @@ var User = new Schema({
         type: String,
         required: true
     },
-    admin: {
-        type: Boolean,
-        default: false
+    privateKey: {
+        type: String
+    },
+    publicKey: {
+        type:String
     }
+
 });
 
 module.exports = mongoose.model('User', User);

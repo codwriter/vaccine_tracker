@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
 const config = require('config');
-
+const bigchaindriver = require('bigchaindb-driver');
 
 router.post('/signup',
   [
@@ -38,6 +38,10 @@ router.post('/signup',
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
 
+      let key = new bigchaindriver.Ed25519Keypair();
+      user.privateKey = key.privateKey;
+      user.publicKey = key.publicKey;
+        
       //Save the user
       await user.save();
 
@@ -99,8 +103,7 @@ router.post('/login',
       jwt.sign(
         payload,
         config.get('jwtSecret'),
-        //TODO://Change Expiration day
-        { expiresIn: '5 days' },
+        { expiresIn: 3600},
         (err, token) => {
           if (err) throw err;
           res.json({ token });

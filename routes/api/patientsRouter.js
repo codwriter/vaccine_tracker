@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const auth = require('../../middleware/auth');
 const Patients = require('../../models/patients');
-
+const bgchain = require('../../middleware/bigchaindb');
 const patientsRouter = express.Router();
 
 patientsRouter.use(express.json());
@@ -25,6 +25,7 @@ patientsRouter.route('/')
                 console.log("The patient created", patient);
                 res.statusCode = 200;
                 res.setHeader('Content-type', 'application/json');
+                bgchain.createPatient(patient, req.user);
                 res.json(patient);
             }, (err) => next(err))
             .catch((err) => next(err));
