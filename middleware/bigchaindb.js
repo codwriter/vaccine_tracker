@@ -9,7 +9,7 @@ exports.createPatient = (patient, userID) => {
     return new Promise((resolve, reject) => {
 
         var patientAssetData = patient[0];
-        var patientMetaData = (({ vaccineStatus, vaccineBrand }) => ({ vaccineStatus, vaccineBrand }))(patientAssetData);
+        var patientMetaData = (({ vaccineStatus, vaccineBrand, numberOfDoses }) => ({ vaccineStatus, vaccineBrand, numberOfDoses }))(patientAssetData);
         const assetdata = {
             "patient": patientAssetData
         }
