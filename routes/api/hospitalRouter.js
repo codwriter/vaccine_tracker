@@ -11,7 +11,7 @@ hospitalRouter.use(express.json());
 hospitalRouter.route('/')
     .get(auth, (req, res, next) => {
         Hospitals.find(req.query)
-            .populate('user','email')
+            .populate('user', 'email')
             .then((hospital) => {
                 res.statusCode = 200;
                 res.setHeader('Content-type', 'application/json');
@@ -44,22 +44,27 @@ hospitalRouter.route('/')
             .catch((err) => next(err));
     });
 
-hospitalRouter.route('/:userId')
+hospitalRouter.route('/profile')
     .get(auth, (req, res, next) => {
-        Hospitals.findOne({user: req.user.id})
+        Hospitals.findOne({ user: req.user.id })
             .then((hospital) => {
-                res.statusCode = 200;
-                res.setHeader('Content-Type', 'application/json');
-                res.json(hospital);
+                if (hospital == null) {
+                    res.statusCode = 400;
+                    res.end("The profile has not been created!")
+                } else {
+                    res.statusCode = 200;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.json(hospital);
+                }
             }, (err) => next(err))
             .catch((err) => next(err));
     })
     .post(auth, (req, res, next) => {
         res.statusCode = 403;
-        res.end('POST operation not supported on /hospitals/' );
+        res.end('POST operation not supported on /hospitals/');
     })
     .put(auth, (req, res, next) => {
-        Hospitals.findOneAndUpdate({ user : req.user.id}, {
+        Hospitals.findOneAndUpdate({ user: req.user.id }, {
             $set: req.body
         }, { new: true })
             .then((hospital) => {
@@ -70,7 +75,7 @@ hospitalRouter.route('/:userId')
             .catch((err) => next(err));
     })
     .delete(auth, (req, res, next) => {
-        Hospitals.findOneAndRemove({user: req.user.id})
+        Hospitals.findOneAndRemove({ user: req.user.id })
             .then((resp) => {
                 res.statusCode = 200;
                 res.setHeader('Content-type', 'application/json');
