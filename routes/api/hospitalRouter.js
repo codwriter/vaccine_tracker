@@ -44,9 +44,9 @@ hospitalRouter.route('/')
             .catch((err) => next(err));
     });
 
-hospitalRouter.route('/:hospitalId')
+hospitalRouter.route('/:userId')
     .get(auth, (req, res, next) => {
-        Hospitals.findById(req.params.hospitalId)
+        Hospitals.findOne({user: req.user.id})
             .then((hospital) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
@@ -56,10 +56,10 @@ hospitalRouter.route('/:hospitalId')
     })
     .post(auth, (req, res, next) => {
         res.statusCode = 403;
-        res.end('POST operation not supported on /hospitals/' + req.params.hospitalId);
+        res.end('POST operation not supported on /hospitals/' );
     })
     .put(auth, (req, res, next) => {
-        Hospitals.findByIdAndUpdate(req.params.hospitalId, {
+        Hospitals.findOneAndUpdate({ user : req.user.id}, {
             $set: req.body
         }, { new: true })
             .then((hospital) => {
@@ -70,7 +70,7 @@ hospitalRouter.route('/:hospitalId')
             .catch((err) => next(err));
     })
     .delete(auth, (req, res, next) => {
-        Hospitals.findByIdAndRemove(req.params.hospitalId)
+        Hospitals.findOneAndRemove({user: req.user.id})
             .then((resp) => {
                 res.statusCode = 200;
                 res.setHeader('Content-type', 'application/json');
