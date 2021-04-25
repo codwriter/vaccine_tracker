@@ -44,6 +44,7 @@ hospitalRouter.route('/')
             .catch((err) => next(err));
     });
 
+
 hospitalRouter.route('/profile')
     .get(auth, (req, res, next) => {
         Hospitals.findOne({ user: req.user.id })
@@ -76,6 +77,7 @@ hospitalRouter.route('/profile')
     })
     .delete(auth, (req, res, next) => {
         Hospitals.findOneAndRemove({ user: req.user.id })
+
             .then((resp) => {
                 res.statusCode = 200;
                 res.setHeader('Content-type', 'application/json');
