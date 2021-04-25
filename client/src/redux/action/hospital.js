@@ -6,7 +6,7 @@ import {
     GET_HOSPITAL,
     HOSPITAL_ERROR,
  //   UPDATE_HOSPITAL,      ΔΕΝ ΧΡΗΣΙΜΟΠΟΙΕΊΤΑΙ ΓΙΑΤΙ ΕΙΝΑΙ ΣΥΜΠΤΙΓΜΕΝΑ ΟΛΑ ΣΕ ΜΙΑ ΣΥΝΑΡΤΗΣΗ 
-    CLEAR_HOSPITAL,
+   CLEAR_HOSPITAL,
     DELETE_HOSPITAL
 }from  './types';
 //
@@ -69,7 +69,7 @@ export const deleteHospital = () => async (dispatch) => {
         dispatch({ type: CLEAR_HOSPITAL });
         dispatch({ type: DELETE_HOSPITAL });
   
-        dispatch(setAlert('The hospitals account has been permanently deleted'));
+        dispatch(setAlert('The hospitals profile has been permanently deleted'));
       } catch (err) {
         dispatch({
           type: HOSPITAL_ERROR,
