@@ -20,7 +20,7 @@ hospitalRouter.route('/')
             .catch((err) => next(err));
     })
     .post(auth, (req, res, next) => {
-        req.body.user = req.user.id
+        req.body.user = req.user.id;
         Hospitals.create(req.body)
             .then((hospital) => {
                 console.log("The Hospital created", hospital);

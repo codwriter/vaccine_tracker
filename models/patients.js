@@ -57,6 +57,10 @@ var patientsSchema = new Schema({
         min: 0,
         max: 2, // 
         default: 0
+    },
+    hospital: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Hospital'
     }
 }, {
     timestamps: true
