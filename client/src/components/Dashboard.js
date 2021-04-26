@@ -33,7 +33,7 @@ const Dashboard = ({
             ) : (
                 <Fragment>
                     <p>You are not linked to a hospital yet, please add some info</p>
-                    <Link to="/create-hostpital-profile" className="btn btn-primary my-1">
+                    <Link to="/create-hospital-profile" className="btn btn-primary my-1">
                         Create Profile
           </Link>
                 </Fragment>
