@@ -38,7 +38,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
     <nav className="navbar bg-primary text-white">
       <h1>
         <a  href="/">
-          Vaccine Tracker
+        <img src='./img/logo_vaccine.png' className='nav-logo' />
         </a>
       </h1>
       <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>

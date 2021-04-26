@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-//import Landing from './components/LandingComponent';
+import Landing from './components/layout/Landing';
 import Main from './components/MainComponent';
 import { LOGOUT } from './redux/action/types';
 import Footer from './components/FooterComponent';
@@ -33,6 +33,7 @@ const App = () => {
       <BrowserRouter>
         <Fragment>
           <Navbar />
+          <Landing />
           <Switch>
             <Route exact path="/" component={Main} />
             <Route component={Routes} />
