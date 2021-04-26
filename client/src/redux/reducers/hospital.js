@@ -3,7 +3,6 @@ import {
     HOSPITAL_ERROR,
     CLEAR_HOSPITAL,
     UPDATE_HOSPITAL,
-    DELETE_HOSPITAL
   } from '../action/types';
   
   const initialState = {
@@ -40,6 +39,5 @@ import {
         return state;
     }
   }
-  //
   export default hospitalReducer;
   

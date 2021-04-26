@@ -6,14 +6,14 @@ import {
     GET_HOSPITAL,
     HOSPITAL_ERROR,
  //   UPDATE_HOSPITAL,      ΔΕΝ ΧΡΗΣΙΜΟΠΟΙΕΊΤΑΙ ΓΙΑΤΙ ΕΙΝΑΙ ΣΥΜΠΤΙΓΜΕΝΑ ΟΛΑ ΣΕ ΜΙΑ ΣΥΝΑΡΤΗΣΗ 
-    CLEAR_HOSPITAL,
+   CLEAR_HOSPITAL,
     DELETE_HOSPITAL
 }from  './types';
 //
 //Get current users Hospital profile info
 export const getCurrentHospital = () => async dispatch => { // () σημαίνει οτι είναι μια συνάρτηση κενή με καθόλου ορίσματα 
     try {
-        const res = await api.get('/hospital'); //ΕΓΙΝΕ ΑΛΛΑΓΗ ΑΠΟ ΤΟ ΠΡΟΤΥΠΟ /api/hospital/me
+        const res = await api.get('/hospital/profile'); //ΕΓΙΝΕ ΑΛΛΑΓΗ ΑΠΟ ΤΟ ΠΡΟΤΥΠΟ /api/hospital/me
 
         dispatch({
             type: GET_HOSPITAL,
@@ -69,7 +69,7 @@ export const deleteHospital = () => async (dispatch) => {
         dispatch({ type: CLEAR_HOSPITAL });
         dispatch({ type: DELETE_HOSPITAL });
   
-        dispatch(setAlert('The hospitals account has been permanently deleted'));
+        dispatch(setAlert('The hospitals profile has been permanently deleted'));
       } catch (err) {
         dispatch({
           type: HOSPITAL_ERROR,
