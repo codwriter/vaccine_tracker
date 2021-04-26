@@ -22,6 +22,7 @@
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.6",
+    "mongodb-client-encryption": "^1.2.3",
     "mongoose": "^5.12.3",
     "mongoose-validator": "^2.1.0",
     "morgan": "~1.9.1",

@@ -1,5 +1,6 @@
 //axios είναι για την χρήση των async/await 
 //παίρνει/διαγράφει διευθύνσεις URL μέσω τις GET/DELETE 
+import { Server } from 'mongodb';
 import api from '../../utils/api';
 import { setAlert } from './alert';
 import {
@@ -22,7 +23,7 @@ export const getCurrentHospital = () => async dispatch => { // () σημαίνε
     }catch(err) {
         dispatch({
             type: HOSPITAL_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: err/* { msg: err.response.statusText, status: err.response.status } PROVLIMA SE SERVER */
         });
     }
 };
@@ -55,7 +56,7 @@ export const createHospital = (formData, history, edit = false) => async dispatc
         }
         dispatch({
             type: HOSPITAL_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: err/* { msg: err.response.statusText, status: err.response.status } PROVLIMA SE SERVER */
         });
     }
 }
@@ -73,7 +74,7 @@ export const deleteHospital = () => async (dispatch) => {
       } catch (err) {
         dispatch({
           type: HOSPITAL_ERROR,
-          payload: { msg: err.response.statusText, status: err.response.status }
+         payload: err/* { msg: err.response.statusText, status: err.response.status } PROVLIMA SE SERVER */
         });
       }
     }
