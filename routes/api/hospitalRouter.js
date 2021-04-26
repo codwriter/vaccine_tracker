@@ -17,7 +17,10 @@ hospitalRouter.route('/')
                 res.setHeader('Content-type', 'application/json');
                 res.json(hospital);
             }, (err) => next(err))
-            .catch((err) => next(err));
+            .catch((err) => {
+                res.status(500).send('Server Error');
+                next(err)
+            });
     })
     .post(auth, (req, res, next) => {
         req.body.user = req.user.id;

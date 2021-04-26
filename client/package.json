@@ -5,11 +5,17 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "bootstrap": "^4.6.0",
+    "classnames": "^2.3.1",
     "cross-fetch": "^3.1.4",
+    "node-sass": "^5.0.0",
+    "perfect-scrollbar": "^1.5.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-popper": "^2.2.5",
@@ -29,7 +35,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+        "compile-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css",
+        "minify-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.min.css --output-style compressed",
+        "map-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css --source-map true"
   },
   "eslintConfig": {
     "extends": [

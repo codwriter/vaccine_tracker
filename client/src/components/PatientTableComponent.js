@@ -37,7 +37,7 @@ const PatientTable = ({
     useEffect(() => {
         getPatients();
     }, [getPatients]);
-   
+
     const table = patients.map((patient, i) => {
         return (
             <Fragment key={patient.id}>
