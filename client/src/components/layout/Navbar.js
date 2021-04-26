@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../redux/action/auth';
+import logo from '../../assets/images/logo_vaccine.png'
 
 const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   const authLinks = (
@@ -38,7 +39,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
     <nav className="navbar bg-primary text-white">
       <h1>
         <a  href="/">
-        <img src='./img/logo_vaccine.png' className='nav-logo' />
+        <img src={logo} className='nav-logo' />
         </a>
       </h1>
       <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
