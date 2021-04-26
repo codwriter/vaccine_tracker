@@ -1,5 +1,11 @@
 import React, { Fragment, useEffect } from 'react';
-import { Table, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import {
+    Table, Card,
+    CardHeader,
+    CardBody,
+    CardTitle,
+    Row,
+    Col, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getPatients } from '../redux/action/patient';
