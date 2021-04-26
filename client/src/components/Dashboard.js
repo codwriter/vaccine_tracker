@@ -1,7 +1,11 @@
 import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
+import {
+    Row,
+    Col,
+} from "reactstrap";
 import { getCurrentHospital } from '../redux/action/hospital';
 
 import PatientsTable from './PatientTableComponent';
@@ -17,6 +21,7 @@ const Dashboard = ({
 
     return (
         <Fragment>
+            <div className="content">
             <h1 className="large text-primary">Dashboard</h1>
             <p className="lead">
                 <i className="fas fa-user" /> Welcome {user && user.email}
@@ -33,7 +38,8 @@ const Dashboard = ({
           </Link>
                 </Fragment>
             )
-            }
+                }
+            </div>
         </Fragment >
     );
 };
