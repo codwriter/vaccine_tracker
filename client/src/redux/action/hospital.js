@@ -28,7 +28,6 @@ export const getCurrentHospital = () => async dispatch => { // () σημαίνε
     }
 };
 
-
 //Create or update hospital
 //ΘΑ ΧΡΕΙΑΣΤΕΙ ΕΝΑ ΟΡΙΣΜΑ ID !!!!!! 
 export const createHospital = (formData, history, edit = false) => async dispatch => {  //H edit μπαινει για να γνωρίζω αμα δημιουργω η κανω edit καποιο νοσοκομειο
@@ -77,6 +76,24 @@ export const deleteHospital = () => async (dispatch) => {
           payload: { msg: err.response.statusText, status: err.response.status }
         });
       }
+    }
+  };
+
+  //Δεν έχω ιδέα για τα αποτελέσματα του παρακάτω κώδικα 
+// Get hospital by user ID
+export const getHospitalById = (userId) => async (dispatch) => {
+    try {
+      const res = await api.get(`/hospital/user/${userId}`);
+  
+      dispatch({
+        type: GET_HOSPITAL,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: HOSPITAL_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status }
+      });
     }
   };
 
