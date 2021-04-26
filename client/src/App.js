@@ -12,7 +12,7 @@ import { loadUser } from './redux/action/auth';
 import setAuthToken from './utils/setAuthToken';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-
+import './assets/paper-dashboard.scss';
 const App = () => {
   useEffect(() => {
     // check for token in LS

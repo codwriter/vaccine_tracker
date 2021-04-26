@@ -22,33 +22,23 @@ const Dashboard = ({
     return (
         <Fragment>
             <div className="content">
-                <Row>
-                    <Col lg="3" md="6" sm="6">
-                        <p className="lead">
-                            <i className="fas fa-user" /> Welcome {user && user.email}
-                        </p>
-                    </Col>
-                </Row>
-                <Row>
-                    <h1 className="large text-primary">Dashboard</h1>
-                </Row>
-                <Row>
-                    <Col lg="12">
-                        {hospital !== null ? (
-                            <Fragment>
-                                <PatientsTable />
-                            </Fragment>
-                        ) : (
-                            <Fragment>
-                                <p>You are not linked to a hospital yet, please add some info</p>
-                                <Link to="/create-hostpital-profile" className="btn btn-primary my-1">
-                                    Create Profile
+                <h1 className="large text-primary">Dashboard</h1>
+                <p className="lead">
+                    <i className="fas fa-user" /> Welcome {user && user.email}
+                </p>
+                {hospital !== null ? (
+                    <Fragment>
+                        <PatientsTable />
+                    </Fragment>
+                ) : (
+                    <Fragment>
+                        <p>You are not linked to a hospital yet, please add some info</p>
+                        <Link to="/create-hospital-profile" className="btn btn-primary my-1">
+                            Create Profile
           </Link>
-                            </Fragment>
-                        )
-                        }
-                    </Col>
-                </Row>
+                    </Fragment>
+                )
+                }
             </div>
         </Fragment >
     );

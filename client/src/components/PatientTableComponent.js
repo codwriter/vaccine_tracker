@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getPatients } from '../redux/action/patient';
 import TablePagination from './layout/tablePagination';
+
 function RenderTable({ patient, i }) {
 
     return (
@@ -54,7 +55,7 @@ const PatientTable = ({
     });
     return (
         <Fragment>
-        <Table responsive bordered hover size="sm" >
+        <Table responsive  hover >
             <thead>
                 <tr>
                     <th>#</th>
