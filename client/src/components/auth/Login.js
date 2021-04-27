@@ -1,8 +1,20 @@
-import React, { Fragment, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React, { Fragment, useState } from "react";
+
+import {
+  FormGroup,
+  Label,
+  Input, 
+  Container,
+  Col,
+  Row
+} from "reactstrap";
+
+import { login } from '../../redux/action/auth';
+import { Button } from "reactstrap";
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { login } from '../../redux/action/auth';
+
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -25,41 +37,29 @@ const Login = ({ login, isAuthenticated }) => {
   }
 
   return (
-    <Fragment>
-      <h1 className="large text-primary">Sign In</h1>
-      <p className="lead text-secondary">
-        <i className="fas fa-user" /> Sign Into Your Account
-      </p>
-      <form className="form" onSubmit={onSubmit}>
-        <div className="form-group">
-        <h5><label className="text-muted">Email</label></h5>
-          <input
-            type="email"
-            placeholder="Your Email"
-            name="email"
-            value={email}
-            onChange={onChange}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-        <h5><label className="text-muted">Password</label></h5>
-          <input
-            type="password"
-            placeholder="Your Password"
-            name="password"
-            value={password}
-            onChange={onChange}
-            minLength="6"
-          />
-        </div>
-        <input type="submit" className="btn btn-primary" value="Login" />
-      </form>
-      <p className="my-1">
-        Don't have an account? <Link to="/register">Sign Up</Link>
-      </p>
-    </Fragment>
+    <form>
+      <FormGroup>
+        <Label for="exampleEmail">Email address</Label>
+        <Input
+          type="email"
+          name="email"
+          id="exampleEmail"
+          placeholder="Enter email"
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label for="examplePassword">Password</Label>
+        <Input
+          type="password"
+          name="password"
+          id="examplePassword"
+          placeholder="Password"
+        />
+      </FormGroup>
+      <Button color="secondary" round outline type="submit">
+        Sign In
+      </Button>
+    </form>
   );
 };
 
