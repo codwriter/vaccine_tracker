@@ -24,6 +24,10 @@ const onChange = (e) =>
   
   const onSubmit = async (e) => {   
       e.preventDefault();
+<<<<<<< HEAD
+=======
+      Hospitalregister({ HospitalName, HospitalAddress, AFM, NumberofDoses });
+>>>>>>> 949b8c58b1bf42c0d1f8ffc5fb48b56953d2b299
       createHospital(formData);
   };
 
@@ -51,7 +55,7 @@ const onChange = (e) =>
                 </Fragment>
               )*/ 
             <form className="form" onSubmit={onSubmit}>
-
+              
                  <div className="form-group">
                  <input
                      type="Hospital Name"
