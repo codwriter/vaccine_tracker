@@ -6,7 +6,7 @@ import {Row, Col,} from "reactstrap";
 import { getCurrentHospital } from '../redux/action/hospital';
 import PatientModal from './layout/PatientModal';
 import PatientsTable from './PatientTableComponent';
-
+import PatientCreation from './Forms/PatientForm';
 
 
 
@@ -35,6 +35,7 @@ const Dashboard = ({
                     <Fragment>
                         <PatientsTable />
                         <a onClick={PatientModal} className="float"><i className="fa fa-plus my-float"></i></a>
+                        <PatientCreation />
                     </Fragment>
                 ) : (
                     <Fragment>

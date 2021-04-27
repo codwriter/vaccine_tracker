@@ -47,9 +47,9 @@ export const getPatient = id => async dispatch => {
 };
 
 // Add Patient 
-export const addPatient = () => async dispatch => {
+export const addPatient = (formData) => async dispatch => {
     try {
-        const res = await api.post('/patients');
+        const res = await api.post('/patients', formData);
 
         dispatch({
             type: ADD_PATIENT,
