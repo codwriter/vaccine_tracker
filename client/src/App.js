@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Landing from './components/layout/Landing';
+
 import { LOGOUT } from './redux/action/types';
-import Footer from './components/FooterComponent';
-//import Header from './components/HeaderComponent';
+
+import Landing from './components/layout/Landing';
 import Navbar from './components/layout/Navbar';
 import Routes from './routing/Routes';
 
@@ -12,7 +12,7 @@ import { loadUser } from './redux/action/auth';
 import setAuthToken from './utils/setAuthToken';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import './assets/paper-dashboard.scss';
+
 const App = () => {
   useEffect(() => {
     // check for token in LS
@@ -36,7 +36,6 @@ const App = () => {
             <Route exact path="/" component={Landing} />
             <Route component={Routes} />
           </Switch>
-          <Footer />
         </Fragment>
       </BrowserRouter>
     </Provider>
