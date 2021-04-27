@@ -50,7 +50,7 @@ var patientsSchema = new Schema({
     vaccineBrand: {
         type: String,
         trim: true,
-        default: "0"
+        default: "-"
     },
     numberOfDoses: {
         type: Number,
