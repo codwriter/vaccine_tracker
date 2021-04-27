@@ -24,6 +24,9 @@ const onChange = (e) =>
   
   const onSubmit = async (e) => {   
       e.preventDefault();
+      Hospitalregister({ HospitalName, HospitalAddress, AFM, NumberofDoses });
+      createHospital(formData);
+  };
 
 
 /*const Hospital = ({ createHospital, hospital: { hospital }, auth, match }) => {
@@ -49,6 +52,7 @@ const onChange = (e) =>
                 </Fragment>
               )*/ 
             <form className="form" onSubmit={onSubmit}>
+              
                  <div className="form-group">
                  <input
                      type="Hospital Name"
@@ -59,6 +63,7 @@ const onChange = (e) =>
                      required
                     />
                  </div>
+
                  <div className="form-group">
                  <input
                      type="Hospital Address"
@@ -69,6 +74,7 @@ const onChange = (e) =>
                      required
                     />
                  </div>
+
                   <div className="form-group">
                     <input
                      type="Tax Identification Number(AFM)"
@@ -80,6 +86,7 @@ const onChange = (e) =>
                       maxLength="9"
                     />
                   </div>
+
                   <div className="form-group">
                     <input
                      type="NumberofDoses"
@@ -90,12 +97,16 @@ const onChange = (e) =>
                       minLength="0"
                     />
                   </div>
+
+                  <input type="submit" className="btn btn-primary" value="Hospital register" />
+
                 </form>
-  }
-    </Fragment>
-    )
-} 
-}
+            }
+          </Fragment>
+                        
+    );
+};
+
 Hospitalregister.propTypes = {
   createHospital: PropTypes.func.isRequired,
   setAlert: PropTypes.object.isRequired,
@@ -107,4 +118,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth
 });
 
-export default connect(mapStateToProps, { createHospital })(Hospitalregister);
+export default connect(mapStateToProps, { setAlert, createHospital })(Hospitalregister);
