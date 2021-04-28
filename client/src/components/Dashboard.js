@@ -18,7 +18,7 @@ const Dashboard = ({
 }) => {
     useEffect(() => {
         getCurrentHospital();
-    }, [getCurrentHospital]);
+    }, []);
 
     const { isShowing, toggle } = useModal();
 
@@ -28,11 +28,12 @@ const Dashboard = ({
             <div className="content">
                 <Row>
                     <Col>
-                        <h1 className="large text-primary">Welcome to Dashboard of {hospital && hospital.name} Hospital</h1>
+                        <h1 className="large text-primary">Welcome to Dashboard </h1>
                     </Col>
                 </Row>
                 {hospital !== null ? (
                     <Fragment>
+                        <h1 className="large text-primary">{hospital && hospital.name} Hospital</h1>
                         <PatientsTable />
                         <PatientModal isShowing={isShowing} hide={toggle} title="Add Patient" />
                         <Button onClick={toggle} className=" btn-primary btn-round float"><i className="fa fa-plus my-float"></i></Button>

@@ -1,22 +1,6 @@
-/*!
-
-=========================================================
-* Paper Dashboard React - v1.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React from "react";
+import React, {useEffect } from "react";
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
 import HospitalProfileForm from '../Forms/HospitalProfileForm';
 // reactstrap components
 import {
@@ -26,23 +10,27 @@ import {
   CardBody,
   CardFooter,
   CardTitle,
-  FormGroup,
-  Form,
-  Input,
   Row,
   Col,
 } from "reactstrap";
+import { getCurrentHospital } from '../../redux/action/hospital';
+import { Redirect } from "react-router";
 
-class Hospital extends React.Component {
-  render() {
+
+const Hospital=({
+  hospital: { hospital }
+}) => {
+  useEffect(() => {
+    getCurrentHospital();
+  }, [getCurrentHospital]);
     return (
       <>
-        <div className="content">
+        {hospital ? <div className="content">
           <Row>
             <Col md="4">
               <Card className="card-user">
                 <div className="image">
-                 {/*  <img
+                  {/*  <img
                     alt="..."
                     src={require("assets/img/damir-bosnjak.jpg")}
                   /> */}
@@ -50,7 +38,7 @@ class Hospital extends React.Component {
                 <CardBody>
                   <div className="author">
                     <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                     {/*  <img
+                      {/*  <img
                         alt="..."
                         className="avatar border-gray"
                         src={require("assets/img/mike.jpg")}
@@ -100,7 +88,7 @@ class Hospital extends React.Component {
                       <Row>
                         <Col md="2" xs="2">
                           <div className="avatar">
-                           {/*  <img
+                            {/*  <img
                               alt="..."
                               className="img-circle img-no-padding img-responsive"
                               src={require("assets/img/faces/ayo-ogunseinde-2.jpg")}
@@ -129,7 +117,7 @@ class Hospital extends React.Component {
                       <Row>
                         <Col md="2" xs="2">
                           <div className="avatar">
-                           {/*  <img
+                            {/*  <img
                               alt="..."
                               className="img-circle img-no-padding img-responsive"
                               src={require("assets/img/faces/joe-gardner-2.jpg")}
@@ -158,7 +146,7 @@ class Hospital extends React.Component {
                       <Row>
                         <Col md="2" xs="2">
                           <div className="avatar">
-                         {/*    <img
+                            {/*    <img
                               alt="..."
                               className="img-circle img-no-padding img-responsive"
                               src={require("assets/img/faces/clem-onojeghuo-2.jpg")}
@@ -193,15 +181,23 @@ class Hospital extends React.Component {
                   <CardTitle tag="h5">Edit Profile</CardTitle>
                 </CardHeader>
                 <CardBody>
-              <HospitalProfileForm/>
+                  <HospitalProfileForm hospital={hospital} />
                 </CardBody>
               </Card>
             </Col>
           </Row>
-        </div>
+        </div>:<Redirect to='/create-hospital-profile'/>}
+        
       </>
     );
   }
-}
 
-export default Hospital;
+Hospital.propTypes = {
+  hospital: PropTypes.object.isRequired,
+};
+const mapStateToProps = (state) => ({
+  hospital: state.hospitalReducer
+});
+
+
+export default connect(mapStateToProps, { getCurrentHospital})(Hospital);
