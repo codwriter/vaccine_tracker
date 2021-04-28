@@ -7,8 +7,7 @@ import Login from '../components/auth/Login';
 import Register from '../components/auth/Register';
 import Dashboard from '../components/Dashboard'
 import HospitalForm from '../components/Forms/HospitalProfileForm';
-import PatientForm from '../components/Forms/PatientForm';
-
+import Hospital from '../components/profile/Hospital';
 const Routes = props => {
     return (
         <section className="container">
@@ -18,8 +17,7 @@ const Routes = props => {
                 <Route exact path="/login" component={Login} />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 <PrivateRoute exact path="/create-hospital-profile" component={HospitalForm} />
-                <PrivateRoute exact path="/add-patient" component={PatientForm} />
-                {/* <PrivateRoute exact path="/edit-profile" component={} /> */}
+                <PrivateRoute exact path="/profile" component={Hospital} />
                 {/* <PrivateRoute exact path="/add-experience" component={} /> */}
                 {/* <PrivateRoute exact path="/add-education" component={} /> */}
                 {/* <PrivateRoute exact path="/posts" component={} /> */}
