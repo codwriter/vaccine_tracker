@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { Link } from "react-router-dom";
 import {
   Collapse,
-  Navbar as navbar,
+  Navbar,
   NavbarToggler,
   NavbarBrand,
   Nav,
@@ -24,7 +24,7 @@ import logo from '../../assets/images/logo_vaccine.png'
 
 
 
-const Navbar = ({ auth: { isAuthenticated }, logout }) => {
+const NavbarComponent = ({ auth: { isAuthenticated }, logout }) => {
   const [isOpen, set_isOpen] = useState(false);
   const authLinks = (
     <>
@@ -53,11 +53,11 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   );
 
   return (
-      <navbar className="bg-primary text-white navbar ">
+      <Navbar className="bg-primary text-white navbar ">
           <NavbarBrand href="/"><img src={logo} className='nav-logo' /></NavbarBrand>
     <div className="navbar-wrapper">
           <Nav >{isAuthenticated ? authLinks : guestLinks}</Nav></div>
-      </navbar>
+      </Navbar>
   );
 };
 
@@ -70,4 +70,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { logout })(Navbar);
+export default connect(mapStateToProps, { logout })(NavbarComponent);
