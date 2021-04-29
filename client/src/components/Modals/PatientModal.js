@@ -9,7 +9,7 @@ const PatientModal = ({ isShowing, hide, patient ,title}) => isShowing ? ReactDO
       <Modal isOpen={isShowing} >
         <ModalHeader toggle={hide}>{title}</ModalHeader>
         <ModalBody>
-          <PatientForm patient={patient} />
+          <PatientForm hide={hide} patient={patient} />
         </ModalBody>
       </Modal>
       </div>

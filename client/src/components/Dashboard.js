@@ -33,12 +33,12 @@ const Dashboard = ({
                         <h1 className="large text-primary">{hospital && hospital.name} Hospital</h1>
                         </Row>
                         <Row>
-                            <Col lg="3" md="6" sm="6">
+                            <Col lg="3" md="6" sm="6" className="offset-sm-9">
                                 <AvailableDoses doses={hospital.numberOfDosesAvailable} />
                             </Col>
                         </Row>
                         <Row>
-                            <Col lg="12" md="6" sm="6">
+                            <Col lg="12" md="6" sm="6" >
                                 <PatientsTable />
                                 <PatientModal isShowing={isShowing} hide={toggle} title="Add Patient" />
                                 <Button onClick={toggle} className=" btn-primary btn-round float"><i className="fa fa-plus my-float"></i></Button>
