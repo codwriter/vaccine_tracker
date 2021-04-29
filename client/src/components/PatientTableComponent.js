@@ -64,12 +64,12 @@ const PatientTable = ({
             <div className="content">
                 <Row>
                     <Col md="12">
-                        <Card >
+                        <Card>
                             <CardHeader>
                                 <CardTitle  tag="h4">Vacinations</CardTitle>
                             </CardHeader>
                             <CardBody>
-                                <Table responsive hover>
+                                <Table responsive hover >
                                     <thead className="text-primary text-center">
                                         <tr>
                                             <th>FullName</th>
