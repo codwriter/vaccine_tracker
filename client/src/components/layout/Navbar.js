@@ -20,7 +20,7 @@ import {
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../redux/action/auth';
-import logo from '../../assets/images/logo_vaccine.png'
+import logo from '../../assets/images/logo_vaccine.svg'
 
 
 
