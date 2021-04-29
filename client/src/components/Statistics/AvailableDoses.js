@@ -8,7 +8,7 @@ const AvailableDoses = ({ doses }) => {
                 <Row>
                     <Col md="4" xs="5">
                         <div className="icon-big text-center icon-warning">
-                            <i className="nc-icon nc-vector text-danger" />
+                            <i className="nc-icon nc-favourite-28 text-warning"  />
                         </div>
                     </Col>
                     <Col md="8" xs="7">
@@ -23,7 +23,6 @@ const AvailableDoses = ({ doses }) => {
             <CardFooter>
                 <hr />
                 <div className="stats">
-                    <i className="far fa-clock" /> In the last hour
                   </div>
             </CardFooter>
         </Card>

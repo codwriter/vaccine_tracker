@@ -4,6 +4,8 @@ import {
     Card, CardHeader, CardBody, CardTitle, CardFooter,
     Row, Col,
     Pagination, PaginationItem, PaginationLink,
+    Button,
+    CardSubtitle
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -25,7 +27,8 @@ const PatientTable = ({
     const [pageCount, setpageCount] = useState(Math.ceil(patients.length / pageSize));
     const [currentPage, setcurrentPage] = useState(0);
     const [patient, setPatient] = useState(null);
-    
+    const [title, setTitle] = useState("")
+
     useEffect(() => {
         setpageCount(Math.ceil(patients.length / pageSize));
     }, [patients])
@@ -35,7 +38,7 @@ const PatientTable = ({
         e.preventDefault();
         setcurrentPage(index);
     }
-    
+
 
     // Table Body
     const tableBody = patients.slice(
@@ -44,7 +47,7 @@ const PatientTable = ({
     ).map((patient, i) => {
         return (
             <tbody className=" text-center " key={patient.id}>
-                <tr onClick={() => { setPatient(patient); toggle() }}>
+                <tr onClick={() => { setTitle("Edit Patient"); setPatient(patient); toggle() }}>
                     <td>{patient.fullname}</td>
                     <td>{patient.amka}</td>
                     <td>{patient.vaccineStatus === -1 ? "Not Scheduled" : patient.vaccineStatus === 0 ?
@@ -57,16 +60,17 @@ const PatientTable = ({
         );
     });
 
-
+    
     return (
         <Fragment>
-            <PatientModal isShowing={isShowing} hide={toggle} patient={patient} title="Edit Patient" />
+            <PatientModal isShowing={isShowing} hide={toggle} patient={patient} title={title} />
             <div className="content">
                 <Row>
                     <Col md="12">
                         <Card>
                             <CardHeader>
-                                <CardTitle  tag="h4">Vacinations</CardTitle>
+                                <CardTitle tag="h4">Vacinations</CardTitle>
+                                <CardSubtitle className="text-right"><Button onClick={() => { setTitle ( "Add Vaccination"); toggle() }} className="btn-sm btn-outline-info  btn-round">Add Vaccination</Button></CardSubtitle>
                             </CardHeader>
                             <CardBody>
                                 <Table responsive hover >
@@ -84,31 +88,31 @@ const PatientTable = ({
                             </CardBody>
 
                             <CardFooter>
-                              
-                                    <div className="pagination-wrapper">
-                                        <Pagination>
-                                            <PaginationItem disabled={currentPage <= 0}>
-                                                <PaginationLink onClick={e =>
-                                                    handleClick(e, currentPage - 1)} previous href="#" />
-                                            </PaginationItem>
-                                            {[...Array(pageCount)].map((page, i) =>
-                                                <PaginationItem active={i === currentPage} key={i}>
-                                                    <PaginationLink onClick={e => handleClick(e, i)} href="#">
-                                                        {i + 1}
-                                                    </PaginationLink>
-                                                </PaginationItem>
-                                            )}
 
-                                            <PaginationItem disabled={currentPage >= pageCount - 1}>
-
-                                                <PaginationLink
-                                                    onClick={e => handleClick(e, currentPage + 1)}
-                                                    next
-                                                    href="#"
-                                                />
+                                <div className="pagination-wrapper">
+                                    <Pagination>
+                                        <PaginationItem disabled={currentPage <= 0}>
+                                            <PaginationLink onClick={e =>
+                                                handleClick(e, currentPage - 1)} previous href="#" />
+                                        </PaginationItem>
+                                        {[...Array(pageCount)].map((page, i) =>
+                                            <PaginationItem active={i === currentPage} key={i}>
+                                                <PaginationLink onClick={e => handleClick(e, i)} href="#">
+                                                    {i + 1}
+                                                </PaginationLink>
                                             </PaginationItem>
-                                        </Pagination>
-                                    </div>
+                                        )}
+
+                                        <PaginationItem disabled={currentPage >= pageCount - 1}>
+
+                                            <PaginationLink
+                                                onClick={e => handleClick(e, currentPage + 1)}
+                                                next
+                                                href="#"
+                                            />
+                                        </PaginationItem>
+                                    </Pagination>
+                                </div>
                             </CardFooter>
                         </Card>
                     </Col>

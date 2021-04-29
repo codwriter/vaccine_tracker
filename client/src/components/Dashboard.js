@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { Row, Col, Button, Container } from "reactstrap";
 import { getCurrentHospital } from '../redux/action/hospital';
-import useModal from './Modals/useModal';
-import PatientModal from './Modals/PatientModal';
 import PatientsTable from './PatientTableComponent';
 import AvailableDoses from './Statistics/AvailableDoses';
 //import Sidebar from './Sidebar/Sidebar';
@@ -19,7 +17,6 @@ const Dashboard = ({
         getCurrentHospital();
     }, []);
 
-    const { isShowing, toggle } = useModal();
 
     return (
 
@@ -33,15 +30,13 @@ const Dashboard = ({
                         <h1 className="large text-primary">{hospital && hospital.name} Hospital</h1>
                         </Row>
                         <Row>
-                            <Col lg="3" md="6" sm="6" className="offset-sm-9">
+                            <Col lg="3" md="6" sm="6" className="offset-lg-9 offset-md-6 offset-sm-6">
                                 <AvailableDoses doses={hospital.numberOfDosesAvailable} />
                             </Col>
                         </Row>
                         <Row>
-                            <Col lg="12" md="6" sm="6" >
+                            <Col lg="12" md="12" sm="12" >
                                 <PatientsTable />
-                                <PatientModal isShowing={isShowing} hide={toggle} title="Add Patient" />
-                                <Button onClick={toggle} className=" btn-primary btn-round float"><i className="fa fa-plus my-float"></i></Button>
                             </Col>
                         </Row>
                         </>
