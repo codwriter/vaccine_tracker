@@ -7,7 +7,7 @@ import { getCurrentHospital } from '../redux/action/hospital';
 import useModal from './Modals/useModal';
 import PatientModal from './Modals/PatientModal';
 import PatientsTable from './PatientTableComponent';
-
+//import Sidebar from './Sidebar/Sidebar';
 
 const Dashboard = ({
     getCurrentHospital,
@@ -23,6 +23,7 @@ const Dashboard = ({
     return (
 
         <Fragment>
+        {/*    <Sidebar/> */}
             <div className="content">
                 <Row>
                     <Col>
