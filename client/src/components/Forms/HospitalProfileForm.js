@@ -7,7 +7,7 @@ import Spinner from '../layout/Spinner';
 import { createHospital } from '../../redux/action/hospital';
 import { setAlert } from '../../redux/action/alert';
 
-const Hospitalregister = ({ setAlert, createHospital, isAuthenticated }) => {
+const Hospitalregister = ({ setAlert, createHospital, isAuthenticated,title }) => {
     const [formData, setFormData] = useState({
         HospitalName: '',
         HospitalAddress: '',
@@ -36,7 +36,7 @@ const Hospitalregister = ({ setAlert, createHospital, isAuthenticated }) => {
 
     return (
         <Fragment>
-            <h1 className="large text-primary">Hospital Info</h1>
+            <h1 className="large text-primary">{title}</h1>
             {Hospitalregister === null ? (
                 <Spinner />
             ) :

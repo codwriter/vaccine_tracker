@@ -176,14 +176,7 @@ const Hospital=({
               </Card>
             </Col>
             <Col md="8">
-              <Card className="card-user">
-                <CardHeader>
-                  <CardTitle tag="h5">Edit Profile</CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <HospitalProfileForm hospital={hospital} />
-                </CardBody>
-              </Card>
+                  <HospitalProfileForm hospital={hospital} title="Edit Profile"/>
             </Col>
           </Row>
         </div>:<Redirect to='/create-hospital-profile'/>}
