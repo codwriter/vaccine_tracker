@@ -4,22 +4,21 @@
   height: 60px;
   bottom: 40px;
   right: 40px;
+  background-color: $success-color;
+  color: #fff;
+  border-radius: 50px;
+  text-align: center;
   box-shadow: 2px 2px 3px #999;
-  .my-float {
-    margin-top: 50%;
-  }
 }
 
+.my-float {
+  margin-top: 22px;
+}
 body {
   background-color: $pale-bg;
 }
 
-// Pagination Centered
-.pagination-wrapper {
-  overflow-x: auto;
-}
-
-.pagination {
-  justify-content: center;
-  margin: 30px;
+.tab_button {
+  width: 255px;
+  text-align: center;
 }
