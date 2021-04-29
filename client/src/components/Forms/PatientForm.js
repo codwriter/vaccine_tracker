@@ -57,39 +57,39 @@ const PatientForm = ({addPatient, setAlert, isAuthorized}) => {
             <small>* = required field</small>
             <form class="form" onSubmit={onSubmit}>
                 <div class="form-group">
-                <input type="text" placeholder="Fullname" name="fullname" onChange={onChange}/>
+                <input type="text" placeholder="Fullname" name="fullname" onChange={onChange} required/>
                 <small class="form-text"
-                    >Patient's name</small
+                    >Patient's name *</small
                 >
                 </div>
                 <div class="form-group">
-                <input type="text" placeholder="Amka" name="amka" onChange={onChange}/>
+                <input type="text" placeholder="Amka" name="amka" minlength="11" onChange={onChange} required/>
                 <small class="form-text"
-                    >11 digit number</small
+                    >11 digit number *</small
                 >
                 </div>
                 <div class="form-group">
-                <input type="number" placeholder="Age" name="age" onChange={onChange}/>
+                <input type="number" placeholder="Age" name="age" onChange={onChange} required/>
                 <small class="form-text"
-                    >age in years</small
+                    >age in years *</small
                 >
                 </div>
                 <div class="form-group">
-                <input type="text" placeholder="Address" name="address" onChange={onChange}/>
+                <input type="text" placeholder="Address" name="address" onChange={onChange} required/>
                 <small class="form-text"
-                    >address of primary living place</small
+                    >address of primary living place *</small
                 >
                 </div>
                 <div class="form-group">
-                <input type="text" placeholder="City" name="city" onChange={onChange}/>
+                <input type="text" placeholder="City" name="city" onChange={onChange} required/>
                 <small class="form-text"
-                    >city of primary living place</small
+                    >city of primary living place *</small
                 >
                 </div>
                 <div class="form-group">
-                <input type="text" placeholder="Country" name="country" onChange={onChange}/>
+                <input type="text" placeholder="Country" name="country" onChange={onChange} required/>
                 <small class="form-text"
-                    >country of primary living place</small
+                    >country of primary living place *</small
                 >
                 </div>
 
