@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { addPatient } from '../../redux/action/patient';
 import {setAlert} from '../../redux/action/alert';
 
-const PatientForm = ({addPatient, setAlert, isAuthorized}) => {
+const PatientForm = ({addPatient, setAlert, isAuthorized, hide, patient}) => {hide
     const [formData, setformData] = useState({
         fullname : '',
         amka : '',
