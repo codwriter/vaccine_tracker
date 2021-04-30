@@ -27,13 +27,13 @@ const PatientForm = ({addPatient, setAlert, isAuthorized}) => {
         /* vaccineStatus,
         vaccineBrand,
         numberOfDoses */
-    }= formData;
-    
+    } = formData;
+
 
     const onChange = (e) =>
-    setformData({ ...formData, [e.target.name]: e.target.value });
+        setformData({ ...formData, [e.target.name]: e.target.value });
 
-    const onSubmit = async (e) => {   
+    const onSubmit = async (e) => {
         e.preventDefault();
         console.log(formData);
         /* PatientForm({ 
@@ -100,14 +100,14 @@ const PatientForm = ({addPatient, setAlert, isAuthorized}) => {
 }
 
 PatientForm.propTypes = {
-  addPatient: PropTypes.func.isRequired,
-  setAlert: PropTypes.object.isRequired,
-  isAuthenticated: PropTypes.object.isRequired
+    addPatient: PropTypes.func.isRequired,
+    setAlert: PropTypes.object.isRequired,
+    isAuthenticated: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  addPatient: state.patientReducer,
-  isAuthenticated: state.auth
+    addPatient: state.patientReducer,
+    isAuthenticated: state.auth
 });
 
 export default connect(mapStateToProps, { setAlert, addPatient })(PatientForm);

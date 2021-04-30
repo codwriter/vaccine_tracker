@@ -185,7 +185,62 @@ $card-background-orange:      #ff8f5e !default;
 $card-font-orange:            #772510 !default;
 $card-subtitle-orange:        #e95e37 !default;
 
+// Color system
 
+$white:    #fff !default;
+$gray-100: #f6f9fc !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #8898aa !default;   // Line footer color
+$gray-700: #525f7f !default;   // Line p color
+$gray-800: #32325d !default;   // Line heading color
+$gray-900: #212529 !default;
+$black:    #000 !default;
+
+$grays: () !default;
+$grays: map-merge((
+  "100": $gray-100,
+  "200": $gray-200,
+  "300": $gray-300,
+  "400": $gray-400,
+  "500": $gray-500,
+  "600": $gray-600,
+  "700": $gray-700,
+  "800": $gray-800,
+  "900": $gray-900
+), $grays);
+
+$blue:    #5e72e4 !default;
+$indigo:  #5603ad !default;
+$purple:  #8965e0 !default;
+$pink:    #f3a4b5 !default;
+$red:     #f5365c !default;
+$orange:  #fb6340 !default;
+$yellow:  #ffd600 !default;
+$green:   #2dce89 !default;
+$teal:    #11cdef !default;
+$cyan:    #2bffc6 !default;
+
+$colors: () !default;
+$colors: map-merge((
+  "blue":       $blue,
+  "indigo":     $indigo,
+  "purple":     $purple,
+  "pink":       $pink,
+  "red":        $red,
+  "orange":     $orange,
+  "yellow":     $yellow,
+  "green":      $green,
+  "teal":       $teal,
+  "cyan":       $cyan,
+  "white":      $white,
+  "gray":       $gray-600,
+  "light":      $gray-400,
+  "lighter":    $gray-200,
+  "gray-dark":  $gray-800
+), $colors);
 
 //== Components
 //
@@ -402,3 +457,17 @@ $social-behance-state-color:       lighten(#1769ff, 6%) !default;
 $input-color-placeholder: #999 !default;
 
 $zindex-select-dropdown: 1060 !default; // must be higher than a modal background (1050)
+
+// Sidebar variables
+$ct-primary:        $primary-color !default;
+$ct-primary-bright: lighten(saturate($ct-primary, 5%), 15%) !default;
+$ct-primary-light:  rgba(255, 255, 255, .9) !default;
+$ct-dark:          	#2a2730 !default;
+$ct-download:      	#ffe484 !default;
+$ct-info:          	#5bc0de !default;
+$ct-warning:       	#f0ad4e !default;
+$ct-danger:        	#d9534f !default;
+
+$ct-sidebar-bg:	#f5f7f9;
+$ct-sidebar-border-color: #e6ecf1;
+

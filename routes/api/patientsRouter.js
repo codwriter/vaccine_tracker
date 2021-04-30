@@ -30,7 +30,11 @@ patientsRouter.route('/')
                         console.log("The patient created", patient);
                         res.statusCode = 200;
                         res.setHeader('Content-type', 'application/json');
-
+                        hospital.numberOfDosesAvailable -= 1;
+                        hospital.save()
+                            .then((hospital => {
+                                console.log(hospital.numberOfDosesAvailable);
+                            }, (err) => next(err)));
                         //Create Asset and send it to bigchain
                         bgchain.createPatient(patient, req.user.id, hospital);
                         res.json(patient);
