@@ -69,7 +69,7 @@ const PatientTable = ({
                     <Col md="12">
                         <Card>
                             <CardHeader>
-                                <CardTitle tag="h4">Vacinations</CardTitle>
+                                <CardTitle tag="h4">Vaccinations</CardTitle>
                                 <CardSubtitle className="text-right"><Button onClick={() => { setTitle ( "Add Vaccination"); toggle() }} className="btn-sm btn-outline-info  btn-round">Add Vaccination</Button></CardSubtitle>
                             </CardHeader>
                             <CardBody>
