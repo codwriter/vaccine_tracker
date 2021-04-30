@@ -1,17 +1,24 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from 'react';
 
 import {
+  Form,
   FormGroup,
   Label,
-  Input, 
-  Container,
-  Col,
-  Row
-} from "reactstrap";
+  Input,
+  Button,
+  InputGroupAddon,
+  InputGroupText,
+  InputGroup,
+} from 'reactstrap';
+
+import {
+  Card, 
+  CardBody, 
+  CardSubtitle
+} from 'reactstrap';
 
 import { login } from '../../redux/action/auth';
-import { Button } from "reactstrap";
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -35,31 +42,65 @@ const Login = ({ login, isAuthenticated }) => {
   if (isAuthenticated) {
     return <Redirect to="/dashboard" />;
   }
-
+  
   return (
-    <form>
-      <FormGroup>
-        <Label for="exampleEmail">Email address</Label>
-        <Input
-          type="email"
-          name="email"
-          id="exampleEmail"
-          placeholder="Enter email"
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label for="examplePassword">Password</Label>
-        <Input
-          type="password"
-          name="password"
-          id="examplePassword"
-          placeholder="Password"
-        />
-      </FormGroup>
-      <Button color="secondary" round outline type="submit">
-        Sign In
-      </Button>
-    </form>
+    <Form onSubmit={onSubmit}>
+      <Card>
+        <CardBody>
+          <CardSubtitle tag="h6" className="mb-2 text-muted">
+            <i className="fas fa-user" />   Sign Into Your Account
+          </CardSubtitle>
+        
+          <br></br>
+
+          <FormGroup className="mb-3">
+            <Label className="text-muted">Email</Label>
+            <InputGroup className="input-group-alternative">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i class="fas fa-envelope"></i> 
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                type="email"
+                placeholder="Enter Email"
+                name="email"
+                value={email}
+                onChange={onChange}
+                required
+              />
+            </InputGroup>
+          </FormGroup>
+
+          <FormGroup className="mb-3">
+            <Label className="text-muted">Password</Label>
+            <InputGroup className="input-group-alternative">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i class="fas fa-key"></i> 
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                type="password"
+                placeholder="Your Password"
+                name="password"
+                value={password}
+                onChange={onChange}
+                minLength="6"
+              />
+            </InputGroup>
+          </FormGroup>
+
+          <Button color="secondary" round outline type="submit">
+            Sign In
+          </Button>
+
+          <div className="my-3">
+            Don't have an account? <Link to="/register">Sign Up</Link>
+          </div>
+        </CardBody>
+      </Card>
+    </Form>
   );
 };
 
