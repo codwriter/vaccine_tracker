@@ -1,4 +1,20 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
+
+import {
+  Form,
+  FormGroup,
+  Label,
+  Button,
+  Input, 
+} from 'reactstrap';
+
+import {
+  Card, 
+  CardBody, 
+  CardTitle, 
+  CardSubtitle
+} from 'reactstrap';
+
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { setAlert } from '../../redux/action/alert';
@@ -31,52 +47,62 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   }
 
   return (
-    <Fragment>
-      <h1 className="large text-primary">Sign Up</h1>
-      <p className="lead text-secondary">
-        <i className="fas fa-user" /> Create Your Account
-      </p>
-      <form className="form" onSubmit={onSubmit}>
-        <div className="form-group">
-          <h5><label className="text-muted">Email</label></h5>
-          <input
-            type="email"
-            placeholder="Your Email"
-            name="email"
-            value={email}
-            onChange={onChange}
-          />
-        </div>
+    <Form onSubmit={onSubmit}>
+      <Card>
+        <CardBody>
+          <CardTitle tag="h2">Sign Up</CardTitle>
 
-        <div className="form-group">
-          <h5><label className="text-muted">Password</label></h5>
-          <input
-            type="password"
-            placeholder="Your Password"
-            name="password"
-            value={password}
-            onChange={onChange}
-          />
-        </div>
+          <br></br>
 
-        <div className="form-group">
-          <h5><label className="text-muted">Retype Password</label></h5>
-          <input
-            type="password"
-            placeholder="Retype Your Password"
-            name="password2"
-            value={password2}
-            onChange={onChange}
-          />
-        </div>
+          <CardSubtitle tag="h6" className="mb-2 text-muted">
+            <i className="fas fa-user" />   Create Your Account
+          </CardSubtitle>
 
-        <input type="submit" className="btn btn-primary" value="Register" />
-      </form>
+          <br></br>
 
-      <p className="my-1">
-        Already have an account? <Link to="/login">Sign In</Link>
-      </p>
-    </Fragment>
+          <FormGroup>
+            <Label className="text-muted">Email address</Label>
+            <Input
+              type="email"
+              placeholder="Enter Email"
+              name="email"
+              value={email}
+              onChange={onChange}
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <Label className="text-muted">Password</Label>
+            <Input
+              type="password"
+              placeholder="Your Password"
+              name="password"
+              value={password}
+              onChange={onChange}
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <Label className="text-muted">Retype Password</Label>
+            <Input
+              type="password"
+              placeholder="Retype Your Password"
+              name="password2"
+              value={password2}
+              onChange={onChange}
+            />
+          </FormGroup>
+
+          <Button color="secondary" round outline type="submit">
+            Sign Up
+          </Button>
+
+          <div className="my-3">
+            Already have an account? <Link to="/login">Sign In</Link>
+          </div>
+        </CardBody>
+      </Card>
+    </Form>
   );
 };
 

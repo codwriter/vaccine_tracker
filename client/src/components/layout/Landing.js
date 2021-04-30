@@ -22,14 +22,13 @@ const Landing = () => {
       if(activeTab !== tab) setActiveTab(tab);}
 
   return (
-    <Container>
+    <Container className="landing_margin">
       <Row>
-        <Col sm="4"><Media object src={VaccineLogo}/></Col>
+        <Col sm="6"><Media object src={VaccineLogo} /></Col>
           
-        <Col xs="8">
+        <Col xs="6">
           <div>
-            <Card>
-              <CardHeader>
+            
             <Nav tabs>
               <Row>
                 <Col>
@@ -47,25 +46,24 @@ const Landing = () => {
                 </NavLink>
               </NavItem >
             </Nav>
-            </CardHeader>
+            
             
             <TabContent activeTab={activeTab}>
               <TabPane tabId="1">
-                <Row>
+                <Row className="justify_center">
                   <Col sm="6">
                     <Login />
                   </Col>
                 </Row>
               </TabPane>
               <TabPane tabId="2">
-                <Row>
+                <Row className="justify_center">
                   <Col sm="6">
                   <Register />
                   </Col>
                 </Row>
               </TabPane>
             </TabContent>
-            </Card>
           </div>
         </Col>
       </Row>
