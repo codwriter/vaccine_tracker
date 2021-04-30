@@ -57,40 +57,40 @@ const PatientForm = ({addPatient, setAlert, isAuthorized}) => {
             <small>* = required field</small>
             <form class="form" onSubmit={onSubmit}>
                 <div class="form-group">
-                    <input type="text" placeholder="Fullname" name="fullname" onChange={onChange} />
-                    <small class="form-text"
-                    >Patient's name</small
-                    >
+                <input type="text" placeholder="Fullname" name="fullname" onChange={onChange} required/>
+                <small class="form-text"
+                    >Patient's name *</small
+                >
                 </div>
                 <div class="form-group">
-                    <input type="text" placeholder="Amka" name="amka" onChange={onChange} />
-                    <small class="form-text"
-                    >11 digit number</small
-                    >
+                <input type="text" placeholder="Amka" name="amka" minlength="11" onChange={onChange} required/>
+                <small class="form-text"
+                    >11 digit number *</small
+                >
                 </div>
                 <div class="form-group">
-                    <input type="number" placeholder="Age" name="age" onChange={onChange} />
-                    <small class="form-text"
-                    >age in years</small
-                    >
+                <input type="number" placeholder="Age" name="age" onChange={onChange} required/>
+                <small class="form-text"
+                    >age in years *</small
+                >
                 </div>
                 <div class="form-group">
-                    <input type="text" placeholder="Address" name="address" onChange={onChange} />
-                    <small class="form-text"
-                    >address of primary living place</small
-                    >
+                <input type="text" placeholder="Address" name="address" onChange={onChange} required/>
+                <small class="form-text"
+                    >address of primary living place *</small
+                >
                 </div>
                 <div class="form-group">
-                    <input type="text" placeholder="City" name="city" onChange={onChange} />
-                    <small class="form-text"
-                    >city of primary living place</small
-                    >
+                <input type="text" placeholder="City" name="city" onChange={onChange} required/>
+                <small class="form-text"
+                    >city of primary living place *</small
+                >
                 </div>
                 <div class="form-group">
-                    <input type="text" placeholder="Country" name="country" onChange={onChange} />
-                    <small class="form-text"
-                    >country of primary living place</small
-                    >
+                <input type="text" placeholder="Country" name="country" onChange={onChange} required/>
+                <small class="form-text"
+                    >country of primary living place *</small
+                >
                 </div>
 
                 <input type="submit" class="btn btn-primary my-1" />
