@@ -4,7 +4,33 @@ import { connect } from 'react-redux';
 import { addPatient } from '../../redux/action/patient';
 import {setAlert} from '../../redux/action/alert';
 
-const PatientForm = ({addPatient, setAlert, isAuthorized, hide, patient}) => {hide
+import {
+    Button,
+    Card,
+    CardHeader,
+    CardBody,
+    CardTitle,
+    FormGroup,
+    Form,
+    Input,
+    Row,
+    Col,
+  } from "reactstrap";
+  
+  /*
+  const {
+    fullname,
+    amka,
+    age,
+    address,
+    city,
+    country,
+    /* vaccineStatus,
+    vaccineBrand,
+    numberOfDoses 
+} = formData;*/
+
+const PatientForm = ({addPatient, setAlert, isAuthorized, hide, patient}) => {
     const [formData, setformData] = useState({
         fullname : '',
         amka : '',
@@ -16,18 +42,7 @@ const PatientForm = ({addPatient, setAlert, isAuthorized, hide, patient}) => {hi
         vaccineBrand : '',
         numberOfDoses : 0, */
     });
-
-    const {
-        fullname,
-        amka,
-        age,
-        address,
-        city,
-        country,
-        /* vaccineStatus,
-        vaccineBrand,
-        numberOfDoses */
-    } = formData;
+}
 
 
     const onChange = (e) =>
@@ -47,57 +62,113 @@ const PatientForm = ({addPatient, setAlert, isAuthorized, hide, patient}) => {hi
             vaccineBrand,
             numberOfDoses }); */
         addPatient(formData);
+        hide();
     };
 
-    return (
-        <div>
-            <h1 class="large text-primary">
-                Patient Registartion
-            </h1>
-            <small>* = required field</small>
-            <form class="form" onSubmit={onSubmit}>
-                <div class="form-group">
-                <input type="text" placeholder="Fullname" name="fullname" onChange={onChange} required/>
-                <small class="form-text"
-                    >Patient's name *</small
-                >
-                </div>
-                <div class="form-group">
-                <input type="text" placeholder="Amka" name="amka" minlength="11" onChange={onChange} required/>
-                <small class="form-text"
-                    >11 digit number *</small
-                >
-                </div>
-                <div class="form-group">
-                <input type="number" placeholder="Age" name="age" onChange={onChange} required/>
-                <small class="form-text"
-                    >age in years *</small
-                >
-                </div>
-                <div class="form-group">
-                <input type="text" placeholder="Address" name="address" onChange={onChange} required/>
-                <small class="form-text"
-                    >address of primary living place *</small
-                >
-                </div>
-                <div class="form-group">
-                <input type="text" placeholder="City" name="city" onChange={onChange} required/>
-                <small class="form-text"
-                    >city of primary living place *</small
-                >
-                </div>
-                <div class="form-group">
-                <input type="text" placeholder="Country" name="country" onChange={onChange} required/>
-                <small class="form-text"
-                    >country of primary living place *</small
-                >
-                </div>
-
-                <input type="submit" class="btn btn-primary my-1" />
-            </form>
-        </div>
-    )
-}
+    class User extends React.Component {
+        render() {
+          return (
+            <>
+              <div className="content">
+                <Row>
+                  <Col md="8">
+                    <Card className="card-user">
+                      <CardHeader>
+                        <CardTitle tag="h5">Patient Registration</CardTitle>
+                      </CardHeader>
+                      <CardBody>
+                        <Form>
+                          <Row>
+                            <Col className="pr-1" md="5">
+                              <FormGroup>
+                                <label>Fullname</label>
+                                <Input
+                                  defaultValue=""
+                                  placeholder="name"
+                                  type="text"
+                                  onChange={onChange} 
+                                  required
+                                />
+                              </FormGroup>
+                            </Col>
+                            <Col className="px-1" md="3">
+                              <FormGroup>
+                                <label>amka</label>
+                                <Input
+                                  defaultValue=""
+                                  placeholder="Amka"
+                                  type="text"
+                                  onChange={onChange} 
+                                  required
+                                />
+                              </FormGroup>
+                            </Col>
+                            <Col className="pl-2" md="5">
+                              <FormGroup>
+                                <label>Age</label>
+                                <Input placeholder="age" type="number" onChange={onChange} required/>
+                              </FormGroup>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col className="pr-1" md="6">
+                              <FormGroup>
+                                <label>Address</label>
+                                <Input
+                                  defaultValue=""
+                                  placeholder="address"
+                                  type="text"
+                                  onChange={onChange} 
+                                  required
+                                />
+                              </FormGroup>
+                            </Col>
+                            <Col className="pr-1" md="6">
+                              <FormGroup>
+                                <label>City</label>
+                                <Input
+                                  defaultValue=""
+                                  placeholder="city"
+                                  type="text"
+                                  onChange={onChange} 
+                                  required
+                                />
+                              </FormGroup>
+                            </Col>  
+                            <Col className="pr-1" md="6">
+                              <FormGroup>
+                                <label>Country</label>
+                                <Input
+                                  defaultValue=""
+                                  placeholder="country"
+                                  type="text"
+                                  onChange={onChange} 
+                                  required
+                                />
+                              </FormGroup>
+                            </Col>    
+                          </Row>
+                          <Row>
+                            <div className="update ml-auto mr-auto">
+                              <Button
+                                className="btn-round"
+                                color="primary"
+                                type="submit"
+                              >
+                                Create Patient
+                              </Button>
+                            </div>
+                          </Row>
+                        </Form>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              </div>
+            </>
+          );
+        }
+      }
 
 PatientForm.propTypes = {
     addPatient: PropTypes.func.isRequired,
