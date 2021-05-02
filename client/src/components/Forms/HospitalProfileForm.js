@@ -1,4 +1,10 @@
- import React from "react";
+import React, { Fragment, useEffect, useState } from 'react'; 
+import PropTypes from 'prop-types'; 
+import { Link } from 'react-router-dom'; 
+import { connect } from 'react-redux'; 
+import Spinner from '../layout/Spinner'; 
+import { createHospital } from '../../redux/action/hospital'; 
+import { setAlert } from '../../redux/action/alert';
 
 // reactstrap components
 import {
@@ -14,6 +20,27 @@ import {
   Row,
   Col,
 } from "reactstrap";
+
+
+const Hospitalregister = ({ setAlert, createHospital, isAuthenticated,title,hospital }) => {
+    const [formData, setFormData] = useState({
+        HospitalName: '',
+        HospitalAddress: '',
+        AFM: '',
+        NumberofDoses: ''
+ });
+
+const { HospitalName, HospitalAddress, AFM, NumberofDoses } = formData; 
+	
+const onChange = (e) => 
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+const onSubmit = async (e) => { 
+     e.preventDefault(); 
+    Hospitalregister({ HospitalName, HospitalAddress, AFM, NumberofDoses }); 	     
+    createHospital(formData); 
+ };
+        
 
 class User extends React.Component {
   render() {
@@ -36,6 +63,7 @@ class User extends React.Component {
                             defaultValue=""
                             placeholder="Hospital"
                             type="text"
+                            required
                           />
                         </FormGroup>
                       </Col>
@@ -46,13 +74,20 @@ class User extends React.Component {
                             defaultValue=""
                             placeholder="Address"
                             type="text"
+                            required
                           />
                         </FormGroup>
                       </Col>
                       <Col className="pl-2" md="5">
                         <FormGroup>
                           <label>Hospital Tax Identification number (AFM)</label>
-                          <Input placeholder="Hospital AFM" type="text" />
+                          <Input placeholder="Hospital AFM" type="text" 
+                            value={AFM}
+                            onChange={onChange}
+                            minLength="9"
+                            maxLength="9"
+                            required
+                            />
                         </FormGroup>
                       </Col>
                     </Row>
@@ -89,5 +124,5 @@ class User extends React.Component {
     );
   }
 }
-
+}
 export default User;
