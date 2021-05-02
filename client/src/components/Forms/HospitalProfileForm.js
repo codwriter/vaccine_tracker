@@ -54,7 +54,7 @@ class User extends React.Component {
                   <CardTitle tag="h5">Hospital Profile</CardTitle>
                 </CardHeader>
                 <CardBody>
-                  <Form>
+                  <Form class="form" onSubmit={onSubmit}>
                     <Row>
                       <Col className="pr-1" md="5">
                         <FormGroup>
