@@ -10,10 +10,6 @@
   }
 }
 
-body {
-  background-color: $pale-bg;
-}
-
 // Pagination Centered
 .pagination-wrapper {
   overflow-x: auto;
@@ -22,4 +18,35 @@ body {
 .pagination {
   justify-content: center;
   margin: 30px;
+}
+
+.align-self-center{
+  align-self: center;
+}
+.tab_button {
+  width: 255px;
+  text-align: center;
+}
+
+.landing_margin {
+  margin-top: 230px;
+}
+.logo_margin {
+  margin-left: 10px;
+}
+
+.justify_center {
+  justify-content: center;
+}
+.nav-tabs {
+  border-bottom: 0px solid;
+}
+
+.loginRegister {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0px;
+  margin-bottom: -30px;
+  list-style: none;
+  justify-content: space-between;
 }

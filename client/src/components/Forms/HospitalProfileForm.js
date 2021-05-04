@@ -1,121 +1,142 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Spinner from '../layout/Spinner';
-//import { getHospitalById } from '../../action/hospital';
-import { createHospital } from '../../redux/action/hospital';
-import { setAlert } from '../../redux/action/alert';
+import { AvForm, AvGroup, AvFeedback, AvInput } from 'availity-reactstrap-validation';
+import { createHospital, updateHospital, getCurrentHospital } from '../../redux/action/hospital';
+import { Button, Label, Spinner, Card, CardHeader, CardBody } from 'reactstrap';
 
-const Hospitalregister = ({ setAlert, createHospital, isAuthenticated,title }) => {
-    const [formData, setFormData] = useState({
-        HospitalName: '',
-        HospitalAddress: '',
-        AFM: '',
-        NumberofDoses: ''
-    });
+const initialState = {
+    name: '',
+    afm: '',
+    address: '',
+    numberOfDosesAvailable: null
+};
+
+const Hospitalregister = ({
+    getCurrentHospital,
+    createHospital,
+    updateHospital,
+    title,
+    history,
+    hospital: { hospital, loading }
+}) => {
+    const [formData, setFormData] = useState(initialState);
+    const [disabled, setdisabled] = useState(false);
+    useEffect(() => {
+        if (!hospital) getCurrentHospital();
+        if (!loading && hospital) {
+            const hospitalData = { ...initialState };
+            for (const key in hospital) {
+                if (key in hospitalData) hospitalData[key] = hospital[key];
+            }
+            setFormData(hospitalData);
+            setdisabled(true);
+        }
+    }, [loading, getCurrentHospital, hospital]);
 
 
-    const { HospitalName, HospitalAddress, AFM, NumberofDoses } = formData;
+    const { name, address, afm, numberOfDosesAvailable } = formData;
 
     const onChange = (e) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
 
-
-    const onSubmit = async (e) => {
-        e.preventDefault();
-      Hospitalregister({ HospitalName, HospitalAddress, AFM, NumberofDoses });
-        createHospital(formData);
-    };
-
-
-    /*const Hospital = ({ createHospital, hospital: { hospital }, auth, match }) => {
-        useEffect(() => {
-          createHospital(match.params.id);
-        }, [createHospital, match.params.id]);*/
+    
+    const handleValidSubmit = async (e) => {
+        console.log(formData);
+        if (hospital != null) {
+            updateHospital(formData);
+        } else
+            createHospital(formData, history);
+    }
 
     return (
         <Fragment>
-            <h1 className="large text-primary">{title}</h1>
-            {Hospitalregister === null ? (
-                <Spinner />
-            ) :
-                /*:(
-                    <Fragment>
-                        {auth.isAuthenticated &&                ///Για την περιπτωση που θέλω να κάνω edit hospital 
-                            auth.loading === false &&
-                            auth.user._id === hospital.user._id && (
-                            <Link to="/edit-hospital" className="btn btn-dark">
-                                Edit hospital
-                            </Link>
-                            )}  
-                    </Fragment>
-                  )*/
-                <form className="form" onSubmit={onSubmit}>
+            {loading ? <Spinner /> : (
+                <Card>
+                    <CardHeader>
+                        <h1 className="large text-primary">{title}</h1>
+                    </CardHeader>
+                    <CardBody>
+                        <AvForm className="form text-white" onValidSubmit={handleValidSubmit}>
+                            <AvGroup>
+                                <Label>Hospital Name</Label>
+                                <AvInput
+                                    type="text"
+                                    placeholder="The name of the hospital"
+                                    name="name"
+                                    value={name}
+                                    onChange={onChange}
+                                    required
+                                />
+                                <AvFeedback>The name of the hospital is required!</AvFeedback>
+                            </AvGroup>
 
-                    <div className="form-group">
-                        <input
-                            type="Hospital Name"
-                            placeholder="Hospital Name"
-                            name="Hospital Name"
-                            value={HospitalName}
-                            onChange={onChange}
-                            required
-                        />
-                    </div>
+                            <AvGroup>
+                                <Label>Hospital Address</Label>
+                                <AvInput
+                                    type="text"
+                                    placeholder="Hospital Address"
+                                    name="address"
+                                    value={address}
+                                    onChange={onChange}
+                                    required
+                                />
+                                <AvFeedback>The address of the hospital is required!</AvFeedback>
+                            </AvGroup>
 
-                    <div className="form-group">
-                        <input
-                            type="Hospital Address"
-                            placeholder="Hospital Address"
-                            name="Hospital Address"
-                            value={HospitalAddress}
-                            onChange={onChange}
-                            required
-                        />
-                    </div>
+                            <AvGroup>
+                                <Label for="afm">Tax Identification Number</Label>
+                                <AvInput
+                                    type="text"
+                                    id="afm"
+                                    placeholder="Tax Identification Number(AFM)"
+                                    name="afm"
+                                    value={afm}
+                                    onChange={onChange}
+                                    minLength="9"
+                                    maxLength="9"
+                                    pattern="^[0-9]+$"
+                                    required
+                                    disabled={disabled}
+                                />
+                                <AvFeedback>The afm is required and must be 9 numbers in length!</AvFeedback>
+                            </AvGroup>
 
-                    <div className="form-group">
-                        <input
-                            type="Tax Identification Number(AFM)"
-                            placeholder="Tax Identification Number(AFM)"
-                            name="Tax Identification Number(AFM)"
-                            value={AFM}
-                            onChange={onChange}
-                            minLength="9"
-                            maxLength="9"
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <input
-                            type="NumberofDoses"
-                            placeholder="NumberofDoses"
-                            name="NumberofDoses"
-                            value={NumberofDoses}
-                            onChange={onChange}
-                            minLength="0"
-                        />
-                    </div>
-
-                    <input type="submit" className="btn btn-primary" value="Hospital register" />
-
-                </form>
-            }
+                            <AvGroup>
+                                <Label for="numberOfDosesAvailable">Number of Doses</Label>
+                                <AvInput
+                                    id="numberOfDosesAvailable"
+                                    type="number"
+                                    placeholder="Number of Doses"
+                                    name="numberOfDosesAvailable"
+                                    value={numberOfDosesAvailable}
+                                    onChange={onChange}
+                                    min="0"
+                                />
+                            </AvGroup>
+                            <AvGroup>
+                                <Button type="submit">Submit</Button>
+                            </AvGroup>
+                        </AvForm>
+                    </CardBody>
+                </Card>
+            )}
         </Fragment>
-
     );
 };
 
 Hospitalregister.propTypes = {
+    getCurrentHospital: PropTypes.func.isRequired,
     createHospital: PropTypes.func.isRequired,
-    setAlert: PropTypes.object.isRequired,
-    isAuthenticated: PropTypes.object.isRequired
+    updateHospital: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.object.isRequired,
+    hospital: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-    createHospital: state.hospitalReducer,
+    hospital: state.hospitalReducer,
     isAuthenticated: state.auth
 });
 
-export default connect(mapStateToProps, { setAlert, createHospital })(Hospitalregister);
+export default connect(mapStateToProps, {createHospital, updateHospital, getCurrentHospital })(withRouter(Hospitalregister));

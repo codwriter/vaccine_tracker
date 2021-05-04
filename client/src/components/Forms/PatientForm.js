@@ -2,9 +2,9 @@ import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { AvForm, AvGroup, AvFeedback, AvInput , AvField} from 'availity-reactstrap-validation';
-import { setAlert } from '../../redux/action/alert';
 import { Button, Label, Card, CardHeader, CardBody, Row, Col } from 'reactstrap';
 import { addPatient, updatePatient } from '../../redux/action/patient';
+
 
 
 const initialState = {
@@ -19,7 +19,7 @@ const initialState = {
     numberOfDoses: 0
 };
 
-const PatientForm = ({ addPatient, updatePatient, setAlert, patient, hide, updated }) => {
+const PatientForm = ({ addPatient, updatePatient, patient, hide }) => {
     const [formData, setFormData] = useState({ initialState });
     const [disabled, setdisabled] = useState(false);
 
@@ -32,8 +32,8 @@ const PatientForm = ({ addPatient, updatePatient, setAlert, patient, hide, updat
             setFormData(patientData);
             setdisabled(true);
         }
-    }, []);
-
+    }, [patient]);
+    
     const {
         fullname,
         amka,
@@ -50,7 +50,6 @@ const PatientForm = ({ addPatient, updatePatient, setAlert, patient, hide, updat
     const onChange = (e) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
 
-
     const handleValidSubmit = async (e) => {
         console.log(formData);
         if (patient != null) {
@@ -58,7 +57,6 @@ const PatientForm = ({ addPatient, updatePatient, setAlert, patient, hide, updat
         } else
             addPatient(formData);
         hide();
-        updated(true);
     }
 
     return (
@@ -163,6 +161,7 @@ const PatientForm = ({ addPatient, updatePatient, setAlert, patient, hide, updat
                             </Col>
                         </Row>
 
+
                         <AvGroup>
                             <Label for="vaccineBrand">Vaccine Brand</Label>
                             <AvInput
@@ -209,14 +208,11 @@ const PatientForm = ({ addPatient, updatePatient, setAlert, patient, hide, updat
 
 PatientForm.propTypes = {
     addPatient: PropTypes.func.isRequired,
-    setAlert: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    updatePatient: state.patientReducer,
-    addPatient: state.patientReducer,
     isAuthenticated: state.auth
 });
 
-export default connect(mapStateToProps, { setAlert, addPatient, updatePatient })(PatientForm);
+export default connect(mapStateToProps,{addPatient, updatePatient })(PatientForm);

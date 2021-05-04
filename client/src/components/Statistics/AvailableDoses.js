@@ -4,7 +4,7 @@ import { Row,Col,Card,CardBody,CardTitle,CardFooter } from "reactstrap";
 const AvailableDoses = ({ doses }) => {
     return (
         <Card className="card-stats">
-            <CardBody>
+            <CardBody className="card-body">
                 <Row>
                     <Col md="4" xs="5">
                         <div className="icon-big text-center icon-warning">
