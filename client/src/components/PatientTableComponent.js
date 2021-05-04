@@ -16,7 +16,7 @@ import PatientModal from './Modals/PatientModal';
 
 const PatientTable = ({
     getPatients,
-    patients: {loading ,patients}
+    patients: { loading, patients }
 }) => {
     const { isShowing, toggle } = useModal();
     const [pageSize, setpageSize] = useState(7);
@@ -26,10 +26,10 @@ const PatientTable = ({
     const [title, setTitle] = useState("")
 
     useEffect(() => {
-     getPatients();
+        getPatients();
     }, [getPatients, loading]);
 
-    
+
 
     useEffect(() => {
         setpageCount(Math.ceil(patients.length / pageSize));
@@ -62,31 +62,32 @@ const PatientTable = ({
         );
     });
 
-    
+
     return (
         <Fragment>
             <PatientModal isShowing={isShowing} hide={toggle} patient={patient} title={title} />
             <div className="content">
                 <Row>
                     <Col md="12">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle tag="h4">Vaccinations</CardTitle>
-                                <CardSubtitle className="text-right"><Button onClick={() => { setTitle ( "Add Vaccination"); toggle() }} className="btn-sm btn-outline-info  btn-round">Add Vaccination</Button></CardSubtitle>
+                        <Card className="card">
+                            <CardHeader className="card-header">
+                                <CardTitle tag="h4" className="card-title">Vaccinations</CardTitle>
+                                <CardSubtitle className="text-right"><Button onClick={() => { setTitle("Add Vaccination"); toggle(); setPatient(null); }} className=" btn-sm btn-outline-info  btn-round">Add Vaccination</Button></CardSubtitle>
                             </CardHeader>
-                            <CardBody>
-                                <Table responsive hover >
-                                    <thead className="text-primary text-center">
-                                        <tr>
-                                            <th>FullName</th>
-                                            <th>Amka</th>
-                                            <th>Vaccine Status</th>
-                                            <th>Vaccine Brand</th>
-                                            <th>Number of Doses</th>
-                                        </tr>
-                                    </thead>
-                                    {tableBody}
-                                </Table>
+                            <CardBody className="card-body">
+                                {patients ? (
+                                    <Table responsive hover className=" table" >
+                                        <thead className="text-primary text-center">
+                                            <tr>
+                                                <th>FullName</th>
+                                                <th>Amka</th>
+                                                <th>Vaccine Status</th>
+                                                <th>Vaccine Brand</th>
+                                                <th>Number of Doses</th>
+                                            </tr>
+                                        </thead>
+                                        {tableBody}
+                                    </Table>
                             </CardBody>
 
                             <CardFooter>
@@ -129,7 +130,7 @@ PatientTable.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    getPatients:state.patientReducer,
+    getPatients: state.patientReducer,
     patients: state.patientReducer
 });
 
