@@ -16,18 +16,20 @@ import PatientModal from './Modals/PatientModal';
 
 const PatientTable = ({
     getPatients,
-    patients: { patients }
+    patients: {loading ,patients}
 }) => {
-    useEffect(() => {
-        getPatients();
-    }, [getPatients]);
-
     const { isShowing, toggle } = useModal();
     const [pageSize, setpageSize] = useState(7);
     const [pageCount, setpageCount] = useState(Math.ceil(patients.length / pageSize));
     const [currentPage, setcurrentPage] = useState(0);
     const [patient, setPatient] = useState(null);
     const [title, setTitle] = useState("")
+
+    useEffect(() => {
+     getPatients();
+    }, [getPatients, loading]);
+
+    
 
     useEffect(() => {
         setpageCount(Math.ceil(patients.length / pageSize));
@@ -124,11 +126,10 @@ const PatientTable = ({
 PatientTable.propTypes = {
     getPatients: PropTypes.func.isRequired,
     patients: PropTypes.object.isRequired,
-
 };
 
-
 const mapStateToProps = (state) => ({
+    getPatients:state.patientReducer,
     patients: state.patientReducer
 });
 
