@@ -46,15 +46,15 @@ const PatientTable = ({
         (currentPage + 1) * pageSize
     ).map((patient, i) => {
         return (
-            <tbody className=" text-center " key={patient.id}>
+            <tbody className=" text-center" key={patient.id}>
                 <tr onClick={() => { setTitle("Edit Patient"); setPatient(patient); toggle() }}>
                     <td>{patient.fullname}</td>
                     <td>{patient.amka}</td>
-                    <td>{patient.vaccineStatus === -1 ? "Not Scheduled" : patient.vaccineStatus === 0 ?
+                    <td className="text-right">{patient.vaccineStatus === -1 ? "Not Scheduled" : patient.vaccineStatus === 0 ?
                         "Pending" : patient.vaccineStatus === 1 ? "Completed" : "Cancelled"}</td>
 
-                    <td>{patient.vaccineBrand}</td>
-                    <td>{patient.numberOfDOses}</td>
+                   {/*  <td>{patient.vaccineBrand}</td>
+                    <td>{patient.numberOfDOses}</td> */}
                 </tr>
             </tbody>
         );
@@ -67,24 +67,26 @@ const PatientTable = ({
             <div className="content">
                 <Row>
                     <Col md="12">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle tag="h4">Vaccinations</CardTitle>
-                                <CardSubtitle className="text-right"><Button onClick={() => { setTitle ( "Add Vaccination"); toggle() }} className="btn-sm btn-outline-info  btn-round">Add Vaccination</Button></CardSubtitle>
+                        <Card className="card">
+                            <CardHeader className="card-header">
+                                <CardTitle tag="h4" className="card-title">Vaccinations</CardTitle>
+                                <CardSubtitle className="text-right"><Button onClick={() => { setTitle ( "Add Vaccination"); toggle() }} className=" btn-sm btn-outline-info  btn-round">Add Vaccination</Button></CardSubtitle>
                             </CardHeader>
-                            <CardBody>
-                                <Table responsive hover >
+                            <CardBody className="card-body">
+                                {patient?(
+                                <Table responsive hover className=" table" >
                                     <thead className="text-primary text-center">
                                         <tr>
                                             <th>FullName</th>
-                                            <th>Amka</th>
-                                            <th>Vaccine Status</th>
-                                            <th>Vaccine Brand</th>
-                                            <th>Number of Doses</th>
+                                            <th >Amka</th>
+                                            <th className=" text-right">Vaccine Status</th>
+                                            {/* <th>Vaccine Brand</th>
+                                            <th>Number of Doses</th> */}
                                         </tr>
                                     </thead>
                                     {tableBody}
-                                </Table>
+                                    </Table>
+                                ) : <div className="text-center text-big">No Vaccinations yet...Start by adding one</div>}
                             </CardBody>
 
                             <CardFooter>

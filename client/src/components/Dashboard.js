@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import { Row, Col, Button, Container, Spinner } from "reactstrap";
+import { Row, Col, Button, Container, Spinner, Card, CardTitle, CardFooter, CardHeader, CardSubtitle } from "reactstrap";
 import { getCurrentHospital } from '../redux/action/hospital';
 import PatientsTable from './PatientTableComponent';
 import AvailableDoses from './Statistics/AvailableDoses';
@@ -29,15 +29,21 @@ const Dashboard = ({
                     {hospital != null ? (
                         <>
                             <Row>
-                                <h1 className="large text-primary">{hospital && hospital.name} Hospital</h1>
-                            </Row>
-                            <Row>
-                                {hospital.numberOfDosesAvailable ? <Col lg="3" md="6" sm="6" className="offset-lg-9 offset-md-6 offset-sm-6">
+                                <Col lg="9" md="6">
+                                    <Card>
+                                        <CardHeader>
+                                            <CardTitle className="align-self-center" ><h1 className="large text-primary text-center" >{hospital && hospital.name} Hospital</h1>
+                                                </CardTitle>
+                                        </CardHeader>
+                                        <CardFooter></CardFooter>
+                                    </Card>
+                                </Col>
+
+                                {hospital.numberOfDosesAvailable ? <Col lg="3" md="6" sm="6" >
                                     <AvailableDoses doses={hospital.numberOfDosesAvailable} />
                                 </Col> : ''}
-
-
                             </Row>
+
                             <Row>
                                 <Col lg="12" md="12" sm="12" >
                                     <PatientsTable />

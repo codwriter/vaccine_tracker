@@ -10,10 +10,6 @@
   }
 }
 
-body {
-  background-color: $pale-bg;
-}
-
 // Pagination Centered
 .pagination-wrapper {
   overflow-x: auto;
@@ -22,4 +18,8 @@ body {
 .pagination {
   justify-content: center;
   margin: 30px;
+}
+
+.align-self-center{
+  align-self: center;
 }
