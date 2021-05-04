@@ -5,7 +5,7 @@ import { setAlert } from './alert';
 import {
   GET_HOSPITAL,
   HOSPITAL_ERROR,
-  UPDATE_HOSPITAL,
+  UPDATE_HOSPITAL, //     ΔΕΝ ΧΡΗΣΙΜΟΠΟΙΕΊΤΑΙ ΓΙΑΤΙ ΕΙΝΑΙ ΣΥΜΠΤΙΓΜΕΝΑ ΟΛΑ ΣΕ ΜΙΑ ΣΥΝΑΡΤΗΣΗ 
   CLEAR_HOSPITAL,
   DELETE_HOSPITAL
 } from './types';
@@ -39,10 +39,10 @@ export const createHospital = (formData, history) => async dispatch => {  //H ed
       payload: res.data
     });
     //στην περίπτωση που έχουν γίνει edit τα στοιχεία του Hospital κάνει display το πρώτο αλλίως το δεύτερο
-    dispatch(setAlert('Hospital Created'));
+    dispatch(setAlert('Hospital Created', 'success'));
 
     //Αν δημιουργήσω ενα καινιούργιο νοσοκομείο θα πρέπει να κάνει redirect 
-    history.push('/hospital');
+    history.push('/dashboard');
 
   } catch (err) {
     const errors = err.response.data.errors;    //Σε περίπτωση που ξεχάσω καποια απο τα υποχρεωτικά πεδία θα μου βγάλει alert
@@ -52,7 +52,7 @@ export const createHospital = (formData, history) => async dispatch => {  //H ed
     }
     dispatch({
       type: HOSPITAL_ERROR,
-      payload: err/* { msg: err.response.statusText, status: err.response.status } PROVLIMA SE SERVER */
+      payload: { msg: err.response.statusText, status: err.response.status } //PROVLIMA SE SERVER
     });
   }
 }
@@ -61,7 +61,7 @@ export const updateHospital = (formdata) => async (dispatch) => {
   try {
     const res = await api.put('/hospital/profile', formdata);
 
-    dispatch(setAlert('Hospital Updated'));
+    dispatch(setAlert('Hospital Updated', 'success'));
 
     dispatch({
       type: UPDATE_HOSPITAL,
@@ -75,7 +75,7 @@ export const updateHospital = (formdata) => async (dispatch) => {
     }
     dispatch({
       type: HOSPITAL_ERROR,
-      payload: err/* { msg: err.response.statusText, status: err.response.status } PROVLIMA SE SERVER */
+      payload: { msg: err.response.statusText, status: err.response.status }
     });
   }
 }
@@ -99,7 +99,7 @@ export const deleteHospital = () => async (dispatch) => {
   }
 };
 
-/* //Δεν έχω ιδέα για τα αποτελέσματα του παρακάτω κώδικα 
+/* //Δεν έχω ιδέα για τα αποτελέσματα του παρακάτω κώδικα
 // Get hospital by user ID
 export const getHospitalById = (userId) => async (dispatch) => {
   try {

@@ -23,7 +23,11 @@ const PatientTable = ({
     const [pageCount, setpageCount] = useState(Math.ceil(patients.length / pageSize));
     const [currentPage, setcurrentPage] = useState(0);
     const [patient, setPatient] = useState(null);
-    const [title, setTitle] = useState("")
+    const [title, setTitle] = useState("");
+
+    useEffect(() => {
+        getPatients();
+    }, [getPatients, loading]);
 
     useEffect(() => {
         getPatients();
@@ -48,15 +52,15 @@ const PatientTable = ({
         (currentPage + 1) * pageSize
     ).map((patient, i) => {
         return (
-            <tbody className=" text-center " key={patient.id}>
-                <tr onClick={() => { setTitle("Edit Patient"); setPatient(patient); toggle() }}>
+            <tbody className=" text-center" key={patient.id}>
+                <tr onClick={() => { setTitle("Edit Patient"); setPatient(patient); toggle();}}>
                     <td>{patient.fullname}</td>
                     <td>{patient.amka}</td>
-                    <td>{patient.vaccineStatus === -1 ? "Not Scheduled" : patient.vaccineStatus === 0 ?
+                    <td className="text-right">{patient.vaccineStatus === -1 ? "Not Scheduled" : patient.vaccineStatus === 0 ?
                         "Pending" : patient.vaccineStatus === 1 ? "Completed" : "Cancelled"}</td>
 
-                    <td>{patient.vaccineBrand}</td>
-                    <td>{patient.numberOfDOses}</td>
+                    {/*  <td>{patient.vaccineBrand}</td>
+                    <td>{patient.numberOfDOses}</td> */}
                 </tr>
             </tbody>
         );
@@ -80,14 +84,17 @@ const PatientTable = ({
                                         <thead className="text-primary text-center">
                                             <tr>
                                                 <th>FullName</th>
-                                                <th>Amka</th>
-                                                <th>Vaccine Status</th>
-                                                <th>Vaccine Brand</th>
-                                                <th>Number of Doses</th>
+                                                <th >Amka</th>
+                                                <th className=" text-right">Vaccine Status</th>
+                                                {/* <th>Vaccine Brand</th>
+                                            <th>Number of Doses</th> */}
+
                                             </tr>
                                         </thead>
                                         {tableBody}
-                                    </Table>
+
+                                ) : <div className="text-center text-big">No Vaccinations yet...Start by adding one</div>}
+
                             </CardBody>
 
                             <CardFooter>

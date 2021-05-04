@@ -1,5 +1,6 @@
 const express = require('express');
 const auth = require('../../middleware/auth');
+const { check, validationResult } = require('express-validator');
 
 const Hospitals = require('../../models/hospital');
 const User = require('../../models/user');
@@ -22,17 +23,29 @@ hospitalRouter.route('/')
                 next(err)
             });
     })
-    .post(auth, (req, res, next) => {
-        req.body.user = req.user.id;
-        Hospitals.create(req.body)
-            .then((hospital) => {
-                console.log("The Hospital created", hospital);
-                res.statusCode = 200;
-                res.setHeader('Content-type', 'application/json');
-                res.json(hospital);
-            }, (err) => next(err))
-            .catch((err) => next(err));
-    })
+    .post(auth,
+        check('name', 'Name of Hospital is required').notEmpty(),
+        check('afm')
+            .isLength({ min: 9, max: 9 })
+            .withMessage('Afm must be 9 numbers')
+            .matches(/^[0-9]+$/)
+            .withMessage('Is not an afm type')
+            .notEmpty()
+            .withMessage('AFM of Hospital is required'),
+        check('address', 'Address of Hospital is required').notEmpty(),
+        (req, res, next) => {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+            req.body.user = req.user.id;
+            Hospitals.create(req.body)
+                .then((hospital) => {
+                    console.log("The Hospital created", hospital);
+                    res.json(hospital);
+                }, (err) => next(err))
+                .catch((err) => next(err));
+        })
     .put(auth, (req, res, next) => {
         res.statusCode = 403;
         res.end('PUT operation not supported on /hospitals');
@@ -67,17 +80,30 @@ hospitalRouter.route('/profile')
         res.statusCode = 403;
         res.end('POST operation not supported on /hospitals/');
     })
-    .put(auth, (req, res, next) => {
-        Hospitals.findOneAndUpdate({ user: req.user.id }, {
-            $set: req.body
-        }, { new: true })
-            .then((hospital) => {
-                res.statusCode = 200;
-                res.setHeader('Content-type', 'application/json');
-                res.json(hospital);
-            }, (err) => next(err))
-            .catch((err) => next(err));
-    })
+    .put(auth, check('name', 'Name of Hospital is required').notEmpty(),
+        check('afm')
+            .isLength({ min: 9, max: 9 })
+            .withMessage('Afm must be 9 numbers')
+            .matches(/^[0-9]+$/)
+            .withMessage('Is not an afm type')
+            .notEmpty()
+            .withMessage('AFM of Hospital is required'),
+        check('address', 'Address of Hospital is required').notEmpty(),
+        (req, res, next) => {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+            Hospitals.findOneAndUpdate({ user: req.user.id }, {
+                $set: req.body
+            }, { new: true })
+                .then((hospital) => {
+                    res.statusCode = 200;
+                    res.setHeader('Content-type', 'application/json');
+                    res.json(hospital);
+                }, (err) => next(err))
+                .catch((err) => next(err));
+        })
     .delete(auth, (req, res, next) => {
         Hospitals.findOneAndRemove({ user: req.user.id })
 
