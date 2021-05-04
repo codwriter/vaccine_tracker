@@ -1,10 +1,11 @@
 import React, { Fragment, useEffect, useState } from 'react'; 
 import PropTypes from 'prop-types'; 
-import { Link } from 'react-router-dom'; 
+import { withRouter } from 'react-router-dom'; 
 import { connect } from 'react-redux'; 
 import Spinner from '../layout/Spinner'; 
-import { createHospital } from '../../redux/action/hospital'; 
+import { createHospital, updateHospital, getCurrentHospital } from '../../redux/action/hospital'; 
 import { setAlert } from '../../redux/action/alert';
+import { AvForm, AvGroup, AvFeedback, AvInput } from 'availity-reactstrap-validation';
 
 // reactstrap components
 import {
@@ -12,97 +13,134 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
-  CardTitle,
-  FormGroup,
-  Form,
   Input,
   Row,
   Col,
 } from "reactstrap";
 
 
-const Hospitalregister = ({ setAlert, createHospital, isAuthenticated,title,hospital }) => {
-    const [formData, setFormData] = useState({
-        HospitalName: '',
-        HospitalAddress: '',
-        AFM: '',
-        NumberofDoses: ''
- });
+ const initialState = {
+        name: '',
+        address: '',
+        afm: '',
+        NumberofDosesAvailable: null
+};
 
-const { HospitalName, HospitalAddress, AFM, NumberofDoses } = formData; 
+const Hospitalregister = ({
+  getCurrentHospital,
+  createHospital,
+  updateHospital,
+  title,
+  history,
+  hospital: { hospital, loading }
+}) => {
+  const [formData, setFormData] = useState(initialState);
+  const [disabled, setdisabled] = useState(false);
+  useEffect(() => {
+    if (!hospital) getCurrentHospital();
+    if (!loading && hospital) {
+        const hospitalData = { ...initialState };
+        for (const key in hospital) {
+            if (key in hospitalData) hospitalData[key] = hospital[key];
+        }
+        setFormData(hospitalData);
+        setdisabled(true);
+    }
+}, [loading, getCurrentHospital, hospital]);
+
+const { name, address, afm, NumberofDosesAvailable } = formData; 
 	
 const onChange = (e) => 
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-const onSubmit = async (e) => { 
-     e.preventDefault(); 
-    Hospitalregister({ HospitalName, HospitalAddress, AFM, NumberofDoses }); 	     
-    createHospital(formData); 
- };
-        
+const handleValidSubmit = async (e) => { 
+     console.log(formData);
+     if (hospital != null) {
+       updateHospital(formData);
+     } else 
+     createHospital(formData, history);
+ }
 
-class User extends React.Component {
-  render() {
     return (
-      <>
+      <Fragment>
+       {loading ? 
+          <Spinner />
+         :(
         <div className="content">
           <Row>
             <Col md="8">
-              <Card className="card-user">
+              <Card>
                 <CardHeader>
-                  <CardTitle tag="h5">Hospital Profile</CardTitle>
+                  <h1 className="large text-primary">{title}</h1>
                 </CardHeader>
                 <CardBody>
-                  <Form class="form" onSubmit={onSubmit}>
-                    <Row>
-                      <Col className="pr-1" md="5">
-                        <FormGroup>
+                  <AvForm class="form" onValidSubmit={handleValidSubmit}>
+
+                    <AvGroup>
+                      <Col className="pr-1" md="5"> 
                           <label>Hospital Name</label>
                           <Input
-                            defaultValue=""
+                            name="name"
+                            value={name}
+                            onChange={onChange}
                             placeholder="Hospital"
                             type="text"
                             required
                           />
-                        </FormGroup>
+                        <AvFeedback>The name of the hospital is required</AvFeedback>
                       </Col>
+                      </AvGroup>
+
+                      <AvGroup>
                       <Col className="px-1" md="3">
-                        <FormGroup>
                           <label>Hospital Address</label>
                           <Input
-                            defaultValue=""
-                            placeholder="Address"
+                            name="address"
+                            value={address}
+                            onChange={onChange}
+                            placeholder="Hospital Address"
                             type="text"
                             required
                           />
-                        </FormGroup>
+                        <AvFeedback>The address of the hospital is required</AvFeedback>
                       </Col>
+                      </AvGroup>
+                    
+                      <AvGroup>
                       <Col className="pl-2" md="5">
-                        <FormGroup>
                           <label>Hospital Tax Identification number (AFM)</label>
                           <Input placeholder="Hospital AFM" type="text" 
+                            id="afm"
+                            name="afm"
                             value={AFM}
                             onChange={onChange}
                             minLength="9"
                             maxLength="9"
+                            pattern="^[0-9]+$"
+                            disabled={disabled}
                             required
                             />
-                        </FormGroup>
+                            <AvFeedback>The AFM is required and must be 9 numbers in length!</AvFeedback>
                       </Col>
-                    </Row>
+                      </AvGroup>
+
+                    <AvForm>
                     <Row>
                       <Col className="pr-1" md="6">
-                        <FormGroup>
                           <label>Number of Vaccine Doses</label>
                           <Input
-                            defaultValue=""
+                            id="numberofDosesAvailable"
                             placeholder="Number of Vaccine Doses"
+                            value={numberOfDosesAvailable}
                             type="number"
+                            onChange={onChange}
+                            min="0"
                           />
-                        </FormGroup>
+
                       </Col>  
                     </Row>
+                    </AvForm>
+
                     <Row>
                       <div className="update ml-auto mr-auto">
                         <Button
@@ -114,15 +152,33 @@ class User extends React.Component {
                         </Button>
                       </div>
                     </Row>
-                  </Form>
+                  </AvForm>
                 </CardBody>
               </Card>
             </Col>
           </Row>
-        </div>
-      </>
-    );
-  }
-}
-}
-export default User;
+         </div>
+          ) 
+        }
+      </Fragment>
+    ); 
+};
+
+Hospitalregister.propTypes = {
+  getCurrentHospital: PropTypes.func.isRequired,
+  createHospital: PropTypes.func.isRequired,
+  updateHospital: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.object.isRequired,
+  hospital: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  getCurrentHospital: state.hospitalReducer,
+  createHospital: state.hospitalReducer,
+  updateHospital: state.hospitalReducer,
+  hospital: state.hospitalReducer,
+  isAuthenticated: state.auth
+});
+
+export default connect(mapStateToProps, {setAlert, createHospital, updateHospital, getCurrentHospital  })(withRouter(Hospitalregister));
