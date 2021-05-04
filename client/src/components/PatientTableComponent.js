@@ -52,7 +52,7 @@ const PatientTable = ({
         (currentPage + 1) * pageSize
     ).map((patient, i) => {
         return (
-            <tbody className=" text-center" key={patient.id}>
+            <tbody className=" text-center" key={patient._id}>
                 <tr onClick={() => { setTitle("Edit Patient"); setPatient(patient); toggle(); }}>
                     <td>{patient.fullname}</td>
                     <td>{patient.amka}</td>
@@ -76,9 +76,14 @@ const PatientTable = ({
                         <Card className="card">
                             <CardHeader className="card-header">
                                 <CardTitle tag="h4" className="card-title">Vaccinations</CardTitle>
-                                <CardSubtitle className="text-right"><Button onClick={() => { setTitle("Add Vaccination"); toggle(); setPatient(null); }} className=" btn-sm btn-outline-info  btn-round">Add Vaccination</Button></CardSubtitle>
+                                <CardSubtitle className="text-right">
+                                    <Button
+                                        onClick={() => { setTitle("Add Vaccination"); toggle(); setPatient(null); }}
+                                        className=" btn-sm btn-outline-info  btn-round">Add Vaccination
+                                        </Button>
+                                </CardSubtitle>
                             </CardHeader>
-                            
+
                             <CardBody className="card-body">
                                 {patients ? (
                                     <Table responsive hover className=" table" >
@@ -87,9 +92,6 @@ const PatientTable = ({
                                                 <th>FullName</th>
                                                 <th >Amka</th>
                                                 <th className=" text-right">Vaccine Status</th>
-                                                {/* <th>Vaccine Brand</th>
-                                            <th>Number of Doses</th> */}
-
                                             </tr>
                                         </thead>
                                         {tableBody}
