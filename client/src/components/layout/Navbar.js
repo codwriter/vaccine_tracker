@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, {useState } from 'react';
 import { Link } from "react-router-dom";
 import {
   Collapse,
@@ -7,17 +7,18 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   Container,
   InputGroup,
   InputGroupText,
   InputGroupAddon,
   Input,
   NavLink,
+
+
   UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
   NavbarText
 } from "reactstrap";
 import { connect } from 'react-redux';
@@ -52,15 +53,22 @@ const NavbarComponent = ({ auth: { isAuthenticated }, logout }) => {
     </>
   );
 
+  const toggle = () => set_isOpen(!isOpen);
+
   return (
-    <navbar className="">
-    <navbar className="bg-primary text-white navbar ">
-      <NavbarBrand href="/"><img src={logo} className='nav-logo' /></NavbarBrand>
-      <div className="navbar-wrapper">
-        <Nav >{isAuthenticated ? authLinks : guestLinks}</Nav>
-      </div>
-    </navbar>
-    </navbar>
+    <div>
+      <Navbar light expand="md" className="bg-primary text-white navbar">
+      <NavbarBrand href={isAuthenticated ? '/dashboard':'/'}>
+        <img src={logo} className='nav-logo' />
+      </NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav>
+            {isAuthenticated ? authLinks : guestLinks}
+          </Nav>
+        </Collapse>
+      </Navbar>
+    </div>
   );
 };
 

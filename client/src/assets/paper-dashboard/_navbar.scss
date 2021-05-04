@@ -196,13 +196,11 @@
     }
 
     .navbar-toggler{
-        width: 37px;
-        height: 27px;
         vertical-align: middle;
         outline: 0;
         cursor: pointer;
 
-        & .navbar-toggler-bar.navbar-kebab{
+        & .n avbar-toggler-bar.navbar-kebab{
             width: 3px;
             height: 3px;
             border-radius: 50%;
@@ -273,11 +271,13 @@
     }
 
     .navbar-collapse {
-      .nav-item {
-        a {
-          font-size: $font-size-base;
+        .nav-item {
+          
+            a {
+                font-size: $font-size-base;
+                font-size: 17px;
+            }
         }
-      }
     }
 }
 
@@ -307,4 +307,18 @@
 
 .bg-white{
     background-color: $white-color !important;
+}
+
+
+/* ANIMATION */
+.menu-btn.open .menu-btn__burger {
+  transform: translateX(-50px);
+  background: transparent;
+  box-shadow: none;
+}
+.menu-btn.open .menu-btn__burger::before {
+  transform: rotate(45deg) translate(35px, -35px);
+}
+.menu-btn.open .menu-btn__burger::after {
+  transform: rotate(-45deg) translate(35px, 35px);
 }
