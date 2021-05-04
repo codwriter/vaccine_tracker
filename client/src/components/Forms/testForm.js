@@ -1,24 +1,18 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
-export default function Form({patient}) {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+export default function App() {
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = data => console.log(data);
+  console.log(errors);
 
-  console.log(watch("example")); // watch input value by passing the name of it
-  console.log(patient);
   return (
-
-    /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <form onSubmit={handleSubmit(onSubmit)}>
-      {/* register your input into the hook by invoking the "register" function */}
-      <input defaultValue="test" {...register("example")} />
-
-      {/* include validation with required or other standard HTML validation rules */}
-      <input {...register("exampleRequired", { required: true })} />
-      {/* errors will return when field validation fails  */}
-      {errors.exampleRequired && <span>This field is required</span>}
-
+      <input type="text" placeholder="Name" {...register("Name", { required: true, maxLength: 80 })} />
+      <input type="text" placeholder="Afm" {...register("Afm", { required: true, max: 9, min: 9, maxLength: 9, pattern: /^[0-9]+$/i })} />
+      <input type="text" placeholder="Address" {...register("Address", { required: true })} />
+      <input type="number" placeholder="Vaccine doses available" {...register("Vaccine doses available", {maxLength: 12})} />
+      
       <input type="submit" />
     </form>
   );

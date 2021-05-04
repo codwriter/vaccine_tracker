@@ -1,22 +1,66 @@
-import react, {useState} from 'react'
-import PropTypes from 'prop-types'
+import React, { Fragment, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addPatient } from '../../redux/action/patient';
-import {setAlert} from '../../redux/action/alert';
+import { AvForm, AvGroup, AvFeedback, AvInput } from 'availity-reactstrap-validation';
+import { Button, Label, Card, CardBody } from 'reactstrap';
+import { addPatient, updatePatient } from '../../redux/action/patient';
 
-const PatientForm = ({addPatient, setAlert, isAuthorized}) => {
-    const [formData, setformData] = useState({
-        fullname : '',
-        amka : '',
-        age : 1,
-        address : '',
-        city : '',
-        country : '',
-        /* vaccineStatus : 1,
-        vaccineBrand : '',
-        numberOfDoses : 0, */
-    });
 
+const initialState = {
+    fullname: '',
+    amka: '',
+    age: null,
+    address: '',
+    city: '',
+    country: '',
+    vaccineStatus: -1,
+    vaccineBrand: '',
+    numberOfDoses: 0
+};
+
+const PatientForm = ({ addPatient, updatePatient, patient, hide }) => {
+    const [formData, setFormData] = useState({ initialState });
+    const [disabled, setdisabled] = useState(false);
+
+    useEffect(() => {
+        if (patient != null) {
+            const patientData = { ...initialState };
+            for (const key in patient) {
+                if (key in patientData) patientData[key] = patient[key];
+            }
+            setFormData(patientData);
+            setdisabled(true);
+        }
+    }, [patient]);
+
+
+const initialState = {
+    fullname: '',
+    amka: '',
+    age: null,
+    address: '',
+    city: '',
+    country: '',
+    vaccineStatus: -1,
+    vaccineBrand: '',
+    numberOfDoses: 0
+};
+
+const PatientForm = ({ addPatient, updatePatient, setAlert, patient, hide }) => {
+    const [formData, setFormData] = useState({ initialState });
+    const [disabled, setdisabled] = useState(false);
+
+    useEffect(() => {
+        if (patient != null) {
+            const patientData = { ...initialState };
+            for (const key in patient) {
+                if (key in patientData) patientData[key] = patient[key];
+            }
+            setFormData(patientData);
+            setdisabled(true);
+        }
+    }, []);
+    
     const {
         fullname,
         amka,
@@ -24,90 +68,173 @@ const PatientForm = ({addPatient, setAlert, isAuthorized}) => {
         address,
         city,
         country,
-        /* vaccineStatus,
+        vaccineStatus,
         vaccineBrand,
-        numberOfDoses */
+        numberOfDoses
     } = formData;
 
 
     const onChange = (e) =>
-        setformData({ ...formData, [e.target.name]: e.target.value });
+        setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
+
+
+    const handleValidSubmit = async (e) => {
         console.log(formData);
-        /* PatientForm({ 
-            fullname,
-            amka,
-            age,
-            address,
-            city,
-            country,
-            vaccineStatus,
-            vaccineBrand,
-            numberOfDoses }); */
-        addPatient(formData);
-    };
+        if (patient != null) {
+            updatePatient(patient._id, formData);
+
+        } else
+            addPatient(formData);
+        hide();
+    }
 
     return (
-        <div>
-            <h1 class="large text-primary">
-                Patient Registartion
-            </h1>
-            <small>* = required field</small>
-            <form class="form" onSubmit={onSubmit}>
-                <div class="form-group">
-                    <input type="text" placeholder="Fullname" name="fullname" onChange={onChange} />
-                    <small class="form-text"
-                    >Patient's name</small
-                    >
-                </div>
-                <div class="form-group">
-                    <input type="text" placeholder="Amka" name="amka" onChange={onChange} />
-                    <small class="form-text"
-                    >11 digit number</small
-                    >
-                </div>
-                <div class="form-group">
-                    <input type="number" placeholder="Age" name="age" onChange={onChange} />
-                    <small class="form-text"
-                    >age in years</small
-                    >
-                </div>
-                <div class="form-group">
-                    <input type="text" placeholder="Address" name="address" onChange={onChange} />
-                    <small class="form-text"
-                    >address of primary living place</small
-                    >
-                </div>
-                <div class="form-group">
-                    <input type="text" placeholder="City" name="city" onChange={onChange} />
-                    <small class="form-text"
-                    >city of primary living place</small
-                    >
-                </div>
-                <div class="form-group">
-                    <input type="text" placeholder="Country" name="country" onChange={onChange} />
-                    <small class="form-text"
-                    >country of primary living place</small
-                    >
-                </div>
+        <Fragment>
+            <Card>
+                <CardBody>
+                    <AvForm className="form text-white" onValidSubmit={handleValidSubmit}>
+                        <AvGroup>
+                            <Label>Fullname</Label>
+                            <AvInput
+                                type="text"
+                                placeholder="The name of the patient"
+                                name="fullname"
+                                value={fullname}
+                                onChange={onChange}
+                                required
+                            />
+                            <AvFeedback>The name of the patient is required!</AvFeedback>
+                        </AvGroup>
 
-                <input type="submit" class="btn btn-primary my-1" />
-            </form>
-        </div>
-    )
+                        <AvGroup>
+                            <Label for="afm">AMKA</Label>
+                            <AvInput
+                                type="text"
+                                id="amka"
+                                placeholder="AMKA"
+                                name="amka"
+                                value={amka}
+                                onChange={onChange}
+                                minLength="11"
+                                maxLength="11"
+                                pattern="^[0-9]+$"
+                                required
+                                disabled={disabled}
+                            />
+                            <AvFeedback>The AMKA is required and must be 11 numbers in length!</AvFeedback>
+                        </AvGroup>
+
+                        <AvGroup>
+                            <Label>Age</Label>
+                            <AvInput
+                                type="number"
+                                placeholder="The age of the patient"
+                                min='1'
+                                max='120'
+                                name="age"
+                                value={age}
+                                onChange={onChange}
+                                required
+                            />
+                            <AvFeedback>The age of the patient is required and must be between 1-120!</AvFeedback>
+                        </AvGroup>
+
+                        <AvGroup>
+                            <Label>Address</Label>
+                            <AvInput
+                                type="text"
+                                placeholder="Patient Address"
+                                name="address"
+                                value={address}
+                                onChange={onChange}
+                                required
+                            />
+                            <AvFeedback>The address of the patient is required!</AvFeedback>
+                        </AvGroup>
+
+                        <AvGroup>
+                            <Label>City</Label>
+                            <AvInput
+                                type="text"
+                                placeholder="City"
+                                name="city"
+                                value={city}
+                                onChange={onChange}
+                                required
+                            />
+                            <AvFeedback>The city of the patient is required!</AvFeedback>
+                        </AvGroup>
+
+                        <AvGroup>
+                            <Label>Country</Label>
+                            <AvInput
+                                type="text"
+                                placeholder="Country of Patient"
+                                name="country"
+                                value={country}
+                                onChange={onChange}
+                                required
+                            />
+                            <AvFeedback>The country of the patient is required!</AvFeedback>
+                        </AvGroup>
+
+
+                        <AvGroup>
+                            <Label for="vaccineBrand">Vaccine Brand</Label>
+                            <AvInput
+                                id="vaccineBrand"
+                                type="text"
+                                placeholder="The brand of the vaccine"
+                                name="vaccineBrand"
+                                value={vaccineBrand}
+                                onChange={onChange}
+                            />
+                        </AvGroup>
+
+                        <AvGroup>
+                            <Label for="vaccineStatus">Status of Vaccination</Label>
+                            <AvInput
+                                id="vaccineStatus"
+                                type="number"
+                                placeholder="The status of vaccination"
+                                name="vaccineStatus"
+                                value={vaccineStatus}
+                                onChange={onChange}
+                            />
+                        </AvGroup>
+
+                        <AvGroup>
+                            <Label for="numberOfDoses">Number of Doses</Label>
+                            <AvInput
+                                id="numberOfDoses"
+                                type="number"
+                                placeholder="Number of Doses"
+                                name="numberOfDoses"
+                                value={numberOfDoses}
+                                onChange={onChange}
+                                min="0"
+                            />
+                        </AvGroup>
+
+                        <AvGroup>
+                            <Button type="submit">Submit</Button>
+                        </AvGroup>
+                    </AvForm>
+                </CardBody>
+            </Card>
+        </Fragment>
+    );
 }
 
 PatientForm.propTypes = {
     addPatient: PropTypes.func.isRequired,
-    setAlert: PropTypes.object.isRequired,
     isAuthenticated: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    addPatient: state.patientReducer,
     isAuthenticated: state.auth
 });
 
-export default connect(mapStateToProps, { setAlert, addPatient })(PatientForm);
+export default connect(mapStateToProps, {addPatient, updatePatient })(PatientForm);
+

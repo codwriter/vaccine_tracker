@@ -1,19 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import PatientForm from '../Forms/PatientForm';
-
-const PatientModal = ({ isShowing, hide, patient ,title}) => isShowing ? ReactDOM.createPortal(
-    <>
+const reload = () => window.location.reload();
+const PatientModal = ({ isShowing, hide, patient, title, }) => isShowing ? ReactDOM.createPortal(
+  <>
     <div>
-      <Modal isOpen={isShowing} >
+      <Modal isOpen={isShowing} onExit={reload} >
         <ModalHeader toggle={hide}>{title}</ModalHeader>
         <ModalBody>
-          <PatientForm patient={patient} />
+          <PatientForm hide={hide} patient={patient} />
         </ModalBody>
       </Modal>
-      </div>
-      </>, document.body
+    </div>
+  </>, document.body
 ) : null;
 
 export default PatientModal;

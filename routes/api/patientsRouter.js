@@ -2,6 +2,7 @@ const { application } = require('express');
 const express = require('express');
 const mongoose = require('mongoose');
 
+const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 const Patients = require('../../models/patients');
 const Hospital = require('../../models/hospital');
@@ -20,26 +21,48 @@ patientsRouter.route('/')
             }, (err) => next(err))
             .catch((err) => next(err));
     })
-    .post(auth, (req, res, next) => {
-        Hospital.findOne({ user: req.user.id })
-            .then(hospital => {
-                for (let i = 0; i < req.body.length; i++)
-                    req.body[i].hospital = hospital.id;
-                Patients.create(req.body)
-                    .then((patient) => {
-                        console.log("The patient created", patient);
-                        res.statusCode = 200;
-                        res.setHeader('Content-type', 'application/json');
-
-                        //Create Asset and send it to bigchain
-                        bgchain.createPatient(patient, req.user.id, hospital);
-                        res.json(patient);
+    .post(auth,
+        check('fullname', 'The fullname of the Patient is required').notEmpty(),
+        check('amka')
+            .isLength({ min: 11, max: 11 })
+            .withMessage('Amka must be 11 numbers')
+            .matches(/^[0-9]+$/)
+            .withMessage('Is not an Amka type')
+            .notEmpty()
+            .withMessage('Amka of Paitient is required'),
+        check('age')
+            .isInt({ min: 1, max: 120 }).withMessage('Age must be between 1 and 120')
+            .notEmpty()
+            .withMessage('Age is required'),
+        check('address', 'Address of Patient is required').notEmpty(),
+        check('city', 'City of Patient is required').notEmpty(),
+        check('country', 'Country of Patient is required').notEmpty(),
+        (req, res, next) => {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            } else {
+                Hospital.findOne({ user: req.user.id })
+                    .then(hospital => {
+                        req.body.hospital = hospital.id;
+                        Patients.create(req.body)
+                            .then((patient) => {
+                                hospital.numberOfDosesAvailable -= 1;
+                                hospital.save()
+                                    .then(hospital => {
+                                    }, (err) => next(err));
+                                //Create Asset and send it to bigchain
+                                bgchain.createPatient(patient, req.user.id, hospital);//TODO:Check if is created
+                                console.log("The patient created", patient);
+                                res.statusCode = 200;
+                                res.json(patient);
+                            }, (err) => next(err))
+                            .catch((err) => next(err));
                     }, (err) => next(err))
                     .catch((err) => next(err));
-            }, (err) => next(err))
-            .catch((err) => next(err));
+            }
+        })
 
-    })
     .put(auth, (req, res, next) => {
         res.statusCode = 403;
         res.end('PUT operation not supported on /patients');
@@ -69,17 +92,39 @@ patientsRouter.route('/:patientId')
         res.statusCode = 403;
         res.end('POST operation not supported on /patients/' + req.params.patientId);
     })
-    .put(auth, (req, res, next) => {
-        Patients.findByIdAndUpdate(req.params.patientId, {
-            $set: req.body
-        }, { new: true })
-            .then((patient) => {
-                res.statusCode = 200;
-                res.setHeader('Content-type', 'application/json');
-                res.json(patient);
-            }, (err) => next(err))
-            .catch((err) => next(err));
-    })
+    .put(auth,
+        check('fullname', 'The fullname of the Patient is required').notEmpty(),
+        check('amka')
+            .isLength({ min: 11, max: 11 })
+            .withMessage('Amka must be 11 numbers')
+            .matches(/^[0-9]+$/)
+            .withMessage('Is not an Amka type')
+            .notEmpty()
+            .withMessage('Amka of Paitient is required'),
+        check('age')
+            .isInt({ min: 1, max: 120 }).withMessage('Age must be between 1 and 120')
+            .notEmpty()
+            .withMessage('Age is required'),
+        check('address', 'Address of Patient is required').notEmpty(),
+        check('city', 'City of Patient is required').notEmpty(),
+        check('country', 'Country of Patient is required').notEmpty(),
+        (req, res, next) => {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            } else {
+                Patients.findByIdAndUpdate(req.params.patientId, {
+                    $set: req.body
+                }, { new: true })
+                    .then((patient) => {
+                        res.statusCode = 200;
+                        res.setHeader('Content-type', 'application/json');
+                        res.json(patient);
+                    }, (err) => next(err))
+                    .catch((err) => next(err));
+            }
+        })
+
     .delete(auth, (req, res, next) => {
         Patients.findByIdAndRemove(req.params.patientId)
             .then((resp) => {

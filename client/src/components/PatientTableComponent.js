@@ -4,6 +4,8 @@ import {
     Card, CardHeader, CardBody, CardTitle, CardFooter,
     Row, Col,
     Pagination, PaginationItem, PaginationLink,
+    Button,
+    CardSubtitle
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -14,18 +16,25 @@ import PatientModal from './Modals/PatientModal';
 
 const PatientTable = ({
     getPatients,
-    patients: { patients }
+    patients: { loading, patients }
 }) => {
-    useEffect(() => {
-        getPatients();
-    }, [getPatients]);
-
     const { isShowing, toggle } = useModal();
     const [pageSize, setpageSize] = useState(7);
     const [pageCount, setpageCount] = useState(Math.ceil(patients.length / pageSize));
     const [currentPage, setcurrentPage] = useState(0);
     const [patient, setPatient] = useState(null);
-    
+    const [title, setTitle] = useState("");
+
+    useEffect(() => {
+        getPatients();
+    }, [getPatients, loading]);
+
+    useEffect(() => {
+        getPatients();
+    }, [getPatients, loading]);
+
+
+
     useEffect(() => {
         setpageCount(Math.ceil(patients.length / pageSize));
     }, [patients])
@@ -35,7 +44,7 @@ const PatientTable = ({
         e.preventDefault();
         setcurrentPage(index);
     }
-    
+
 
     // Table Body
     const tableBody = patients.slice(
@@ -43,15 +52,15 @@ const PatientTable = ({
         (currentPage + 1) * pageSize
     ).map((patient, i) => {
         return (
-            <tbody className=" text-center " key={patient.id}>
-                <tr onClick={() => { setPatient(patient); toggle() }}>
+            <tbody className=" text-center" key={patient.id}>
+                <tr onClick={() => { setTitle("Edit Patient"); setPatient(patient); toggle(); }}>
                     <td>{patient.fullname}</td>
                     <td>{patient.amka}</td>
-                    <td>{patient.vaccineStatus === -1 ? "Not Scheduled" : patient.vaccineStatus === 0 ?
+                    <td className="text-right">{patient.vaccineStatus === -1 ? "Not Scheduled" : patient.vaccineStatus === 0 ?
                         "Pending" : patient.vaccineStatus === 1 ? "Completed" : "Cancelled"}</td>
 
-                    <td>{patient.vaccineBrand}</td>
-                    <td>{patient.numberOfDOses}</td>
+                    {/*  <td>{patient.vaccineBrand}</td>
+                    <td>{patient.numberOfDOses}</td> */}
                 </tr>
             </tbody>
         );
@@ -60,55 +69,60 @@ const PatientTable = ({
 
     return (
         <Fragment>
-            <PatientModal isShowing={isShowing} hide={toggle} patient={patient} title="Edit Patient" />
+            <PatientModal isShowing={isShowing} hide={toggle} patient={patient} title={title} />
             <div className="content">
                 <Row>
                     <Col md="12">
-                        <Card >
-                            <CardHeader>
-                                <CardTitle  tag="h4">Vacinations</CardTitle>
+                        <Card className="card">
+                            <CardHeader className="card-header">
+                                <CardTitle tag="h4" className="card-title">Vaccinations</CardTitle>
+                                <CardSubtitle className="text-right"><Button onClick={() => { setTitle("Add Vaccination"); toggle(); setPatient(null); }} className=" btn-sm btn-outline-info  btn-round">Add Vaccination</Button></CardSubtitle>
                             </CardHeader>
-                            <CardBody>
-                                <Table responsive hover>
-                                    <thead className="text-primary text-center">
-                                        <tr>
-                                            <th>FullName</th>
-                                            <th>Amka</th>
-                                            <th>Vaccine Status</th>
-                                            <th>Vaccine Brand</th>
-                                            <th>Number of Doses</th>
-                                        </tr>
-                                    </thead>
-                                    {tableBody}
-                                </Table>
+                            
+                            <CardBody className="card-body">
+                                {patients ? (
+                                    <Table responsive hover className=" table" >
+                                        <thead className="text-primary text-center">
+                                            <tr>
+                                                <th>FullName</th>
+                                                <th >Amka</th>
+                                                <th className=" text-right">Vaccine Status</th>
+                                                {/* <th>Vaccine Brand</th>
+                                            <th>Number of Doses</th> */}
+
+                                            </tr>
+                                        </thead>
+                                        {tableBody}
+                                    </Table>
+                                ) : <div className="text-center text-big">No Vaccinations yet...Start by adding one</div>
+                                }
                             </CardBody>
 
                             <CardFooter>
-                              
-                                    <div className="pagination-wrapper">
-                                        <Pagination>
-                                            <PaginationItem disabled={currentPage <= 0}>
-                                                <PaginationLink onClick={e =>
-                                                    handleClick(e, currentPage - 1)} previous href="#" />
+                                <div className="pagination-wrapper">
+                                    <Pagination>
+                                        <PaginationItem disabled={currentPage <= 0}>
+                                            <PaginationLink onClick={e =>
+                                                handleClick(e, currentPage - 1)} previous href="#" />
+                                        </PaginationItem>
+                                        {[...Array(pageCount)].map((page, i) =>
+                                            <PaginationItem active={i === currentPage} key={i}>
+                                                <PaginationLink onClick={e => handleClick(e, i)} href="#">
+                                                    {i + 1}
+                                                </PaginationLink>
                                             </PaginationItem>
-                                            {[...Array(pageCount)].map((page, i) =>
-                                                <PaginationItem active={i === currentPage} key={i}>
-                                                    <PaginationLink onClick={e => handleClick(e, i)} href="#">
-                                                        {i + 1}
-                                                    </PaginationLink>
-                                                </PaginationItem>
-                                            )}
+                                        )}
 
-                                            <PaginationItem disabled={currentPage >= pageCount - 1}>
+                                        <PaginationItem disabled={currentPage >= pageCount - 1}>
 
-                                                <PaginationLink
-                                                    onClick={e => handleClick(e, currentPage + 1)}
-                                                    next
-                                                    href="#"
-                                                />
-                                            </PaginationItem>
-                                        </Pagination>
-                                    </div>
+                                            <PaginationLink
+                                                onClick={e => handleClick(e, currentPage + 1)}
+                                                next
+                                                href="#"
+                                            />
+                                        </PaginationItem>
+                                    </Pagination>
+                                </div>
                             </CardFooter>
                         </Card>
                     </Col>
@@ -120,11 +134,10 @@ const PatientTable = ({
 PatientTable.propTypes = {
     getPatients: PropTypes.func.isRequired,
     patients: PropTypes.object.isRequired,
-
 };
 
-
 const mapStateToProps = (state) => ({
+    getPatients: state.patientReducer,
     patients: state.patientReducer
 });
 

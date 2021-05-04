@@ -6,6 +6,16 @@ var amkaValidator = [
 ]; */
 
 var patientsSchema = new Schema({
+   /*  firstname: {
+        type: String,
+        trim: true,
+        required: true
+    },
+    lastname: {
+        type: String,
+        trim: true,
+        required: true
+    }, */
     fullname: {
         type: String,
         trim: true,

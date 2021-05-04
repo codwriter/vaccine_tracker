@@ -10,10 +10,6 @@
   }
 }
 
-body {
-  background-color: $pale-bg;
-}
-
 // Pagination Centered
 .pagination-wrapper {
   overflow-x: auto;
@@ -24,6 +20,9 @@ body {
   margin: 30px;
 }
 
+.align-self-center{
+  align-self: center;
+}
 .tab_button {
   width: 255px;
   text-align: center;
@@ -42,7 +41,7 @@ body {
 .nav-tabs {
   border-bottom: 0px solid;
 }
-//dsds
+
 .loginRegister {
   display: flex;
   flex-wrap: wrap;

@@ -4,14 +4,16 @@ import {
   Form,
   FormGroup,
   Label,
+  Input,
   Button,
-  Input, 
+  InputGroupAddon,
+  InputGroupText,
+  InputGroup,
 } from 'reactstrap';
 
 import {
   Card, 
-  CardBody, 
-  CardTitle, 
+  CardBody,
   CardSubtitle
 } from 'reactstrap';
 
@@ -50,47 +52,65 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     <Form onSubmit={onSubmit}>
       <Card>
         <CardBody>
-          <CardTitle tag="h2">Sign Up</CardTitle>
-
-          <br></br>
-
           <CardSubtitle tag="h6" className="mb-2 text-muted">
             <i className="fas fa-user" />   Create Your Account
           </CardSubtitle>
 
           <br></br>
 
-          <FormGroup>
-            <Label className="text-muted">Email address</Label>
-            <Input
-              type="email"
-              placeholder="Enter Email"
-              name="email"
-              value={email}
-              onChange={onChange}
-            />
+          <FormGroup className="mb-3">
+            <Label className="text-muted">Email</Label>
+            <InputGroup className="input-group-alternative">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i class="fas fa-envelope"></i> 
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                type="email"
+                placeholder="Enter Email"
+                name="email"
+                value={email}
+                onChange={onChange}
+              />
+            </InputGroup>
           </FormGroup>
 
-          <FormGroup>
+          <FormGroup className="mb-3">
             <Label className="text-muted">Password</Label>
-            <Input
-              type="password"
-              placeholder="Your Password"
-              name="password"
-              value={password}
-              onChange={onChange}
-            />
+            <InputGroup className="input-group-alternative">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i class="fas fa-key"></i> 
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                type="password"
+                placeholder="Your Password"
+                name="password"
+                value={password}
+                onChange={onChange}
+              />
+            </InputGroup>
           </FormGroup>
 
-          <FormGroup>
+          <FormGroup className="mb-3">
             <Label className="text-muted">Retype Password</Label>
-            <Input
-              type="password"
-              placeholder="Retype Your Password"
-              name="password2"
-              value={password2}
-              onChange={onChange}
-            />
+            <InputGroup className="input-group-alternative">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>
+                  <i class="fas fa-key"></i> 
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                type="password"
+                placeholder="Retype Your Password"
+                name="password2"
+                value={password2}
+                onChange={onChange}
+              />
+            </InputGroup>
+
           </FormGroup>
 
           <Button color="secondary" round outline type="submit">
