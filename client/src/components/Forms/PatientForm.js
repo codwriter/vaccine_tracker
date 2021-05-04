@@ -33,6 +33,34 @@ const PatientForm = ({ addPatient, updatePatient, patient, hide }) => {
         }
     }, [patient]);
 
+
+const initialState = {
+    fullname: '',
+    amka: '',
+    age: null,
+    address: '',
+    city: '',
+    country: '',
+    vaccineStatus: -1,
+    vaccineBrand: '',
+    numberOfDoses: 0
+};
+
+const PatientForm = ({ addPatient, updatePatient, setAlert, patient, hide }) => {
+    const [formData, setFormData] = useState({ initialState });
+    const [disabled, setdisabled] = useState(false);
+
+    useEffect(() => {
+        if (patient != null) {
+            const patientData = { ...initialState };
+            for (const key in patient) {
+                if (key in patientData) patientData[key] = patient[key];
+            }
+            setFormData(patientData);
+            setdisabled(true);
+        }
+    }, []);
+    
     const {
         fullname,
         amka,
@@ -50,10 +78,12 @@ const PatientForm = ({ addPatient, updatePatient, patient, hide }) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
 
 
+
     const handleValidSubmit = async (e) => {
         console.log(formData);
         if (patient != null) {
             updatePatient(patient._id, formData);
+
         } else
             addPatient(formData);
         hide();
@@ -207,3 +237,4 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {addPatient, updatePatient })(PatientForm);
+

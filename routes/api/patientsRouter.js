@@ -62,6 +62,7 @@ patientsRouter.route('/')
                     .catch((err) => next(err));
             }
         })
+
     .put(auth, (req, res, next) => {
         res.statusCode = 403;
         res.end('PUT operation not supported on /patients');
@@ -123,6 +124,7 @@ patientsRouter.route('/:patientId')
                     .catch((err) => next(err));
             }
         })
+
     .delete(auth, (req, res, next) => {
         Patients.findByIdAndRemove(req.params.patientId)
             .then((resp) => {

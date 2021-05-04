@@ -30,6 +30,12 @@ const PatientTable = ({
     }, [getPatients, loading]);
 
     useEffect(() => {
+        getPatients();
+    }, [getPatients, loading]);
+
+
+
+    useEffect(() => {
         setpageCount(Math.ceil(patients.length / pageSize));
     }, [patients])
 
@@ -82,11 +88,13 @@ const PatientTable = ({
                                                 <th className=" text-right">Vaccine Status</th>
                                                 {/* <th>Vaccine Brand</th>
                                             <th>Number of Doses</th> */}
+
                                             </tr>
                                         </thead>
                                         {tableBody}
-                                    </Table>
+
                                 ) : <div className="text-center text-big">No Vaccinations yet...Start by adding one</div>}
+
                             </CardBody>
 
                             <CardFooter>

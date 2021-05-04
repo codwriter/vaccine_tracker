@@ -110,6 +110,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 onChange={onChange}
               />
             </InputGroup>
+
           </FormGroup>
 
           <Button color="secondary" round outline type="submit">
