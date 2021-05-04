@@ -1,8 +1,8 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import { Row, Col, Button, Container, Spinner, Card, CardTitle, CardFooter, CardHeader, CardSubtitle } from "reactstrap";
+import { Row, Col,Container, Spinner, Card, CardTitle, CardFooter, CardHeader } from "reactstrap";
 import { getCurrentHospital } from '../redux/action/hospital';
 import PatientsTable from './PatientTableComponent';
 import AvailableDoses from './Statistics/AvailableDoses';
@@ -10,16 +10,14 @@ import AvailableDoses from './Statistics/AvailableDoses';
 
 const Dashboard = ({
     getCurrentHospital,
-    auth: { user },
     hospital: { hospital, loading }
 }) => {
     useEffect(() => {
-        getCurrentHospital();
-    }, []);
+       getCurrentHospital();
+    }, [getCurrentHospital]);
 
 
     return (
-
         <Fragment>
             {/*    <Sidebar/> */}
             {loading ? (
@@ -85,6 +83,4 @@ const mapStateToProps = (state) => ({
     hospital: state.hospitalReducer
 });
 
-export default connect(mapStateToProps, { getCurrentHospital })(
-    Dashboard
-);
+export default connect(mapStateToProps, { getCurrentHospital })(Dashboard);

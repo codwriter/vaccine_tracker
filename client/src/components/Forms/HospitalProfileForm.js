@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AvForm, AvGroup, AvFeedback, AvInput } from 'availity-reactstrap-validation';
 import { createHospital, updateHospital, getCurrentHospital } from '../../redux/action/hospital';
-import { setAlert } from '../../redux/action/alert';
 import { Button, Label, Spinner, Card, CardHeader, CardBody } from 'reactstrap';
 
 const initialState = {
@@ -131,17 +130,13 @@ Hospitalregister.propTypes = {
     getCurrentHospital: PropTypes.func.isRequired,
     createHospital: PropTypes.func.isRequired,
     updateHospital: PropTypes.func.isRequired,
-    setAlert: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.object.isRequired,
     hospital: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-    getCurrentHospital: state.hospitalReducer,
-    createHospital: state.hospitalReducer,
-    updateHospital: state.hospitalReducer,
     hospital: state.hospitalReducer,
     isAuthenticated: state.auth
 });
 
-export default connect(mapStateToProps, { setAlert, createHospital, updateHospital, getCurrentHospital })(withRouter(Hospitalregister));
+export default connect(mapStateToProps, {createHospital, updateHospital, getCurrentHospital })(withRouter(Hospitalregister));
