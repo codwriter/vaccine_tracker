@@ -1,37 +1,41 @@
-import React, { Fragment, useState } from 'react';
+import React, {useState } from 'react';
 import { Link } from "react-router-dom";
 import {
   Collapse,
-  Navbar as navbar,
+  Navbar,
   NavbarToggler,
   NavbarBrand,
   Nav,
   NavItem,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   Container,
   InputGroup,
   InputGroupText,
   InputGroupAddon,
   Input,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  NavbarText
 } from "reactstrap";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../redux/action/auth';
-import logo from '../../assets/images/logo_vaccine.png'
+import logo from '../../assets/images/white_logo.png'
 
 
 
-const Navbar = ({ auth: { isAuthenticated }, logout }) => {
+const NavbarComponent = ({ auth: { isAuthenticated }, logout }) => {
   const [isOpen, set_isOpen] = useState(false);
   const authLinks = (
     <>
+      <NavItem >
+        <Link to="/dashboard" className="nav-link btn-magnify">Dashboard</Link>
+      </NavItem>
       <NavItem>
-        <Link to="/dashboard" className="nav-link btn-magnify">Dashboard</Link></NavItem>
-      <NavItem>
-        <Link to="/Profile" className="nav-link btn-magnify">Hospital</Link></NavItem>
+        <Link to="/Profile" className="nav-link btn-magnify">Hospital</Link>
+      </NavItem>
       <NavItem>
         <a onClick={logout} className="nav-link btn-magnify" href="/">
           <i className="fas fa-sign-out-alt" />{' '}
@@ -43,21 +47,27 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
 
   const guestLinks = (
     <>
-      <NavItem>
-        <Link to="/register" className="nav-link btn-magnify">Register</Link>
-      </NavItem>
-      <NavItem>
-        <Link to="/login" className="nav-link btn-magnify">Login</Link>
-      </NavItem>
+    
     </>
   );
 
+  const toggle = () => set_isOpen(!isOpen);
+
   return (
-      <navbar className="bg-primary text-white navbar ">
-          <NavbarBrand href="/"><img src={logo} className='nav-logo' /></NavbarBrand>
-    <div className="navbar-wrapper">
-          <Nav >{isAuthenticated ? authLinks : guestLinks}</Nav></div>
-      </navbar>
+    <div>
+      <Navbar light expand="md" className="bg-primary text-white navbar">
+      <NavbarBrand href={isAuthenticated ? '/dashboard':'/'}>
+        <img src={logo} className='nav-logo' />
+      </NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav>
+            {isAuthenticated ? authLinks : guestLinks}
+          </Nav>
+        </Collapse>
+      </Navbar>
+    </div>
+
   );
 };
 
@@ -70,4 +80,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { logout })(Navbar);
+export default connect(mapStateToProps, { logout })(NavbarComponent);

@@ -1,65 +1,54 @@
-import React, { Fragment, useEffect, useState } from 'react'; 
-import PropTypes from 'prop-types'; 
-import { withRouter } from 'react-router-dom'; 
-import { connect } from 'react-redux'; 
-import Spinner from '../layout/Spinner'; 
-import { createHospital, updateHospital, getCurrentHospital } from '../../redux/action/hospital'; 
-import { setAlert } from '../../redux/action/alert';
+import React, { Fragment, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { AvForm, AvGroup, AvFeedback, AvInput } from 'availity-reactstrap-validation';
+import { createHospital, updateHospital, getCurrentHospital } from '../../redux/action/hospital';
+import { Button, Label, Spinner, Card, CardHeader, CardBody } from 'reactstrap';
 
-// reactstrap components
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  Input,
-  Row,
-  Col,
-} from "reactstrap";
-
-
- const initialState = {
-        name: '',
-        address: '',
-        afm: '',
-        NumberofDosesAvailable: null
+const initialState = {
+    name: '',
+    afm: '',
+    address: '',
+    numberOfDosesAvailable: null
 };
 
 const Hospitalregister = ({
-  getCurrentHospital,
-  createHospital,
-  updateHospital,
-  title,
-  history,
-  hospital: { hospital, loading }
+    getCurrentHospital,
+    createHospital,
+    updateHospital,
+    title,
+    history,
+    hospital: { hospital, loading }
 }) => {
-  const [formData, setFormData] = useState(initialState);
-  const [disabled, setdisabled] = useState(false);
-  useEffect(() => {
-    if (!hospital) getCurrentHospital();
-    if (!loading && hospital) {
-        const hospitalData = { ...initialState };
-        for (const key in hospital) {
-            if (key in hospitalData) hospitalData[key] = hospital[key];
+    const [formData, setFormData] = useState(initialState);
+    const [disabled, setdisabled] = useState(false);
+    useEffect(() => {
+        if (!hospital) getCurrentHospital();
+        if (!loading && hospital) {
+            const hospitalData = { ...initialState };
+            for (const key in hospital) {
+                if (key in hospitalData) hospitalData[key] = hospital[key];
+            }
+            setFormData(hospitalData);
+            setdisabled(true);
         }
-        setFormData(hospitalData);
-        setdisabled(true);
+    }, [loading, getCurrentHospital, hospital]);
+
+
+    const { name, address, afm, numberOfDosesAvailable } = formData;
+
+    const onChange = (e) =>
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    
+    const handleValidSubmit = async (e) => {
+        console.log(formData);
+        if (hospital != null) {
+            updateHospital(formData);
+        } else
+            createHospital(formData, history);
     }
-}, [loading, getCurrentHospital, hospital]);
-
-const { name, address, afm, NumberofDosesAvailable } = formData; 
-	
-const onChange = (e) => 
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-const handleValidSubmit = async (e) => { 
-     console.log(formData);
-     if (hospital != null) {
-       updateHospital(formData);
-     } else 
-     createHospital(formData, history);
- }
 
     return (
       <Fragment>
@@ -165,20 +154,16 @@ const handleValidSubmit = async (e) => {
 };
 
 Hospitalregister.propTypes = {
-  getCurrentHospital: PropTypes.func.isRequired,
-  createHospital: PropTypes.func.isRequired,
-  updateHospital: PropTypes.func.isRequired,
-  setAlert: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.object.isRequired,
-  hospital: PropTypes.object.isRequired
+    getCurrentHospital: PropTypes.func.isRequired,
+    createHospital: PropTypes.func.isRequired,
+    updateHospital: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.object.isRequired,
+    hospital: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  getCurrentHospital: state.hospitalReducer,
-  createHospital: state.hospitalReducer,
-  updateHospital: state.hospitalReducer,
-  hospital: state.hospitalReducer,
-  isAuthenticated: state.auth
+    hospital: state.hospitalReducer,
+    isAuthenticated: state.auth
 });
 
-export default connect(mapStateToProps, {setAlert, createHospital, updateHospital, getCurrentHospital  })(withRouter(Hospitalregister));
+export default connect(mapStateToProps, {createHospital, updateHospital, getCurrentHospital })(withRouter(Hospitalregister));

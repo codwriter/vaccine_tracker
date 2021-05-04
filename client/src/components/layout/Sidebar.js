@@ -32,7 +32,8 @@ class Sidebar extends React.Component {
   render() {
     return (
       <div
-        className="sidebar"
+        className="sidebar" data-color="white"
+        data-active-color="info"
       >
         <div className="logo">
           <a
@@ -47,7 +48,7 @@ class Sidebar extends React.Component {
         </div>
         <div className="sidebar-wrapper" ref={this.sidebar}>
           <Nav>
-           <li>dd</li>
+           <li>Add Patient</li>
           </Nav>
         </div>
       </div>

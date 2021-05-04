@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var hospitalsSchema = new Schema({
-    hospitalName: {
+    name: {
         type: String,
         default: '',
         required: true

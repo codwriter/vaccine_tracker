@@ -47,9 +47,9 @@ export const getPatient = id => async dispatch => {
 };
 
 // Add Patient 
-export const addPatient = () => async dispatch => {
+export const addPatient = (formData) => async dispatch => {
     try {
-        const res = await api.post('/patients');
+        const res = await api.post('/patients', formData);
 
         dispatch({
             type: ADD_PATIENT,
@@ -59,6 +59,11 @@ export const addPatient = () => async dispatch => {
         dispatch(setAlert('Patient Created', 'success'));
 
     } catch (err) {
+        const errors = err.response.data.errors;    //Σε περίπτωση που ξεχάσω καποια απο τα υποχρεωτικά πεδία θα μου βγάλει alert
+
+        if (errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        }
         dispatch({
             type: PATIENT_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
@@ -67,16 +72,23 @@ export const addPatient = () => async dispatch => {
 };
 
 // Update Patient
-export const updatePatient = id => async dispatch => {
+export const updatePatient = (id,formData) => async dispatch => {
     try {
-        const res = await api.put(`/patients/${id}`);
+        const res = await api.put(`/patients/${id}`,formData);
 
         dispatch({
             type: UPDATE_PATIENT,
             payload: {id, patient: res.data}
         });
 
+        dispatch(setAlert('Patient Updated', 'success'));
+
     } catch (err) {
+        const errors = err.response.data.errors;    //Σε περίπτωση που ξεχάσω καποια απο τα υποχρεωτικά πεδία θα μου βγάλει alert
+
+        if (errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        }
         dispatch({
             type: PATIENT_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
