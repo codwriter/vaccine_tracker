@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AvForm, AvGroup, AvFeedback, AvInput } from 'availity-reactstrap-validation';
 import { createHospital, updateHospital, getCurrentHospital } from '../../redux/action/hospital';
-import { Button, Label, Spinner, Card, CardHeader, CardBody } from 'reactstrap';
+import { Button, Label, Spinner, Card, CardHeader, CardBody,Row,Col } from 'reactstrap';
 
 const initialState = {
     name: '',
@@ -51,106 +51,79 @@ const Hospitalregister = ({
     }
 
     return (
-      <Fragment>
-       {loading ? 
-          <Spinner />
-         :(
-        <div className="content">
-          <Row>
-            <Col md="8">
-              <Card>
-                <CardHeader>
-                  <h1 className="large text-primary">{title}</h1>
-                </CardHeader>
-                <CardBody>
-                  <AvForm class="form" onValidSubmit={handleValidSubmit}>
+    <Fragment>
+      {loading ? <Spinner /> : (
+        <Card>
+          <CardHeader>
+            <h1 className="large text-primary">{title}</h1>
+          </CardHeader>
+          <CardBody>
+            <AvForm className="form text-white" onValidSubmit={handleValidSubmit}>
+              <AvGroup>
+                <Label>Hospital Name</Label>
+                <AvInput
+                  type="text"
+                  placeholder="The name of the hospital"
+                  name="name"
+                  value={name}
+                  onChange={onChange}
+                  required
+                />
+                <AvFeedback>The name of the hospital is required!</AvFeedback>
+              </AvGroup>
 
-                    <AvGroup>
-                      <Col className="pr-1" md="5"> 
-                          <label>Hospital Name</label>
-                          <Input
-                            name="name"
-                            value={name}
-                            onChange={onChange}
-                            placeholder="Hospital"
-                            type="text"
-                            required
-                          />
-                        <AvFeedback>The name of the hospital is required</AvFeedback>
-                      </Col>
-                      </AvGroup>
+              <AvGroup>
+                <Label>Hospital Address</Label>
+                <AvInput
+                  type="text"
+                  placeholder="Hospital Address"
+                  name="address"
+                  value={address}
+                  onChange={onChange}
+                  required
+                />
+                <AvFeedback>The address of the hospital is required!</AvFeedback>
+              </AvGroup>
 
-                      <AvGroup>
-                      <Col className="px-1" md="3">
-                          <label>Hospital Address</label>
-                          <Input
-                            name="address"
-                            value={address}
-                            onChange={onChange}
-                            placeholder="Hospital Address"
-                            type="text"
-                            required
-                          />
-                        <AvFeedback>The address of the hospital is required</AvFeedback>
-                      </Col>
-                      </AvGroup>
-                    
-                      <AvGroup>
-                      <Col className="pl-2" md="5">
-                          <label>Hospital Tax Identification number (AFM)</label>
-                          <Input placeholder="Hospital AFM" type="text" 
-                            id="afm"
-                            name="afm"
-                            value={AFM}
-                            onChange={onChange}
-                            minLength="9"
-                            maxLength="9"
-                            pattern="^[0-9]+$"
-                            disabled={disabled}
-                            required
-                            />
-                            <AvFeedback>The AFM is required and must be 9 numbers in length!</AvFeedback>
-                      </Col>
-                      </AvGroup>
+              <AvGroup>
+                <Label for="afm">Tax Identification Number</Label>
+                <AvInput
+                  type="text"
+                  id="afm"
+                  placeholder="Tax Identification Number(AFM)"
+                  name="afm"
+                  value={afm}
+                  onChange={onChange}
+                  minLength="9"
+                  maxLength="9"
+                  pattern="^[0-9]+$"
+                  required
+                  disabled={disabled}
+                />
+                <AvFeedback>The afm is required and must be 9 numbers in length!</AvFeedback>
+              </AvGroup>
 
-                    <AvForm>
-                    <Row>
-                      <Col className="pr-1" md="6">
-                          <label>Number of Vaccine Doses</label>
-                          <Input
-                            id="numberofDosesAvailable"
-                            placeholder="Number of Vaccine Doses"
-                            value={numberOfDosesAvailable}
-                            type="number"
-                            onChange={onChange}
-                            min="0"
-                          />
-
-                      </Col>  
-                    </Row>
-                    </AvForm>
-
-                    <Row>
-                      <div className="update ml-auto mr-auto">
-                        <Button
-                          className="btn-round"
-                          color="primary"
-                          type="submit"
-                        >
-                          Update Hospital Profile
-                        </Button>
-                      </div>
-                    </Row>
-                  </AvForm>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-         </div>
-          ) 
-        }
-      </Fragment>
-    ); 
+              <AvGroup>
+                <Label for="numberOfDosesAvailable">Number of Doses</Label>
+                <AvInput
+                  id="numberOfDosesAvailable"
+                  type="number"
+                  placeholder="Number of Doses"
+                  name="numberOfDosesAvailable"
+                  value={numberOfDosesAvailable}
+                  onChange={onChange}
+                  min="0"
+                />
+              </AvGroup>
+              <AvGroup>
+                <Button type="submit">Submit</Button>
+              </AvGroup>
+            </AvForm>
+          </CardBody>
+        </Card>
+      )}
+    </Fragment>
+  );
 };
 
 Hospitalregister.propTypes = {
