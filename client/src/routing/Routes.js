@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Alert from '../components/layout/Alert';
+import {Container} from 'reactstrap'
 import NotFound from '../components/layout/NotFound';
 import PrivateRoute from './PrivateRoute';
 import Login from '../components/auth/Login';
@@ -11,7 +12,7 @@ import Hospital from '../components/profile/Hospital';
 
 const Routes = props => {
     return (
-        <section className="container">
+        <Container>
             <Alert />
             <Switch>
                 <Route exact path="/register" component={Register} />
@@ -21,7 +22,7 @@ const Routes = props => {
                 <PrivateRoute exact path="/profile" component={Hospital} />
                 <Route component={NotFound} />
             </Switch>
-        </section>
+        </Container>
     );
 };
 
