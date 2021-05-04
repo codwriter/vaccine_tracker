@@ -53,7 +53,7 @@ const PatientTable = ({
     ).map((patient, i) => {
         return (
             <tbody className=" text-center" key={patient.id}>
-                <tr onClick={() => { setTitle("Edit Patient"); setPatient(patient); toggle();}}>
+                <tr onClick={() => { setTitle("Edit Patient"); setPatient(patient); toggle(); }}>
                     <td>{patient.fullname}</td>
                     <td>{patient.amka}</td>
                     <td className="text-right">{patient.vaccineStatus === -1 ? "Not Scheduled" : patient.vaccineStatus === 0 ?
@@ -78,6 +78,7 @@ const PatientTable = ({
                                 <CardTitle tag="h4" className="card-title">Vaccinations</CardTitle>
                                 <CardSubtitle className="text-right"><Button onClick={() => { setTitle("Add Vaccination"); toggle(); setPatient(null); }} className=" btn-sm btn-outline-info  btn-round">Add Vaccination</Button></CardSubtitle>
                             </CardHeader>
+                            
                             <CardBody className="card-body">
                                 {patients ? (
                                     <Table responsive hover className=" table" >
@@ -92,13 +93,12 @@ const PatientTable = ({
                                             </tr>
                                         </thead>
                                         {tableBody}
-
-                                ) : <div className="text-center text-big">No Vaccinations yet...Start by adding one</div>}
-
+                                    </Table>
+                                ) : <div className="text-center text-big">No Vaccinations yet...Start by adding one</div>
+                                }
                             </CardBody>
 
                             <CardFooter>
-
                                 <div className="pagination-wrapper">
                                     <Pagination>
                                         <PaginationItem disabled={currentPage <= 0}>
