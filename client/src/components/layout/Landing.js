@@ -27,12 +27,12 @@ const Landing = () => {
           </Card>
         </Col>
 
-        <Col xs='6'>
+        <Col >
           <Card>
             <Nav tabs className='loginRegister'>
               <Row>
-                <Col>
-                  <NavItem tag='h3' className='tab_button'>
+                <Col className="xs-6">
+                  <NavItem tag='h3' className='btn-wd'>
                     <NavLink
                       className={classnames({ active: activeTab === '1' })}
                       onClick={() => {
@@ -43,18 +43,20 @@ const Landing = () => {
                     </NavLink>
                   </NavItem>
                 </Col>
-              </Row>
 
-              <NavItem tag='h3' className='tab_button'>
-                <NavLink
-                  className={classnames({ active: activeTab === '2' })}
-                  onClick={() => {
-                    toggle('2');
-                  }}
-                >
-                  Register
+                <Col >
+                  <NavItem tag='h3' className='tab_button'>
+                    <NavLink
+                      className={classnames({ active: activeTab === '2' })}
+                      onClick={() => {
+                        toggle('2');
+                      }}
+                    >
+                      Register
                 </NavLink>
-              </NavItem>
+                  </NavItem>
+                </Col>
+              </Row>
             </Nav>
           </Card>
 
