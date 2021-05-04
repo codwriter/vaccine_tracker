@@ -1,20 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Row, Col, Media } from 'reactstrap';
 import VaccineLogo from '../../assets/images/Vaccine-Tracker_logo.png';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Button } from 'reactstrap';
+import {
+  TabContent, TabPane, Nav, NavItem, NavLink, Container, Row, Col, Card,
+  CardImg,
+} from 'reactstrap';
 import classnames from 'classnames';
 import Login from '../auth/Login';
 import Register from '../auth/Register';
-import {
-  Card,
-  CardImg,
-  CardHeader,
-  CardFooter,
-  CardBody,
-  CardTitle,
-  CardText,
-} from 'reactstrap';
+
 
 const Landing = () => {
   const [activeTab, setActiveTab] = useState('1');
