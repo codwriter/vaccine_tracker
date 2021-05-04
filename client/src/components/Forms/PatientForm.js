@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { AvForm, AvGroup, AvFeedback, AvInput , AvField} from 'availity-reactstrap-validation';
 import { setAlert } from '../../redux/action/alert';
-import { Button, Label, Card, CardHeader, CardBody } from 'reactstrap';
+import { Button, Label, Card, CardHeader, CardBody, Row, Col } from 'reactstrap';
 import { addPatient, updatePatient } from '../../redux/action/patient';
 
 
@@ -66,51 +66,59 @@ const PatientForm = ({ addPatient, updatePatient, setAlert, patient, hide, updat
             <Card>
                 <CardBody>
                     <AvForm className="form text-white" onValidSubmit={handleValidSubmit}>
-                        <AvGroup>
-                            <Label>Fullname</Label>
-                            <AvInput
-                                type="text"
-                                placeholder="The name of the patient"
-                                name="fullname"
-                                value={fullname}
-                                onChange={onChange}
-                                required
-                            />
-                            <AvFeedback>The name of the patient is required!</AvFeedback>
-                        </AvGroup>
-
-                        <AvGroup>
-                            <Label for="afm">AMKA</Label>
-                            <AvInput
-                                type="text"
-                                id="amka"
-                                placeholder="AMKA"
-                                name="amka"
-                                value={amka}
-                                onChange={onChange}
-                                minLength="11"
-                                maxLength="11"
-                                pattern="^[0-9]+$"
-                                required
-                                disabled={disabled}
-                            />
-                            <AvFeedback>The AMKA is required and must be 11 numbers in length!</AvFeedback>
-                        </AvGroup>
-
-                        <AvGroup>
-                            <Label>Age</Label>
-                            <AvInput
-                                type="number"
-                                placeholder="The age of the patient"
-                                min='1'
-                                max='120'
-                                name="age"
-                                value={age}
-                                onChange={onChange}
-                                required
-                            />
-                            <AvFeedback>The age of the patient is required and must be between 1-120!</AvFeedback>
-                        </AvGroup>
+                        <Row>
+                            <Col>
+                                <AvGroup>
+                                    <Label>Fullname</Label>
+                                    <AvInput
+                                        type="text"
+                                        placeholder="The name of the patient"
+                                        name="fullname"
+                                        value={fullname}
+                                        onChange={onChange}
+                                        required
+                                    />
+                                    <AvFeedback>The name of the patient is required!</AvFeedback>
+                                </AvGroup>
+                            </Col>
+                        </Row>
+                        <Row xs="2">
+                            <Col>
+                                <AvGroup>
+                                    <Label for="afm">AMKA</Label>
+                                    <AvInput
+                                        type="text"
+                                        id="amka"
+                                        placeholder="AMKA"
+                                        name="amka"
+                                        value={amka}
+                                        onChange={onChange}
+                                        minLength="11"
+                                        maxLength="11"
+                                        pattern="^[0-9]+$"
+                                        required
+                                        disabled={disabled}
+                                    />
+                                    <AvFeedback>The AMKA is required and must be 11 numbers in length!</AvFeedback>
+                                </AvGroup>
+                            </Col>
+                            <Col>
+                                <AvGroup>
+                                    <Label>Age</Label>
+                                    <AvInput
+                                        type="number"
+                                        placeholder="The age of the patient"
+                                        min='1'
+                                        max='120'
+                                        name="age"
+                                        value={age}
+                                        onChange={onChange}
+                                        required
+                                    />
+                                    <AvFeedback>The age of the patient is required and must be between 1-120!</AvFeedback>
+                                </AvGroup>
+                            </Col>
+                        </Row>
 
                         <AvGroup>
                             <Label>Address</Label>
@@ -124,33 +132,36 @@ const PatientForm = ({ addPatient, updatePatient, setAlert, patient, hide, updat
                             />
                             <AvFeedback>The address of the patient is required!</AvFeedback>
                         </AvGroup>
-
-                        <AvGroup>
-                            <Label>City</Label>
-                            <AvInput
-                                type="text"
-                                placeholder="City"
-                                name="city"
-                                value={city}
-                                onChange={onChange}
-                                required
-                            />
-                            <AvFeedback>The city of the patient is required!</AvFeedback>
-                        </AvGroup>
-
-                        <AvGroup>
-                            <Label>Country</Label>
-                            <AvInput
-                                type="text"
-                                placeholder="Country of Patient"
-                                name="country"
-                                value={country}
-                                onChange={onChange}
-                                required
-                            />
-                            <AvFeedback>The country of the patient is required!</AvFeedback>
-                        </AvGroup>
-
+                        <Row xs="2">
+                            <Col>
+                                <AvGroup>
+                                    <Label>City</Label>
+                                    <AvInput
+                                        type="text"
+                                        placeholder="City"
+                                        name="city"
+                                        value={city}
+                                        onChange={onChange}
+                                        required
+                                    />
+                                    <AvFeedback>The city of the patient is required!</AvFeedback>
+                                </AvGroup>
+                            </Col>
+                            <Col>
+                                <AvGroup>
+                                    <Label>Country</Label>
+                                    <AvInput
+                                        type="text"
+                                        placeholder="Country of Patient"
+                                        name="country"
+                                        value={country}
+                                        onChange={onChange}
+                                        required
+                                    />
+                                    <AvFeedback>The country of the patient is required!</AvFeedback>
+                                </AvGroup>
+                            </Col>
+                        </Row>
 
                         <AvGroup>
                             <Label for="vaccineBrand">Vaccine Brand</Label>
