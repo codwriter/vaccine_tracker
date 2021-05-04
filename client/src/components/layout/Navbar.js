@@ -13,8 +13,6 @@ import {
   InputGroupAddon,
   Input,
   NavLink,
-
-
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
@@ -69,6 +67,7 @@ const NavbarComponent = ({ auth: { isAuthenticated }, logout }) => {
         </Collapse>
       </Navbar>
     </div>
+
   );
 };
 

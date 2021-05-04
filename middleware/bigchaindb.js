@@ -5,11 +5,11 @@ const API_PATH = 'http://localhost:9984/api/v1/';
 const conn = new driver.Connection(API_PATH);
 
 
-exports.createPatient = (patient, userID, {hospitalName,address}) => {
+exports.createPatient = (patient, userID, {name,address}) => {
     return new Promise((resolve, reject) => {
-        var patientAssetData = patient[0];
+        var patientAssetData = patient;
         var patientMetaData = (({ vaccineStatus, vaccineBrand, numberOfDoses }) => ({ vaccineStatus, vaccineBrand, numberOfDoses }))(patientAssetData);
-        patientMetaData.hospital = { "hospitalName": hospitalName, "address": address };
+        patientMetaData.hospital = { "HospitalName": name, "Address": address };
 
         console.log("the metadata is ", patientMetaData);
         const assetdata = {
