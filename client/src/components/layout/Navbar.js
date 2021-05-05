@@ -17,7 +17,9 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText
+  NavbarText,
+  Row,
+  Col
 } from "reactstrap";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -30,17 +32,17 @@ const NavbarComponent = ({ auth: { isAuthenticated }, logout }) => {
   const [isOpen, set_isOpen] = useState(false);
   const authLinks = (
     <>
-      <NavItem >
+      <NavItem className="text-right">
         <Link to="/dashboard" className="nav-link btn-magnify">Dashboard</Link>
       </NavItem>
       <NavItem>
         <Link to="/Profile" className="nav-link btn-magnify">Hospital</Link>
       </NavItem>
       <NavItem>
-        <a onClick={logout} className="nav-link btn-magnify" href="/">
+        <Link onClick={logout} className="nav-link btn-magnify" to="/">
           <i className="fas fa-sign-out-alt" />{' '}
           <span className="hide-sm">Logout</span>
-        </a>
+        </Link>
       </NavItem>
     </>
   );
@@ -54,12 +56,14 @@ const NavbarComponent = ({ auth: { isAuthenticated }, logout }) => {
   const toggle = () => set_isOpen(!isOpen);
 
   return (
-    <div>
+     </div>
       <Navbar light expand="md" className="bg-primary text-white navbar">
       <NavbarBrand href={isAuthenticated ? '/dashboard':'/'}>
         <img src={logo} className='nav-logo' />
       </NavbarBrand>
         <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar >
+          <Nav className="mr-auto" >
         <Collapse isOpen={isOpen} navbar>
           <Nav>
             {isAuthenticated ? authLinks : guestLinks}
