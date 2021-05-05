@@ -95,9 +95,9 @@ const Login = ({ login, isAuthenticated }) => {
             Sign In
           </Button>
 
-          <div className="my-3">
+         {/*  <div className="my-3">
             Don't have an account? <Link to="/register">Sign Up</Link>
-          </div>
+          </div> */}
         </CardBody>
       </Card>
     </Form>

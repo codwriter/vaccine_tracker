@@ -41,29 +41,28 @@ patientsRouter.route('/')
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return res.status(400).json({ errors: errors.array() });
-            }
-            Hospital.findOne({ user: req.user.id })
-                .then(hospital => {
+            } else {
+                Hospital.findOne({ user: req.user.id })
+                    .then(hospital => {
                         req.body.hospital = hospital.id;
-                    Patients.create(req.body)
-                        .then((patient) => {
-                            hospital.numberOfDosesAvailable -= 1;
-                            hospital.save()
-                                .then((hospital => {
-                                    console.log("The doses minus 1",hospital.numberOfDosesAvailable);
-                                }, (err) => next(err)));
-                            //Create Asset and send it to bigchain
-                            bgchain.createPatient(patient, req.user.id, hospital);
-                            console.log("The patient created", patient);
-                            res.statusCode = 200;
-                            res.setHeader('Content-type', 'application/json');
-                            res.json(patient);
-                        }, (err) => next(err))
-                        .catch((err) => next(err));
-                }, (err) => next(err))
-                .catch((err) => next(err));
+                        Patients.create(req.body)
+                            .then((patient) => {
+                                hospital.numberOfDosesAvailable -= 1;
+                                hospital.save()
+                                    .then(hospital => {
+                                    }, (err) => next(err));
+                                //Create Asset and send it to bigchain
+                                bgchain.createPatient(patient, req.user.id, hospital);//TODO:Check if is created
+                                console.log("The patient created", patient);
+                                res.statusCode = 200;
+                                res.json(patient);
+                            }, (err) => next(err))
+                            .catch((err) => next(err));
+                    }, (err) => next(err))
+                    .catch((err) => next(err));
+            }
+        })
 
-    })
     .put(auth, (req, res, next) => {
         res.statusCode = 403;
         res.end('PUT operation not supported on /patients');
@@ -113,17 +112,19 @@ patientsRouter.route('/:patientId')
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return res.status(400).json({ errors: errors.array() });
+            } else {
+                Patients.findByIdAndUpdate(req.params.patientId, {
+                    $set: req.body
+                }, { new: true })
+                    .then((patient) => {
+                        res.statusCode = 200;
+                        res.setHeader('Content-type', 'application/json');
+                        res.json(patient);
+                    }, (err) => next(err))
+                    .catch((err) => next(err));
             }
-        Patients.findByIdAndUpdate(req.params.patientId, {
-            $set: req.body
-        }, { new: true })
-            .then((patient) => {
-                res.statusCode = 200;
-                res.setHeader('Content-type', 'application/json');
-                res.json(patient);
-            }, (err) => next(err))
-            .catch((err) => next(err));
-    })
+        })
+
     .delete(auth, (req, res, next) => {
         Patients.findByIdAndRemove(req.params.patientId)
             .then((resp) => {

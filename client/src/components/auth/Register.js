@@ -117,9 +117,9 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             Sign Up
           </Button>
 
-          <div className="my-3">
+         {/*  <div className="my-3">
             Already have an account? <Link to="/login">Sign In</Link>
-          </div>
+          </div> */}
         </CardBody>
       </Card>
     </Form>

@@ -56,7 +56,7 @@ const NavbarComponent = ({ auth: { isAuthenticated }, logout }) => {
   const toggle = () => set_isOpen(!isOpen);
 
   return (
-    <div class>
+     </div>
       <Navbar light expand="md" className="bg-primary text-white navbar">
       <NavbarBrand href={isAuthenticated ? '/dashboard':'/'}>
         <img src={logo} className='nav-logo' />
@@ -64,6 +64,8 @@ const NavbarComponent = ({ auth: { isAuthenticated }, logout }) => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar >
           <Nav className="mr-auto" >
+        <Collapse isOpen={isOpen} navbar>
+          <Nav>
             {isAuthenticated ? authLinks : guestLinks}
           </Nav>
         </Collapse>

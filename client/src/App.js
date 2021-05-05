@@ -5,9 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { LOGOUT } from './redux/action/types';
 
 import Landing from './components/layout/Landing';
-import Navbar from './components/layout/Navbar';
 import Routes from './routing/Routes';
-
 import { loadUser } from './redux/action/auth';
 import setAuthToken from './utils/setAuthToken';
 import { Provider } from 'react-redux';
@@ -31,7 +29,6 @@ const App = () => {
     <Provider store={store}>
       <BrowserRouter>
         <Fragment>
-         <Navbar />
           <Switch>
             <Route exact path="/" component={Landing} />
             <Route component={Routes} />
