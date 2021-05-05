@@ -79,7 +79,7 @@ const PatientTable = ({
                             </CardHeader>
 
                             <CardBody className="card-body">
-                                {patients? 
+                                {pageCount>=1? 
                                     <Table responsive hover className=" table" >
                                         <thead className="text-primary text-center">
                                             <tr>
