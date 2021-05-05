@@ -5,6 +5,7 @@ import {
   CardImg,
 } from 'reactstrap';
 import classnames from 'classnames';
+import Alert from '../../components/layout/Alert';
 import Login from '../auth/Login';
 import Register from '../auth/Register';
 
@@ -31,8 +32,8 @@ const Landing = () => {
           <Card>
             <Nav tabs className='loginRegister'>
               <Row>
-                <Col className="xs-6">
-                  <NavItem tag='h3' className='btn-wd'>
+                <Col >
+                  <NavItem tag='h3' className='tab_button'>
                     <NavLink
                       className={classnames({ active: activeTab === '1' })}
                       onClick={() => {
@@ -44,7 +45,7 @@ const Landing = () => {
                   </NavItem>
                 </Col>
 
-                <Col >
+                <Col  >
                   <NavItem tag='h3' className='tab_button'>
                     <NavLink
                       className={classnames({ active: activeTab === '2' })}
@@ -61,6 +62,7 @@ const Landing = () => {
           </Card>
 
           <TabContent activeTab={activeTab}>
+            <Alert/>
             <TabPane tabId='1'>
               <Row className='justify_center'>
                 <Col>

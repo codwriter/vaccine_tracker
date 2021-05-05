@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { AvForm, AvGroup, AvFeedback, AvInput, AvField } from 'availity-reactstrap-validation';
 import { Button, Label, Row, Col } from 'reactstrap';
-import { addPatient, updatePatient } from '../../redux/action/patient';
+import { addPatient, updatePatient, removePatient } from '../../redux/action/patient';
 
 
 
@@ -19,7 +19,7 @@ const initialState = {
     numberOfDoses: 0
 };
 
-const PatientForm = ({ addPatient, updatePatient, patient, hide }) => {
+const PatientForm = ({ addPatient, updatePatient, removePatient, patient, hide }) => {
     const [formData, setFormData] = useState({ initialState });
     const [disabled, setdisabled] = useState(false);
 
@@ -56,6 +56,10 @@ const PatientForm = ({ addPatient, updatePatient, patient, hide }) => {
             updatePatient(patient._id, formData);
         } else
             addPatient(formData);
+        hide();
+    }
+    const removeVaccination = async (e) => {
+        removePatient(patient._id);
         hide();
     }
 
@@ -199,11 +203,13 @@ const PatientForm = ({ addPatient, updatePatient, patient, hide }) => {
                     <Button type="submit">Submit</Button>
                 </AvGroup>
             </AvForm>
+            {patient? <Button color="danger " onClick={removeVaccination}>Delete Patient</Button>:""}
         </Fragment>
     );
 }
 
 PatientForm.propTypes = {
+    removePatient: PropTypes.func.isRequired,
     addPatient: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.object.isRequired
 };
@@ -212,4 +218,4 @@ const mapStateToProps = (state) => ({
     isAuthenticated: state.auth
 });
 
-export default connect(mapStateToProps, { addPatient, updatePatient })(PatientForm);
+export default connect(mapStateToProps, { addPatient, updatePatient, removePatient })(PatientForm);

@@ -37,7 +37,7 @@ const Dashboard = ({
                                     </Card>
                                 </Col>
 
-                                {hospital.numberOfDosesAvailable ? <Col lg="3" md="6" sm="6" >
+                                {hospital.numberOfDosesAvailable>=0 ? <Col lg="3" md="6" sm="6" >
                                     <AvailableDoses doses={hospital.numberOfDosesAvailable} />
                                 </Col> : ''}
                             </Row>
@@ -57,7 +57,7 @@ const Dashboard = ({
                             </Row>
                             <Row>
                                 <Col>
-                                    <p className="text-white">You are not linked to a hospital yet, please add some info.</p>
+                                    <p>You are not linked to a hospital yet, please add some info.</p>
                                     <Link to="/create-hospital-profile" className="btn btn-primary">
                                         Create Profile
                             </Link>

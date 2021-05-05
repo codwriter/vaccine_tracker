@@ -6,7 +6,6 @@ import { LOGOUT } from './redux/action/types';
 
 import Landing from './components/layout/Landing';
 import Routes from './routing/Routes';
-
 import { loadUser } from './redux/action/auth';
 import setAuthToken from './utils/setAuthToken';
 import { Provider } from 'react-redux';

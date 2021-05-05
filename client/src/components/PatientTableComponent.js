@@ -30,12 +30,6 @@ const PatientTable = ({
     }, [getPatients, loading]);
 
     useEffect(() => {
-        getPatients();
-    }, [getPatients, loading]);
-
-
-
-    useEffect(() => {
         setpageCount(Math.ceil(patients.length / pageSize));
     }, [patients])
 
@@ -85,7 +79,7 @@ const PatientTable = ({
                             </CardHeader>
 
                             <CardBody className="card-body">
-                                {patients ? (
+                                {patients? 
                                     <Table responsive hover className=" table" >
                                         <thead className="text-primary text-center">
                                             <tr>
@@ -96,7 +90,7 @@ const PatientTable = ({
                                         </thead>
                                         {tableBody}
                                     </Table>
-                                ) : <div className="text-center text-big">No Vaccinations yet...Start by adding one</div>
+                                 : <div className="text-center text-big">No Vaccinations yet...Start by adding one</div>
                                 }
                             </CardBody>
 
