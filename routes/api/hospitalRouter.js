@@ -4,12 +4,51 @@ const { check, validationResult } = require('express-validator');
 
 const Hospitals = require('../../models/hospital');
 const User = require('../../models/user');
+const { findOne } = require('../../models/hospital');
 
 const hospitalRouter = express.Router();
 
 hospitalRouter.use(express.json());
 
-hospitalRouter.route('/')
+// @route    GET api/hospital/me
+// @desc     Get Hospital that is linked to user
+// @access   Private
+hospitalRouter.get('/me', auth, async (req, res) => {
+    try {
+        const hospital = await Hospitals.findOne({
+            id : req.user.hospital
+        });
+
+        if (!hospital) {
+            return res.status(400).json({ msg: 'There is no hospital linked to this user' });
+        }
+
+        res.json(hospital);
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+});
+
+// @route    GET api/hospital/
+// @desc     Get All hospitals
+// @access   Private
+hospitalRouter.get('/', auth, async (req, res) => {
+   try {
+       const hospitals = await Hospitals.find(req.query);
+       if (!hospitals) {
+           return res.status(400).json({ msg: 'There are no hospitals' });
+       }
+       res.json(hospitals);
+   } catch (err) {
+       console.error(err.message);
+       res.status(500).send('Server error')
+   } 
+});
+
+
+/*  hospitalRouter.route('/')
     .get(auth, (req, res, next) => {
         Hospitals.find(req.query)
             .populate('user', 'email')
@@ -22,7 +61,7 @@ hospitalRouter.route('/')
                 res.status(500).send('Server Error');
                 next(err)
             });
-    })
+    }) 
     .post(auth,
         check('name', 'Name of Hospital is required').notEmpty(),
         check('afm')
@@ -59,7 +98,7 @@ hospitalRouter.route('/')
             }, (err) => next(err))
             .catch((err) => next(err));
     });
-
+ */
 
 hospitalRouter.route('/profile')
     .get(auth, (req, res, next) => {
