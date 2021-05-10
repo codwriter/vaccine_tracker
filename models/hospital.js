@@ -5,6 +5,7 @@ var hospitalsSchema = new Schema({
     name: {
         type: String,
         default: '',
+        trim: true,
         required: true
     },
     afm: {
@@ -19,15 +20,37 @@ var hospitalsSchema = new Schema({
     address: {
         type: String,
         default: '',
+        trim: true,
         required: true
     },
-    numberOfDosesAvailable: {
-        type: Number,
+    city: {
+        type: String,
+        trim: true,
+        required:true
     },
-    user: {
+    country: {
+        type: String,
+        trim: true,
+        required: true
+    },
+    admin: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    vaccines: [
+        {
+            vaccineBrand: {
+                type: String,
+                trim: true,
+                required:true
+            },
+            doses: {
+                type: number,
+                required:true
+            },
+            required:true
+        }
+    ]
 }, {
     timestamps: true
 });
