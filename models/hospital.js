@@ -45,10 +45,9 @@ var hospitalsSchema = new Schema({
                 required:true
             },
             doses: {
-                type: number,
+                type: Number,
                 required:true
             },
-            required:true
         }
     ]
 }, {
