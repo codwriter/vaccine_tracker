@@ -7,7 +7,7 @@ const User = require('../../models/user');
 const { findOne } = require('../../models/hospital');
 
 const hospitalRouter = express.Router();
-
+/* 
 hospitalRouter.use(express.json());
 
 // @route    GET api/hospital/me
@@ -16,7 +16,7 @@ hospitalRouter.use(express.json());
 hospitalRouter.get('/me', auth, async (req, res) => {
     try {
         const hospital = await Hospitals.findOne({
-            id : req.user.hospital
+            id: req.user.hospital
         });
 
         if (!hospital) {
@@ -35,20 +35,48 @@ hospitalRouter.get('/me', auth, async (req, res) => {
 // @desc     Get All hospitals
 // @access   Private
 hospitalRouter.get('/', auth, async (req, res) => {
-   try {
-       const hospitals = await Hospitals.find(req.query);
-       if (!hospitals) {
-           return res.status(400).json({ msg: 'There are no hospitals' });
-       }
-       res.json(hospitals);
-   } catch (err) {
-       console.error(err.message);
-       res.status(500).send('Server error')
-   } 
+    try {
+        const hospitals = await Hospitals.find(req.query);
+        if (!hospitals) {
+            return res.status(400).json({ msg: 'There are no hospitals' });
+        }
+        res.json(hospitals);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error')
+    }
 });
 
+// @route   Post api/hospital/
+// @desc    Post a new Hospital
+// @access   Private
+hospitalRouter.post('/', auth, check('name', 'Name of Hospital is required').notEmpty(),
+    check('afm')
+        .isLength({ min: 9, max: 9 })
+        .withMessage('Afm must be 9 numbers')
+        .matches(/^[0-9]+$/)
+        .withMessage('Is not an afm type')
+        .notEmpty()
+        .withMessage('AFM of Hospital is required'),
+    check('address', 'Address of Hospital is required').notEmpty(),
+    (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        const {}
+        try {
+            let Hospital = await Hospitals.findOne({ afm: req.body.afm });
+            if (Hospital) {
+                return res.status(400).json({ errors: [{ msg: 'Hospital already exists' }] });
 
-/*  hospitalRouter.route('/')
+            }
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server error');
+        }
+    }); */
+ hospitalRouter.route('/')
     .get(auth, (req, res, next) => {
         Hospitals.find(req.query)
             .populate('user', 'email')
@@ -98,7 +126,6 @@ hospitalRouter.get('/', auth, async (req, res) => {
             }, (err) => next(err))
             .catch((err) => next(err));
     });
- */
 
 hospitalRouter.route('/profile')
     .get(auth, (req, res, next) => {
