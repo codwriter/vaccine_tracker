@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import {
   Collapse,
@@ -7,19 +7,12 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  Container,
-  InputGroup,
-  InputGroupText,
-  InputGroupAddon,
-  Input,
-  NavLink,
+
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText,
-  Row,
-  Col
+  NavbarText
 } from "reactstrap";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -32,9 +25,6 @@ const NavbarComponent = ({ auth: { isAuthenticated }, logout }) => {
   const [isOpen, set_isOpen] = useState(false);
   const authLinks = (
     <>
-      <NavItem className="text-right">
-        <Link to="/dashboard" className="nav-link btn-magnify">Dashboard</Link>
-      </NavItem>
       <NavItem>
         <Link to="/Profile" className="nav-link btn-magnify">Hospital</Link>
       </NavItem>
@@ -56,17 +46,34 @@ const NavbarComponent = ({ auth: { isAuthenticated }, logout }) => {
   const toggle = () => set_isOpen(!isOpen);
 
   return (
-      <Navbar light expand="md" className="bg-primary text-white navbar">
+    <Navbar light expand="md" className="bg-primary text-white navbar">
       <NavbarBrand href={isAuthenticated ? '/dashboard':'/'}>
         <img src={logo} className='nav-logo' />
       </NavbarBrand>
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar >
-        <Nav className="mr-auto" style={{float:'right'}} >
-            {isAuthenticated ? authLinks : guestLinks}
-          </Nav>
-        </Collapse>
-      </Navbar>
+
+
+      <Link className="nav-link btn-magnify statistics" to="/Statistics">
+        <div className="stats-fa">
+          <i class="far fa-chart-bar fa-lg" />{' '}
+          <span className="hide-sm">Statistics</span>
+        </div>
+      </Link>
+   
+      
+      <UncontrolledDropdown  inNavbar >
+        <DropdownToggle nav caret>
+          <i class="far fa-user fa-lg"></i>
+        </DropdownToggle>
+        
+        <DropdownMenu right>
+          <DropdownItem>
+            <Nav className="mr-auto" >
+              {isAuthenticated ? authLinks : guestLinks}
+            </Nav>
+          </DropdownItem>
+        </DropdownMenu>
+      </UncontrolledDropdown>
+    </Navbar>
   );
 };
 

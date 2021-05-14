@@ -4,19 +4,53 @@
     min-height: 20px;
     margin-bottom: 20px;
 
+    .dropdown-menu .dropdown-item:hover, 
+    .dropdown-menu .dropdown-item:focus {
+        background-color: $white-color;
+    }
+
+    .fa-user {
+        color: $white-color;
+    }
+
+    .dropup .dropdown-toggle:after, 
+    .dropdown .dropdown-toggle:after{
+        color: $white-color;
+    }
+
+    a:not(.btn):not(.dropdown-item){
+        width: 100% !important;
+        color: $white-color;
+    }
+
+    .statistics{
+        color: $white-color !important;
+        font-size: medium;
+    }
+
+    .stats-fa{
+        float: right;
+    }
+
+    a:hover {
+        color: $gray-600 !important;
+    }
+
+    .statistics:hover{
+        color: $gray-500 !important;
+    }
+
     a{
         vertical-align: middle;
 
         &:not(.btn):not(.dropdown-item){
-            color: $white-color;
+            color: $black-color;
         }
 
         &.dropdown-item{
             color: $default-color;
         }
     }
-
-
 
     &.bg-white{
       .input-group .form-control,
@@ -273,20 +307,30 @@
         }
     }
 
-    .navbar-collapse {
-        .nav-item {
-          
-            a {
-                font-size: $font-size-base;
-                font-size: 17px;
-            }
+}
 
-            a:hover {
-                color: $gray-500;
-            }
-        }
+
+
+@media only screen and (max-width: 991px){
+    .navbar .dropdown.show .dropdown-menu{
+        background-color: $white-color !important;
     }
 }
+
+
+@media screen and (max-width: 768px){
+    .navbar a:not(.btn):not(.dropdown-item){
+        width: 45% !important;
+    }
+}
+
+@media screen and (max-width: 600px){
+    .navbar a:not(.btn):not(.dropdown-item){
+        width: 44% !important;
+    }
+}
+
+
 
 
 .bg-default{
