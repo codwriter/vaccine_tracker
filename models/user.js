@@ -24,6 +24,7 @@ var User = new Schema({
         trim: true,
         required: true
     },
+
     hospital: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Hospital'
