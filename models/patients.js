@@ -16,7 +16,12 @@ var patientsSchema = new Schema({
         trim: true,
         required: true
     }, */
-    fullname: {
+    firstname: {
+        type: String,
+        trim: true,
+        required: true
+    },
+    lastname: {
         type: String,
         trim: true,
         required: true
@@ -34,6 +39,10 @@ var patientsSchema = new Schema({
         type: Number,
         min: 1,
         max: 120,
+    },
+    birthday: {
+        type: Date,
+        default: Date.now,
         required: true
     },
     address: {
