@@ -34,11 +34,14 @@ var patientsSchema = new Schema({
         type: Number,
         min: 1,
         max: 120,
-        required: true
     },
     address: {
         type: String,
         trim: true,
+        required: true
+    },
+    sex: {
+        type: String,
         required: true
     },
     city: {
@@ -61,12 +64,6 @@ var patientsSchema = new Schema({
         type: String,
         trim: true,
         default: "-"
-    },
-    numberOfDoses: {
-        type: Number,
-        min: 0,
-        max: 2, // 
-        default: 0
     },
     hospital: {
         type: mongoose.Schema.Types.ObjectId,
