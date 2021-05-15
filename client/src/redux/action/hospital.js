@@ -4,16 +4,20 @@ import api from '../../utils/api';
 import { setAlert } from './alert';
 import {
   GET_HOSPITAL,
+  GET_HOSPITALS,
+  LINK_HOSPITAL,
+  UNLINK_HOSPITAL,
   HOSPITAL_ERROR,
   UPDATE_HOSPITAL, //     ΔΕΝ ΧΡΗΣΙΜΟΠΟΙΕΊΤΑΙ ΓΙΑΤΙ ΕΙΝΑΙ ΣΥΜΠΤΙΓΜΕΝΑ ΟΛΑ ΣΕ ΜΙΑ ΣΥΝΑΡΤΗΣΗ 
   CLEAR_HOSPITAL,
   DELETE_HOSPITAL
+
 } from './types';
-//
+
 //Get current users Hospital profile info
 export const getCurrentHospital = () => async dispatch => { // () σημαίνει οτι είναι μια συνάρτηση κενή με καθόλου ορίσματα 
   try {
-    const res = await api.get('/hospital/profile'); //ΕΓΙΝΕ ΑΛΛΑΓΗ ΑΠΟ ΤΟ ΠΡΟΤΥΠΟ /api/hospital/me
+    const res = await api.get('/hospital/me'); //ΕΓΙΝΕ ΑΛΛΑΓΗ ΑΠΟ ΤΟ ΠΡΟΤΥΠΟ /api/hospital/me
 
     dispatch({
       type: GET_HOSPITAL,
@@ -29,7 +33,7 @@ export const getCurrentHospital = () => async dispatch => { // () σημαίνε
 
 //Create or update hospital
 //ΘΑ ΧΡΕΙΑΣΤΕΙ ΕΝΑ ΟΡΙΣΜΑ ID !!!!!! 
-export const createHospital = (formData, history) => async dispatch => {  //H edit μπαινει για να γνωρίζω αμα δημιουργω η κανω edit καποιο νοσοκομειο
+export const createHospital = (formData, history) => async (dispatch) => {  //H edit μπαινει για να γνωρίζω αμα δημιουργω η κανω edit καποιο νοσοκομειο
   try {
 
     const res = await api.post('/hospital', formData);    //η διαδρομή που παίρνει για να κάνει update η να δημιουργήσει το καινουργιο profile νοσοκομειου
@@ -59,7 +63,7 @@ export const createHospital = (formData, history) => async dispatch => {  //H ed
 
 export const updateHospital = (formdata) => async (dispatch) => {
   try {
-    const res = await api.put('/hospital/profile', formdata);
+    const res = await api.put('/hospital/me', formdata);
 
     dispatch(setAlert('Hospital Updated', 'success'));
 
@@ -80,33 +84,15 @@ export const updateHospital = (formdata) => async (dispatch) => {
   }
 }
 
-// Delete Hospital profile 
-export const deleteHospital = () => async (dispatch) => {
-  if (window.confirm('Are you sure? This can NOT be undone!')) {
-    try {
-      await api.delete('/hospital');
+//GET ALL HOSPITALS
+export const getHospitals = () => async (dispatch) => {
+  dispatch({ type: CLEAR_HOSPITAL });
 
-      dispatch({ type: CLEAR_HOSPITAL });
-      dispatch({ type: DELETE_HOSPITAL });
-
-      dispatch(setAlert('The hospitals profile has been permanently deleted'));
-    } catch (err) {
-      dispatch({
-        type: HOSPITAL_ERROR,
-        payload: err/* { msg: err.response.statusText, status: err.response.status } PROVLIMA SE SERVER */
-      });
-    }
-  }
-};
-
-/* //Δεν έχω ιδέα για τα αποτελέσματα του παρακάτω κώδικα
-// Get hospital by user ID
-export const getHospitalById = (userId) => async (dispatch) => {
   try {
-    const res = await api.get(`/hospital/user/${userId}`);
+    const res = await api.get('/'); ///PATH ????
 
     dispatch({
-      type: GET_HOSPITAL,
+      type: GET_HOSPITALS,
       payload: res.data
     });
   } catch (err) {
@@ -116,4 +102,35 @@ export const getHospitalById = (userId) => async (dispatch) => {
     });
   }
 };
- */
+
+//LINK HOSPITAL
+export const linkhospital = () => async (dispatch) => {
+  try {
+    const res = await api.get('/'); ///PATH
+
+    dispatch({
+      type: LINK_HOSPITAL,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: HOSPITAL_ERROR
+    });
+  }
+};
+
+//UNLINK HOSPITAL
+export const unlinkhospital = () => async (dispatch) => {
+  try {
+    const res = await api.get('/'); ///PATH
+
+    dispatch({
+      type: UNLINK_HOSPITAL,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: HOSPITAL_ERROR
+    });
+  }
+};
