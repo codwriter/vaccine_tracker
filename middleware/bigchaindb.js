@@ -37,7 +37,7 @@ exports.createPatient = (hospital, patient) => {
         });
     });
 }
-// Get patients
+// Get patients from a hospital
 exports.getPatients = async (hospitalId) => {
     try {
         var patients = [];
@@ -55,7 +55,30 @@ exports.getPatients = async (hospitalId) => {
     }
 }
 
+// Get all patients
+exports.getAllPatients = async () => {
+    try {
+        var patients = [];
+        // Find all Hospitals
+        var hospitals = await Hospitals.find();
+        // For every hospital find the unspent transactions
+        for (let hospital of hospitals) {
+            var responds = await conn.listOutputs(hospital.keypair.publicKey, false);
+            // Find the metadata for every unspent transaction and push it to Patients array
+            for (let respond of responds) {
+                let patient = await conn.searchMetadata(respond.transaction_id);
+                patients.push(patient[0].metadata);
+            }
+        }
+        return patients;
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
 // Get Patient
+// Input PatientID
+// Output Patient
 exports.getPatient = async (patientId) => {
     try {
         let patient = await conn.searchMetadata(patientId);
@@ -104,11 +127,11 @@ exports.deletePatient = async (patientId) => {
         let transaction = await conn.getTransaction(patient.id);
         // Random Keypair
         let randomKeypair = new driver.Ed25519Keypair();
-       
+
         const txDeleteTransfer = driver.Transaction.makeTransferTransaction(
             [{ tx: transaction, output_index: 0 }],
             [driver.Transaction.makeOutput(driver.Transaction.makeEd25519Condition(randomKeypair.publicKey))],
-            {Patient:"Deleted"}
+            { Patient: "Deleted" }
         );
 
         // Sign Transaction with private key

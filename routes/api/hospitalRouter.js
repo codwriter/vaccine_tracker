@@ -4,8 +4,6 @@ const { check, validationResult } = require('express-validator');
 const bigchaindriver = require('bigchaindb-driver');
 const Hospitals = require('../../models/hospital');
 const User = require('../../models/user');
-
-
 const hospitalRouter = express.Router();
 
 hospitalRouter.use(express.json());
@@ -15,9 +13,8 @@ hospitalRouter.use(express.json());
 // @access   Private
 hospitalRouter.get('/me', auth, async (req, res) => {
     try {
-        const hospital = await Hospitals.findOne({
-            id: req.user.hospital
-        }).select('-keypair');
+        const user = await User.findById(req.user.id);
+        const hospital = await Hospitals.findById(user.hospital).select('-keypair');
         console.log(req.user);
         if (!hospital) {
             return res.status(400).json({ msg: 'There is no hospital linked to this user' });
@@ -87,7 +84,7 @@ hospitalRouter.post('/', auth,
 
             res.json(hospital);
 
-            let keypair = new bigchaindriver.Ed25519Keypair();F
+            let keypair = new bigchaindriver.Ed25519Keypair();
             hospital.keypair = keypair;
             await hospital.save();
 
