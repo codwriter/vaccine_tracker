@@ -14,13 +14,35 @@ var User = new Schema({
         type: String,
         required: true
     },
-    privateKey: {
-        type: String
+    firstname: {
+        type: String,
+        trim: true,
+        required: true
     },
-    publicKey: {
-        type:String
-    }
+    lastname: {
+        type: String,
+        trim: true,
+        required: true
+    },
 
+    hospital: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Hospital'
+    },
+    birthday: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
+    amkaUser: {
+        type: String,
+        match: [/^[0-9]+$/i, "Only numbers are allowed!"],
+        trim: true,
+        minLength: 11,
+        maxLength: 11,
+        required: true,
+        unigue:true
+    }
 });
 
 module.exports = mongoose.model('User', User);

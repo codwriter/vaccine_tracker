@@ -15,6 +15,7 @@ var patientsSchema = new Schema({
         type: String,
         trim: true,
         required: true
+
     }, 
     birthday: {
         type: Date,
@@ -34,6 +35,7 @@ var patientsSchema = new Schema({
         type: Number,
         min: 1,
         max: 120,
+        required: true
     },
     address: {
         type: String,
