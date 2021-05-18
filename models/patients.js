@@ -6,16 +6,6 @@ var amkaValidator = [
 ]; */
 
 var patientsSchema = new Schema({
-   /*  firstname: {
-        type: String,
-        trim: true,
-        required: true
-    },
-    lastname: {
-        type: String,
-        trim: true,
-        required: true
-    }, */
     firstname: {
         type: String,
         trim: true,
@@ -24,6 +14,12 @@ var patientsSchema = new Schema({
     lastname: {
         type: String,
         trim: true,
+        required: true
+
+    }, 
+    birthday: {
+        type: Date,
+        default: Date.now,
         required: true
     },
     amka: {
@@ -39,15 +35,15 @@ var patientsSchema = new Schema({
         type: Number,
         min: 1,
         max: 120,
-    },
-    birthday: {
-        type: Date,
-        default: Date.now,
         required: true
     },
     address: {
         type: String,
         trim: true,
+        required: true
+    },
+    sex: {
+        type: String,
         required: true
     },
     city: {
@@ -59,27 +55,34 @@ var patientsSchema = new Schema({
         type: String,
         required: true
     },
-    // 0: Pending, 1:Completed, 2: Cancelled, -1: Not Scheduled
+    apointmentA: {
+        type: Date,
+        default: Date.now
+    },
+    apointmentB: {
+        type: Date,
+        default: Date.now
+    },
+    // 0: Pending, 1:Completed, 2: Cancelled
     vaccineStatus: {
         type: Number,
-        min: -1,
+        min: 0,
         max: 2,
-        default: -1
+        default: 0,
+        required: true
     },
     vaccineBrand: {
         type: String,
         trim: true,
         default: "-"
     },
-    numberOfDoses: {
-        type: Number,
-        min: 0,
-        max: 2, // 
-        default: 0
-    },
     hospital: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Hospital'
+    },
+    additionalInfo: {
+        type: String,
+        default: "..."
     }
 }, {
     timestamps: true
