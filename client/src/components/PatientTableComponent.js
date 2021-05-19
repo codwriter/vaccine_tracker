@@ -1,9 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import {
-    Table,
     Card, CardHeader, CardBody, CardTitle, CardFooter,
     Row, Col,
-    Pagination, PaginationItem, PaginationLink,
     Button,
     CardSubtitle
 } from 'reactstrap';
@@ -12,6 +10,7 @@ import { connect } from 'react-redux';
 import { getPatients } from '../redux/action/patient';
 import useModal from '../components/Modals/useModal';
 import PatientModal from './Modals/PatientModal';
+import XTable from './table';
 
 
 const PatientTable = ({
@@ -19,9 +18,6 @@ const PatientTable = ({
     patients: { loading, patients }
 }) => {
     const { isShowing, toggle } = useModal();
-    const [pageSize, setpageSize] = useState(7);
-    const [pageCount, setpageCount] = useState(Math.ceil(patients.length / pageSize));
-    const [currentPage, setcurrentPage] = useState(0);
     const [patient, setPatient] = useState(null);
     const [title, setTitle] = useState("");
 
@@ -29,36 +25,30 @@ const PatientTable = ({
         getPatients();
     }, [getPatients, loading]);
 
-    useEffect(() => {
-        setpageCount(Math.ceil(patients.length / pageSize));
-    }, [patients])
 
+    const listHeader = [
+        {
+            Header: "Fullname",
+            className: "t-cell-1 text-left",
+            accessor: "fullname",
+        },
+        {
+            Header: "Amka",
+            accessor: "amka",
+            className: "t-cell-2 text-left"
+        },
+        {
+            Header: "City",
+            accessor: "city",
+            className: "t-cell-3 text-left"
+        },
+        {
+            Header: "Vaccine Status",
+            accessor: "vaccineStatus",
+            className: "t-cell-4 text-left"
+        }
+    ];
 
-    function handleClick(e, index) {
-        e.preventDefault();
-        setcurrentPage(index);
-    }
-
-
-    // Table Body
-    const tableBody = patients.slice(
-        currentPage * pageSize,
-        (currentPage + 1) * pageSize
-    ).map((patient, i) => {
-        return (
-            <tbody className=" text-center" key={patient._id}>
-                <tr onClick={() => { setTitle("Edit Patient"); setPatient(patient); toggle(); }}>
-                    <td>{patient.fullname}</td>
-                    <td>{patient.amka}</td>
-                    <td className="text-right">{patient.vaccineStatus === -1 ? "Not Scheduled" : patient.vaccineStatus === 0 ?
-                        "Pending" : patient.vaccineStatus === 1 ? "Completed" : "Cancelled"}</td>
-
-                    {/*  <td>{patient.vaccineBrand}</td>
-                    <td>{patient.numberOfDOses}</td> */}
-                </tr>
-            </tbody>
-        );
-    });
 
 
     return (
@@ -69,7 +59,7 @@ const PatientTable = ({
                     <Col md="12">
                         <Card className="card">
                             <CardHeader className="card-header">
-                                <CardTitle tag="h4" className="card-title">Vaccinations</CardTitle>
+                                <CardTitle tag="h4" className="card-title text-c">Vaccinations</CardTitle>
                                 <CardSubtitle className="text-right">
                                     <Button
                                         onClick={() => { setTitle("Add Vaccination"); toggle(); setPatient(null); }}
@@ -79,47 +69,11 @@ const PatientTable = ({
                             </CardHeader>
 
                             <CardBody className="card-body">
-                                {pageCount>=1? 
-                                    <Table responsive hover className=" table" >
-                                        <thead className="text-primary text-center">
-                                            <tr>
-                                                <th>FullName</th>
-                                                <th >Amka</th>
-                                                <th className=" text-right">Vaccine Status</th>
-                                            </tr>
-                                        </thead>
-                                        {tableBody}
-                                    </Table>
-                                 : <div className="text-center text-big">No Vaccinations yet...Start by adding one</div>
+                                {patients ?
+                                    (<XTable columns={listHeader} loading={loading} data={patients} toggle={toggle} setTitle={setTitle} setPatient={ setPatient}/>)
+                                    : <div className="text-center text-big">No Vaccinations yet...Start by adding one</div>
                                 }
                             </CardBody>
-
-                            <CardFooter>
-                                <div className="pagination-wrapper">
-                                    <Pagination>
-                                        <PaginationItem disabled={currentPage <= 0}>
-                                            <PaginationLink onClick={e =>
-                                                handleClick(e, currentPage - 1)} previous href="#" />
-                                        </PaginationItem>
-                                        {[...Array(pageCount)].map((page, i) =>
-                                            <PaginationItem active={i === currentPage} key={i}>
-                                                <PaginationLink onClick={e => handleClick(e, i)} href="#">
-                                                    {i + 1}
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                        )}
-
-                                        <PaginationItem disabled={currentPage >= pageCount - 1}>
-
-                                            <PaginationLink
-                                                onClick={e => handleClick(e, currentPage + 1)}
-                                                next
-                                                href="#"
-                                            />
-                                        </PaginationItem>
-                                    </Pagination>
-                                </div>
-                            </CardFooter>
                         </Card>
                     </Col>
                 </Row>
