@@ -37,6 +37,7 @@ var hospitalsSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    keypair:{},
     vaccines: [
         {
             vaccineBrand: {
