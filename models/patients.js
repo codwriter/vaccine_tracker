@@ -63,12 +63,10 @@ var patientsSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    // 0: Pending, 1:Completed, 2: Cancelled
+    // Pending, Completed, Cancelled
     vaccineStatus: {
-        type: Number,
-        min: 0,
-        max: 2,
-        default: 0,
+        type: String,
+        default: "Pending",
         required: true
     },
     vaccineBrand: {
