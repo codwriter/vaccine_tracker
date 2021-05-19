@@ -40,7 +40,7 @@ function patientReducer(state = initialState, action) {
             return {
                 ...state,
                 patients: state.patients.map((patient) =>
-                    patient._id === payload.id ? { ...patient, patient: payload.patient } : patient
+                    patient._id === payload.id ? patient = payload.patient  : patient
                 ),
                 loading: false
             };

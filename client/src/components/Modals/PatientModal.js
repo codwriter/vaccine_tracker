@@ -6,7 +6,7 @@ const reload = () => window.location.reload();
 const PatientModal = ({ isShowing, hide, patient, title, }) => isShowing ? ReactDOM.createPortal(
   <>
     <div>
-      <Modal isOpen={isShowing} onExit={reload} >
+      <Modal isOpen={isShowing} /* onExit={reload} */ >
         <ModalHeader toggle={hide}>{title}</ModalHeader>
         <ModalBody>
           <PatientForm hide={hide} patient={patient} />
