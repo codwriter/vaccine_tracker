@@ -1,11 +1,9 @@
 const express = require('express');
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
-
+const bigchaindriver = require('bigchaindb-driver');
 const Hospitals = require('../../models/hospital');
 const User = require('../../models/user');
-
-
 const hospitalRouter = express.Router();
 
 hospitalRouter.use(express.json());
@@ -15,9 +13,8 @@ hospitalRouter.use(express.json());
 // @access   Private
 hospitalRouter.get('/me', auth, async (req, res) => {
     try {
-        const hospital = await Hospitals.findOne({
-            id: req.user.hospital
-        });
+        const user = await User.findById(req.user.id);
+        const hospital = await Hospitals.findById(user.hospital).select('-keypair');
         console.log(req.user);
         if (!hospital) {
             return res.status(400).json({ msg: 'There is no hospital linked to this user' });
@@ -34,7 +31,7 @@ hospitalRouter.get('/me', auth, async (req, res) => {
 // @access   Private
 hospitalRouter.get('/', auth, async (req, res) => {
     try {
-        const hospitals = await Hospitals.find(req.query);
+        const hospitals = await Hospitals.find(req.query).select('-keypair');
         if (!hospitals) {
             return res.status(400).json({ msg: 'There are no hospitals' });
         }
@@ -72,12 +69,10 @@ hospitalRouter.post('/', auth,
             if (Hospital) {
                 return res.status(400).json({ errors: [{ msg: 'Hospital already exists' }] });
             }
-
-
+          
             const hospitalFields = {
-                name, afm, address, city, country, vaccines
+                name, afm, address, city, country, vaccines,
             };
-            console.log(hospitalFields);
             let hospital = await Hospitals.create(hospitalFields);
 
             //Insert in User Hospital ID if exist replace it with new.
@@ -88,6 +83,11 @@ hospitalRouter.post('/', auth,
             );
 
             res.json(hospital);
+
+            let keypair = new bigchaindriver.Ed25519Keypair();
+            hospital.keypair = keypair;
+            await hospital.save();
+
         } catch (err) {
             console.error(err.message);
             res.status(500).send('Server error');
@@ -150,7 +150,7 @@ hospitalRouter.put('/me', auth,
             const user = await User.findById(req.user.id).select('-password -privateKey -publicKey');
             let hospital = await Hospitals.findByIdAndUpdate({ _id: user.hospital }, {
                 $set: req.body
-            }, { new: true })
+            }, { new: true }).select('-keypair');
 
             res.status(200).json(hospital);
         } catch (err) {
@@ -166,7 +166,7 @@ hospitalRouter.route('/vaccines')
     .get(auth, async (req, res) => {
         try {
             const user = await User.findById(req.user.id).select('-password -privateKey -publicKey');
-            const hospital = await Hospitals.findById({ _id: user.hospital });
+            const hospital = await Hospitals.findById({ _id: user.hospital }).select('-keypair');
 
             res.json(hospital.vaccines);
 
@@ -189,7 +189,7 @@ hospitalRouter.route('/vaccines')
 
             try {
                 const user = await User.findById(req.user.id).select('-password -privateKey -publicKey');
-                const hospital = await Hospitals.findById({ _id: user.hospital });
+                const hospital = await Hospitals.findById({ _id: user.hospital }).select('-keypair');
                 console.log(hospital);
                 hospital.vaccines.unshift(req.body);
 
@@ -210,7 +210,7 @@ hospitalRouter.route('/vaccines/:vac_id')
     .get(auth, async (req, res) => {
         try {
             const user = await User.findById(req.user.id).select('-password -privateKey -publicKey');
-            const hospital = await Hospitals.findById({ _id: user.hospital });
+            const hospital = await Hospitals.findById({ _id: user.hospital }).select('-keypair');
 
             res.json(hospital.vaccines.id(req.params.vac_id));
 
@@ -225,7 +225,7 @@ hospitalRouter.route('/vaccines/:vac_id')
     .put(auth, async (req, res) => {
         try {
             const user = await User.findById(req.user.id).select('-password -privateKey -publicKey');
-            const hospital = await Hospitals.findById({ _id: user.hospital });
+            const hospital = await Hospitals.findById({ _id: user.hospital }).select('-keypair');
 
             if (req.body.vaccineBrand)
                 hospital.vaccines.id(req.params.vac_id).vaccineBrand = req.body.vaccineBrand;
@@ -248,7 +248,7 @@ hospitalRouter.route('/vaccines/:vac_id')
     .delete(auth, async (req, res) => {
         try {
             const user = await User.findById(req.user.id).select('-password -privateKey -publicKey');
-            const foundHospital = await Hospitals.findById({ _id: user.hospital });
+            const foundHospital = await Hospitals.findById({ _id: user.hospital }).select('-keypair');
 
             foundHospital.vaccines = foundHospital.vaccines.filter(
                 (vac) => vac._id.toString() !== req.params.vac_id
