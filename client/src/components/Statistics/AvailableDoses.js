@@ -9,7 +9,7 @@ const AvailableDoses = ({ vaccines }) => {
                 <Row>
                     <Col md="4" xs="5">
                         <div className="icon-big text-center icon-warning">
-                            <i className="nc-icon nc-favourite-28 text-warning"  />
+                            <i className="fas fa-syringe text-warning"  />
                         </div>
                     </Col>
                     <Col md="8" xs="7">
