@@ -7,13 +7,14 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getPatients } from '../redux/action/patient';
-import useModal from '../components/Modals/useModal';
-import PatientModal from './Modals/PatientModal';
+import { getPatients } from '../../redux/action/patient';
+import useModal from '../Modals/useModal';
+import PatientModal from '../Modals/PatientModal';
 import XTable from './table';
 
 
 const PatientTable = ({
+    hospital,
     getPatients,
     patients: { loading, patients }
 }) => {
@@ -59,7 +60,7 @@ const PatientTable = ({
                     <Col md="12">
                         <Card className="card">
                             <CardHeader className="card-header">
-                                <CardTitle tag="h4" className="card-title text-c">Vaccinations</CardTitle>
+                                <CardTitle tag="h4" className="card-title text-center">Vaccinations in {hospital.name}</CardTitle>
                                 <CardSubtitle className="text-right">
                                     <Button
                                         onClick={() => { setTitle("Add Vaccination"); toggle(); setPatient(null); }}

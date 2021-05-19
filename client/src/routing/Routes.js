@@ -6,7 +6,7 @@ import NotFound from '../components/layout/NotFound';
 import PrivateRoute from './PrivateRoute';
 import Login from '../components/auth/Login';
 import Register from '../components/auth/Register';
-import Dashboard from '../components/Dashboard'
+import Dashboard from '../components/Dashboard/Dashboard'
 import HospitalForm from '../components/Forms/HospitalProfileForm';
 import Hospital from '../components/profile/Hospital';
 import Navbar from '../components/layout/Navbar';
