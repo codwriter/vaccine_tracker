@@ -1,7 +1,8 @@
 import React from 'react'
 import { Row,Col,Card,CardBody,CardTitle,CardFooter } from "reactstrap";
 
-const AvailableDoses = ({ doses }) => {
+const AvailableDoses = ({ vaccines }) => {
+    console.log(vaccines);
     return (
         <Card className="card-stats">
             <CardBody className="card-body">
@@ -12,11 +13,14 @@ const AvailableDoses = ({ doses }) => {
                         </div>
                     </Col>
                     <Col md="8" xs="7">
-                        <div className="numbers">
-                            <p className="card-category">Available Doses</p>
-                            <CardTitle tag="p">{doses}</CardTitle>
-                            <p />
-                        </div>
+                       { vaccines.map(vaccine=>
+                           <div className="numbers" key="vaccine._id">
+                               <p className="card-category">{vaccine.vaccineBrand}</p>
+                               <CardTitle tag="p">{vaccine.doses}</CardTitle>
+                               <p />
+                           </div>
+                        )}
+                        
                     </Col>
                 </Row>
             </CardBody>

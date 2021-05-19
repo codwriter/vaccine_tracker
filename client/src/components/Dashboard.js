@@ -37,8 +37,8 @@ const Dashboard = ({
                                     </Card>
                                 </Col>
 
-                                {hospital.numberOfDosesAvailable>=0 ? <Col lg="3" md="6" sm="6" >
-                                    <AvailableDoses doses={hospital.numberOfDosesAvailable} />
+                                {hospital.vaccines ? <Col lg="3" md="6" sm="6" >
+                                    <AvailableDoses vaccines={hospital.vaccines} />
                                 </Col> : ''}
                             </Row>
 
