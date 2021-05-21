@@ -85,11 +85,10 @@ export const updateHospital = (formdata) => async (dispatch) => {
 }
 
 //GET ALL HOSPITALS
-export const getHospitals = () => async (dispatch) => {
-  dispatch({ type: CLEAR_HOSPITAL });
+export const getHospitals = (id) => async (dispatch) => {
 
   try {
-    const res = await api.get('/'); ///PATH ????
+    const res = await api.get(`/hospital/${id}`); ///PATH ????
 
     dispatch({
       type: GET_HOSPITALS,
@@ -106,7 +105,7 @@ export const getHospitals = () => async (dispatch) => {
 //LINK HOSPITAL
 export const linkhospital = () => async (dispatch) => {
   try {
-    const res = await api.get('/'); ///PATH
+    const res = await api.get('/hospital/link'); ///PATH
 
     dispatch({
       type: LINK_HOSPITAL,
@@ -122,7 +121,7 @@ export const linkhospital = () => async (dispatch) => {
 //UNLINK HOSPITAL
 export const unlinkhospital = () => async (dispatch) => {
   try {
-    const res = await api.get('/'); ///PATH
+    const res = await api.get('/hospital/unlink'); ///PATH
 
     dispatch({
       type: UNLINK_HOSPITAL,
