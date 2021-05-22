@@ -12,7 +12,6 @@ import useModal from '../Modals/useModal';
 import PatientModal from '../Modals/PatientModal';
 import XTable from './table';
 
-
 const PatientTable = ({
     hospital,
     getPatients,
