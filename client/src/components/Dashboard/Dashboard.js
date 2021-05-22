@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { Row, Col, Container, Spinner, Card, CardTitle, CardFooter, CardHeader } from "reactstrap";
@@ -50,21 +50,7 @@ const Dashboard = ({
                             </Row>
                         </>
                     ) : (
-                        <>
-                            <Row>
-                                <Col lg="12" md="6" sm="6">
-                                    <h1 className="large text-primary">Welcome to Dashboard </h1>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col>
-                                    <p>You are not linked to a hospital yet, please add some info.</p>
-                                    <Link to="/create-hospital-profile" className="btn btn-primary">
-                                        Create Profile
-                            </Link>
-                                </Col>
-                            </Row>
-                        </>
+                        <Redirect to='/intro'/>
                     )
                     }
                 </Container>
