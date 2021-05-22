@@ -55,14 +55,14 @@ const Hospitalregister = ({
       {loading ? <Spinner /> : (
         <Card>
           <CardHeader>
-            <h1 className="large text-primary">{title}</h1>
+            <h1 className="text-primary text-center">{title}</h1>
           </CardHeader>
           <CardBody>
-            <AvForm className="form text-white" onValidSubmit={handleValidSubmit}>
+            <AvForm className="form" onValidSubmit={handleValidSubmit}>
               <AvGroup>
                 <Label>Hospital Name</Label>
                 <AvInput
-                  autocomplete="true"
+                  autoComplete="true"
                   type="text"
                   placeholder="The name of the hospital"
                   name="name"
@@ -76,7 +76,7 @@ const Hospitalregister = ({
               <AvGroup>
                 <Label>Hospital Address</Label>
                 <AvInput
-                  autocomplete="true"
+                  autoComplete="true"
                   type="text"
                   placeholder="Hospital Address"
                   name="address"
@@ -90,7 +90,7 @@ const Hospitalregister = ({
               <AvGroup>
                 <Label for="afm">Tax Identification Number</Label>
                 <AvInput
-                  autocomplete="true"
+                  autoComplete="true"
                   type="text"
                   id="afm"
                   placeholder="Tax Identification Number(AFM)"
@@ -109,7 +109,7 @@ const Hospitalregister = ({
               <AvGroup>
                 <Label for="numberOfDosesAvailable">Number of Doses</Label>
                 <AvInput
-                  autocomplete="true"
+                  autoComplete="true"
                   id="numberOfDosesAvailable"
                   type="number"
                   placeholder="Number of Doses"
