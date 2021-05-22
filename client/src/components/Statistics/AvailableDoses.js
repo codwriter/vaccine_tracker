@@ -1,36 +1,45 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Row, Col, Card, CardBody, CardTitle, CardFooter } from "reactstrap";
 
 const AvailableDoses = ({ vaccines }) => {
-    console.log(vaccines);
+    const [cardColor, setcardColor] = useState("white");
+
     return (
-        <Card className="card-stats">
-            <CardBody className="card-body">
-                <Row>
-                    <Col>
-                        <div className="icon-big text-center icon-warning ">
-                            <i className="fas fa-syringe text-success" />
-                        </div>
-                    </Col>
-                    {vaccines.map(vaccine =>
-                        <Col>
-                            <div className="numbers" key="vaccine._id">
-                                <p className="card-category">{vaccine.vaccineBrand}</p>
-                                <CardTitle tag="p">{vaccine.doses}</CardTitle>
-                                <p />
+        <> <Row>
+            {vaccines.map(vaccine =>
+                <Col className="justify-content-center" key={vaccine._id}>
+                    <Card className="card-stats">
+
+                        <CardBody  className="card-body">
+                            <Row>
+                                <Col lg="2" md="2" sm="2">
+                                    <div className="icon-big text-center">
+                                        {vaccine.doses <= 200 ? (<i className="fas fa-syringe text-warning" />) : (<i className="fas fa-syringe text-success " />) }
+                                    </div>
+                                </Col>
+
+                                <Col key={vaccine._id}>
+                                    <div className="numbers">
+                                        <p className="card-category">{vaccine.vaccineBrand}</p>
+                                        <CardTitle tag="p">{vaccine.doses}</CardTitle>
+                                        <p />
+                                    </div>
+                                </Col>
+
+                            </Row>
+                        </CardBody>
+
+                        <CardFooter>
+                            <hr />
+                            <div className="stats">
                             </div>
-                        </Col>
-                    )}
+                        </CardFooter>
+                    </Card>
+                </Col>
+            )}
 
-
-                </Row>
-            </CardBody>
-            <CardFooter>
-                <hr />
-                <div className="stats">
-                </div>
-            </CardFooter>
-        </Card>
+        </Row>
+        </>
     );
 }
 export default AvailableDoses;

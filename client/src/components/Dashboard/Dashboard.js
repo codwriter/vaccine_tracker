@@ -23,13 +23,13 @@ const Dashboard = ({
             {loading ? (
                 <Spinner />
             ) : (
-                <Container>
+                <Container >
                     {hospital != null ? (
                         <>
                             <Row>
                                 <Col >
-                                    <Card>
-                                        <CardHeader>
+                                    <Card >
+                                        <CardHeader >
                                             <CardTitle className="align-self-center" ><h1 className="large text-primary text-center" >{hospital && hospital.name} Hospital</h1>
                                             </CardTitle>
                                         </CardHeader>
@@ -38,7 +38,7 @@ const Dashboard = ({
                                 </Col>
                                 </Row>
                                 <Row>
-                                    {hospital.vaccines ? <Col lg="6" md="12" sm="12" className="offset-lg-6" >
+                                    {hospital.vaccines ? <Col lg="12" md="12" sm="12"  >
                                     <AvailableDoses vaccines={hospital.vaccines} />
                                 </Col> : ''}
                             </Row>

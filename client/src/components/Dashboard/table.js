@@ -121,13 +121,13 @@ const XTable = ({ columns, data, loading = true, toggle, setTitle, setPatient}) 
                     />
                 </span>
             </div>
-            <Table {...getTableProps()} hover bordered responsive className="table">
+            <Table {...getTableProps()} hover responsive className="table">
                 <thead>
                     {headerGroups.map((headerGroup) => (
                         <>
                             <tr className="theader" {...headerGroup.getHeaderGroupProps()}>
                                 {headerGroup.headers.map((column) => (
-                                    <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                    <th className="text-center" {...column.getHeaderProps(column.getSortByToggleProps())}>
                                         {column.render("Header")}
                                              <span className="float-right">
                                             {!column.notShowSortingDisplay ? (
@@ -153,18 +153,15 @@ const XTable = ({ columns, data, loading = true, toggle, setTitle, setPatient}) 
                                         <th className="tfilter">
                                             {column.canFilter ? (
                                                 <FormGroup className="mb-1">
-                                                    <Label className="divFilter mb-0">
-                                                        Filter {column.render("Header")} :
-                          </Label>
+                                                    <Label className="divFilter mb-0">Filter {column.render("Header")} :</Label>
                                                     {column.render("Filter")}
                                                 </FormGroup>
                                             ) : null}
                                         </th>
                                     ))}
                                 </tr>
-                            ) : (
-                                ""
-                            )}
+                            ) : ("")
+                            }
                         </>
                     ))}
                 </thead>
