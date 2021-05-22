@@ -107,7 +107,7 @@ export const linkHospital = (id, history) => async (dispatch) => {
     const res = await api.put(`/hospital/link/${id}`);
 
     dispatch({
-      type: GET_HOSPITAL,
+      type: GET_HOSPITALS,
       payload: res.data
     });
     
