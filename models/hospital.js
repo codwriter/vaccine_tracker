@@ -49,6 +49,12 @@ var hospitalsSchema = new Schema({
                 type: Number,
                 required:true
             },
+            appointments: {
+                type: Number,
+                min: 1,
+                max: 2,
+                required:true
+            }
         }
     ]
 }, {
