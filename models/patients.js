@@ -66,7 +66,7 @@ var patientsSchema = new Schema({
         trim: true,
         default: Date.now
     },
-    // 0: Pending, 1:Completed, 2: Cancelled
+    // Pending, Completed, Cancelled
     vaccineStatus: {
         type: String,
         trim: true,
