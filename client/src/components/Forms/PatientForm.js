@@ -1,27 +1,35 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { AvForm, AvGroup, AvFeedback, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Button, Label, Row, Col } from 'reactstrap';
+import { AvForm, AvGroup, AvFeedback, AvInput } from 'availity-reactstrap-validation';
+import { Button, Label, Row, Col, FormText, Collapse } from 'reactstrap';
 import { addPatient, updatePatient, removePatient } from '../../redux/action/patient';
 
 
 
 const initialState = {
-    fullname: '',
-    amka: '',
+    firstname: '',
+    lastname: '',
+    birthdate: '',
+    sex: '',
     age: null,
+    amka: '',
     address: '',
     city: '',
     country: '',
-    vaccineStatus: -1,
+    vaccineStatus: '',
     vaccineBrand: '',
-    numberOfDoses: 0
+    appointmentA: '',
+    appointmentB: '',
+    additionalInfo: ''
 };
 
 const PatientForm = ({ addPatient, updatePatient, removePatient, patient, hide }) => {
     const [formData, setFormData] = useState({ initialState });
-    const [disabled, setdisabled] = useState(false);
+    const currentDate = new Date().toISOString().split("T");
+    const [addInfoOpen, setaddInfoOpen] = useState(false);
+    const [patientInfoOpen, setpatientInfoOpen] = useState(true);
+    const [vacInfoOpen, setvacInfoOpen] = useState(true);
 
     useEffect(() => {
         if (patient) {
@@ -30,22 +38,37 @@ const PatientForm = ({ addPatient, updatePatient, removePatient, patient, hide }
                 if (key in patientData) patientData[key] = patient[key];
             }
             setFormData(patientData);
-            setdisabled(true);
         }
     }, [patient]);
 
     const {
-        fullname,
-        amka,
+        firstname,
+        lastname,
+        birthdate,
+        sex,
         age,
+        amka,
         address,
         city,
         country,
         vaccineStatus,
         vaccineBrand,
-        numberOfDoses
+        appointmentA,
+        appointmentB,
+        additionalInfo
     } = formData;
 
+    const togglePatientInfo = () => setpatientInfoOpen(!patientInfoOpen);
+
+    const toggleVacInfo = () => setvacInfoOpen(!vacInfoOpen);
+
+    const toggleAddInfo = () => {
+        if (patientInfoOpen || vacInfoOpen) {
+            setpatientInfoOpen(false);
+            setvacInfoOpen(false);
+        }
+        setaddInfoOpen(!addInfoOpen);
+    }
 
     const onChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -53,157 +76,243 @@ const PatientForm = ({ addPatient, updatePatient, removePatient, patient, hide }
 
     const handleValidSubmit = async (e) => {
         if (patient != null) {
+            formData.age = currentDate[0] - formData.birthdate;
             updatePatient(patient._id, formData);
-        } else
+        } else {
+            formData.age = currentDate[0] - formData.birthdate;
             addPatient(formData);
-        hide();
+            hide();
+        }
     }
     const removeVaccination = async (e) => {
-        removePatient(patient._id);
-        hide();
+        const confirm = (window.confirm('Are you sure you wish to delete this vaccination?'));
+        if (confirm) {
+            removePatient(patient._id);
+            hide();
+        }
     }
 
     return (
         <Fragment>
             <AvForm className="form" onValidSubmit={handleValidSubmit}>
-                <Row>
-                    <Col>
-                        <AvGroup>
-                            <Label>Fullname</Label>
-                            <AvInput
-                                type="text"
-                                placeholder="The name of the patient"
-                                name="fullname"
-                                value={fullname}
-                                onChange={onChange}
-                                required
-                            />
-                            <AvFeedback>The name of the patient is required!</AvFeedback>
-                        </AvGroup>
-                    </Col>
-                </Row>
-                <Row xs="2">
-                    <Col>
-                        <AvGroup>
-                            <Label for="afm">AMKA</Label>
-                            <AvInput
-                                type="text"
-                                id="amka"
-                                placeholder="AMKA"
-                                name="amka"
-                                value={amka}
-                                onChange={onChange}
-                                minLength="11"
-                                maxLength="11"
-                                pattern="^[0-9]+$"
-                                required
-                                disabled={disabled}
-                            />
-                            <AvFeedback>The AMKA is required and must be 11 numbers in length!</AvFeedback>
-                        </AvGroup>
-                    </Col>
-                    <Col>
-                        <AvGroup>
-                            <Label>Age</Label>
-                            <AvInput
-                                type="number"
-                                placeholder="The age of the patient"
-                                min='1'
-                                max='120'
-                                name="age"
-                                value={age}
-                                onChange={onChange}
-                                required
-                            />
-                            <AvFeedback>The age of the patient is required and must be between 1-120!</AvFeedback>
-                        </AvGroup>
-                    </Col>
-                </Row>
 
-                <AvGroup>
-                    <Label>Address</Label>
-                    <AvInput
-                        type="text"
-                        placeholder="Patient Address"
-                        name="address"
-                        value={address}
-                        onChange={onChange}
-                        required
-                    />
-                    <AvFeedback>The address of the patient is required!</AvFeedback>
-                </AvGroup>
-                <Row xs="2">
-                    <Col>
-                        <AvGroup>
-                            <Label>City</Label>
-                            <AvInput
-                                type="text"
-                                placeholder="City"
-                                name="city"
-                                value={city}
-                                onChange={onChange}
-                                required
-                            />
-                            <AvFeedback>The city of the patient is required!</AvFeedback>
-                        </AvGroup>
-                    </Col>
-                    <Col>
-                        <AvGroup>
-                            <Label>Country</Label>
-                            <AvInput
-                                type="text"
-                                placeholder="Country of Patient"
-                                name="country"
-                                value={country}
-                                onChange={onChange}
-                                required
-                            />
-                            <AvFeedback>The country of the patient is required!</AvFeedback>
-                        </AvGroup>
-                    </Col>
-                </Row>
+                <FormText type="button" className="h6 pb-2 " onClick={togglePatientInfo}>
+                    Patient Info
+                {!patientInfoOpen ? <i className="ml-1 fas fa-caret-right"></i> : <i className="ml-1 fas fa-caret-down"></i>}
+                </FormText>
 
+                <Collapse isOpen={patientInfoOpen}>
+                    <Row>
+                        <Col>
+                            <AvGroup>
+                                <Label for="firstname">Firstname:</Label>
+                                <AvInput
+                                    type="text"
+                                    placeholder="Firstname "
+                                    name="firstname"
+                                    value={firstname}
+                                    onChange={onChange}
+                                    required
+                                />
+                                <AvFeedback>The firstname name of the patient is required!</AvFeedback>
+                            </AvGroup>
+                        </Col>
 
-                <AvGroup>
-                    <Label for="vaccineBrand">Vaccine Brand</Label>
-                    <AvInput
-                        id="vaccineBrand"
-                        type="text"
-                        placeholder="The brand of the vaccine"
-                        name="vaccineBrand"
-                        value={vaccineBrand}
-                        onChange={onChange}
-                    />
-                </AvGroup>
+                        <Col>
+                            <AvGroup>
+                                <Label for="lastname">Lastname:</Label>
+                                <AvInput
+                                    type="text"
+                                    placeholder="Lastname "
+                                    name="lastname"
+                                    value={lastname}
+                                    onChange={onChange}
+                                    required
+                                />
+                                <AvFeedback>The lastname name of the patient is required!</AvFeedback>
+                            </AvGroup>
+                        </Col>
+                    </Row>
+                    <Row xs="2">
+                        <Col>
+                            <AvGroup>
+                                <Label for="sex">Sex:</Label>
+                                <AvInput type="select" name="sex" id="sex" onChange={onChange} value={sex} required>
+                                    <option value="">Select</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </AvInput>
+                                <AvFeedback>The sex is required!</AvFeedback>
+                            </AvGroup>
+                        </Col>
 
-                <AvGroup>
-                    <Label for="vaccineStatus">Status of Vaccination</Label>
-                    <AvInput type="select" name="vaccineStatus" id="vaccineStatus" onChange={onChange} value={vaccineStatus}>
-                        <option value="-1">Not Scheduled</option>
-                        <option value="0">Pending</option>
-                        <option value="1">Completed</option>
-                        <option value="2">Cancelled</option>
-                    </AvInput>
-                </AvGroup>
+                        <Col>
+                            <AvGroup>
+                                <Label for="birthdate">Birthdate:</Label>
+                                <AvInput
+                                    type="date"
+                                    id="birthdate"
+                                    name="birthdate"
+                                    value={birthdate}
+                                    onChange={onChange}
+                                    required
+                                />
+                                <AvFeedback>The Birthdate is required!</AvFeedback>
+                            </AvGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <AvGroup>
+                                <Label for="afm">AMKA:</Label>
+                                <AvInput
+                                    type="text"
+                                    id="amka"
+                                    placeholder="Amka"
+                                    name="amka"
+                                    value={amka}
+                                    onChange={onChange}
+                                    minLength="11"
+                                    maxLength="11"
+                                    pattern="^[0-9]+$"
+                                    required
+                                />
+                                <AvFeedback>The AMKA is required and must be 11 numbers in length!</AvFeedback>
+                            </AvGroup>
+                        </Col>
+                    </Row>
 
-                <AvGroup>
-                    <Label for="numberOfDoses">Number of Doses</Label>
-                    <AvInput
-                        id="numberOfDoses"
-                        type="number"
-                        placeholder="Number of Doses"
-                        name="numberOfDoses"
-                        value={numberOfDoses}
-                        onChange={onChange}
-                        min="0"
-                    />
-                </AvGroup>
+                    <Row>
+                        <Col>
+                            <AvGroup>
+                                <Label>Address:</Label>
+                                <AvInput
+                                    type="text"
+                                    placeholder="Patient Address"
+                                    name="address"
+                                    value={address}
+                                    onChange={onChange}
+                                    required
+                                />
+                                <AvFeedback>The address of the patient is required!</AvFeedback>
+                            </AvGroup>
+                        </Col>
+                    </Row>
+                    <Row xs="2">
+                        <Col>
+                            <AvGroup>
+                                <Label>City:</Label>
+                                <AvInput
+                                    type="text"
+                                    placeholder="City"
+                                    name="city"
+                                    value={city}
+                                    onChange={onChange}
+                                    required
+                                />
+                                <AvFeedback>The city of the patient is required!</AvFeedback>
+                            </AvGroup>
+                        </Col>
+                        <Col>
+                            <AvGroup>
+                                <Label>Country:</Label>
+                                <AvInput
+                                    type="text"
+                                    placeholder="Country of Patient"
+                                    name="country"
+                                    value={country}
+                                    onChange={onChange}
+                                    required
+                                />
+                                <AvFeedback>The country of the patient is required!</AvFeedback>
+                            </AvGroup>
+                        </Col>
+                    </Row>
+                </Collapse>
 
-                <AvGroup>
+                <FormText type="button" id="vaccInfo" onClick={toggleVacInfo} className="h6 mt-4 pb-2">
+                    Vaccination Info
+                     {!vacInfoOpen ? <i className="ml-1 fas fa-caret-right"></i> : <i className="ml-1 fas fa-caret-down"></i>}
+                </FormText>
+                <Collapse isOpen={vacInfoOpen}>
+                    <AvGroup>
+                        <Label for="vaccineBrand">Vaccine Brand:</Label>
+                        <AvInput
+                            id="vaccineBrand"
+                            type="text"
+                            placeholder="The brand of the vaccine"
+                            name="vaccineBrand"
+                            value={vaccineBrand}
+                            onChange={onChange}
+                        />
+                    </AvGroup>
+                    <Row>
+                        <Col>
+                            <AvGroup>
+                                <Label for="appointmentA">First Appointment:</Label>
+                                <AvInput
+
+                                    type="date"
+                                    id="appointmentA"
+                                    name="appointmentA"
+                                    value={appointmentA}
+                                    onChange={onChange}
+                                    min={currentDate[0]}
+                                    required
+                                />
+                                <AvFeedback>The First Appointment is required!</AvFeedback>
+                            </AvGroup>
+                        </Col> <Col>
+                            <AvGroup>
+                                <Label for="appointmentB">Second Appointment:</Label>
+                                <AvInput
+                                    type="date"
+                                    id="appointmentB"
+                                    name="appointmentB"
+                                    value={appointmentB}
+                                    onChange={onChange}
+                                    min={currentDate[0]}
+                                    required
+                                />
+                                <AvFeedback>The second appointment is required!</AvFeedback>
+                            </AvGroup>
+                        </Col>
+                    </Row>
+                    <AvGroup>
+                        <Label for="vaccineStatus">Status of Vaccination:</Label>
+                        <AvInput type="select" name="vaccineStatus" id="vaccineStatus" onChange={onChange} value={vaccineStatus} required>
+                            <option value="">Not Scheduled</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </AvInput>
+                    </AvGroup>
+                </Collapse>
+
+                <FormText type="button" id="addInfo" className="h6 mt-4 pb-2" onClick={toggleAddInfo}>
+                    Additional Info
+                     {!addInfoOpen ? <i className="ml-1 fas fa-caret-right"></i> : <i className="ml-1 fas fa-caret-down"></i>}
+                </FormText>
+                <Collapse isOpen={addInfoOpen}>
+                    <AvGroup>
+                        <Label for="addtionalInfo">Additional Info:</Label>
+                        <AvInput
+                            type="textarea"
+                            name="additionalInfo"
+                            id="additionalInfo"
+                            onChange={onChange}
+                            value={additionalInfo}
+                            placeholder="symptoms..etc"
+                        />
+
+                    </AvGroup>
+                </Collapse>
+
+                <AvGroup className="float-right">
                     <Button type="submit">Submit</Button>
                 </AvGroup>
             </AvForm>
-            {patient? <Button color="danger " onClick={removeVaccination}>Delete Patient</Button>:""}
+            {patient ? <Button color="danger " className="float-right" onClick={removeVaccination}>Delete Patient</Button> : ""}
         </Fragment>
     );
 }
@@ -211,6 +320,8 @@ const PatientForm = ({ addPatient, updatePatient, removePatient, patient, hide }
 PatientForm.propTypes = {
     removePatient: PropTypes.func.isRequired,
     addPatient: PropTypes.func.isRequired,
+    updatePatient: PropTypes.func.isRequired,
+    // getVaccines:PropTypes.func.isRequired,
     isAuthenticated: PropTypes.object.isRequired
 };
 

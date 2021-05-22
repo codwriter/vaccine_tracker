@@ -7,9 +7,9 @@ import PrivateRoute from './PrivateRoute';
 import Login from '../components/auth/Login';
 import Register from '../components/auth/Register';
 import Dashboard from '../components/Dashboard'
-import HospitalForm from '../components/Forms/HospitalProfileForm';
 import Hospital from '../components/profile/Hospital';
 import Navbar from '../components/layout/Navbar';
+import Intro from '../components/Views/Intro';
 
 const Routes = props => {
     return (
@@ -21,7 +21,7 @@ const Routes = props => {
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />
                     <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                    <PrivateRoute exact path="/create-hospital-profile" component={() => <HospitalForm title="Create New Profile" />} />
+                    <PrivateRoute exact path="/intro" component={Intro} />
                     <PrivateRoute exact path="/profile" component={Hospital} />
                     <Route component={NotFound} />
                 </Switch>

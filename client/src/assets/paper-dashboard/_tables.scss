@@ -106,6 +106,7 @@
 
     > tbody > tr{
         position: relative;
+        
     }
 }
 
@@ -171,3 +172,90 @@
 .table-hover>tbody>tr:hover{
   background-color: #f5f5f5;
 }
+
+.table > thead > tr > th.tfilter {
+  padding: 2px 5px;
+  font-weight: 400;
+}
+
+.table > thead > tr > th.tfilter > div > label.divFilter {
+  font-size: 10px;
+}
+
+.div-pagination {
+  font-size: 12px;
+}
+
+.div-pagination-2 {
+  float: right;
+  text-align: right;
+}
+.div-pagination-1 {
+  text-align: left;
+}
+
+.pagina {
+  color: #212529;
+}
+
+.table-search-switch > label {
+  font-size: 12px;
+  padding: 4px 2px;
+}
+
+.pagina .pagination {
+  margin-bottom: 3px;
+}
+
+.div-pagination-2-1 .inputan {
+  width: 40px;
+  text-align: center;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  color: #212529;
+}
+
+.div-pagination-2-1 .inputan:focus {
+  border: 1px solid #dee2e6;
+}
+
+.div-pagination-2-2 .selectan {
+  text-align: center;
+  border: 1px solid #dee2e6;
+  color: #212529;
+}
+
+.div-pagination-2-2 .inputan:focus {
+  border: 1px solid #dee2e6;
+}
+
+.t-cell-1 {
+  width: 60px;
+  min-width: 60px;
+}
+
+.t-cell-2 {
+  width: 150px;
+  min-width: 150px;
+}
+.t-cell-3 {
+  width: 120px;
+  min-width: 120px;
+}
+.t-cell-4 {
+  width: 120px;
+  min-width: 120px;
+}
+.t-cell-5 {
+  width: 150px;
+  min-width: 150px;
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+  .div-pagination-2 {
+    float: none;
+    text-align: left;
+  }
+}
+

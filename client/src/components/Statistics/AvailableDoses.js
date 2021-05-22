@@ -1,31 +1,45 @@
-import React from 'react'
-import { Row,Col,Card,CardBody,CardTitle,CardFooter } from "reactstrap";
+import React, { useState } from 'react'
+import { Row, Col, Card, CardBody, CardTitle, CardFooter } from "reactstrap";
 
-const AvailableDoses = ({ doses }) => {
+const AvailableDoses = ({ vaccines }) => {
+    const [cardColor, setcardColor] = useState("white");
+
     return (
-        <Card className="card-stats">
-            <CardBody className="card-body">
-                <Row>
-                    <Col md="4" xs="5">
-                        <div className="icon-big text-center icon-warning">
-                            <i className="nc-icon nc-favourite-28 text-warning"  />
-                        </div>
-                    </Col>
-                    <Col md="8" xs="7">
-                        <div className="numbers">
-                            <p className="card-category">Available Doses</p>
-                            <CardTitle tag="p">{doses}</CardTitle>
-                            <p />
-                        </div>
-                    </Col>
-                </Row>
-            </CardBody>
-            <CardFooter>
-                <hr />
-                <div className="stats">
-                  </div>
-            </CardFooter>
-        </Card>
+        <> <Row>
+            {vaccines.map(vaccine =>
+                <Col className="justify-content-center" key={vaccine._id}>
+                    <Card className="card-stats">
+
+                        <CardBody  className="card-body">
+                            <Row>
+                                <Col lg="2" md="2" sm="2">
+                                    <div className="icon-big text-center">
+                                        {vaccine.doses <= 200 ? (<i className="fas fa-syringe text-warning" />) : (<i className="fas fa-syringe text-success " />) }
+                                    </div>
+                                </Col>
+
+                                <Col key={vaccine._id}>
+                                    <div className="numbers">
+                                        <p className="card-category">{vaccine.vaccineBrand}</p>
+                                        <CardTitle tag="p">{vaccine.doses}</CardTitle>
+                                        <p />
+                                    </div>
+                                </Col>
+
+                            </Row>
+                        </CardBody>
+
+                        <CardFooter>
+                            <hr />
+                            <div className="stats">
+                            </div>
+                        </CardFooter>
+                    </Card>
+                </Col>
+            )}
+
+        </Row>
+        </>
     );
 }
 export default AvailableDoses;

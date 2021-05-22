@@ -53,26 +53,31 @@ var patientsSchema = new Schema({
     },
     country: {
         type: String,
+        trim: true,
         required: true
     },
     apointmentA: {
         type: Date,
+        trim: true,
         default: Date.now
     },
     apointmentB: {
         type: Date,
+        trim: true,
         default: Date.now
     },
     // Pending, Completed, Cancelled
     vaccineStatus: {
         type: String,
-        default: "Pending",
+        trim: true,
+        default:"",
         required: true
     },
     vaccineBrand: {
         type: String,
         trim: true,
-        default: "-"
+        default: "-",
+        required: true
     },
     hospital: {
         type: mongoose.Schema.Types.ObjectId,
@@ -80,6 +85,7 @@ var patientsSchema = new Schema({
     },
     additionalInfo: {
         type: String,
+        trim:true,
         default: "..."
     }
 }, {

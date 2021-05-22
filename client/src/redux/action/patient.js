@@ -2,6 +2,7 @@ import api from '../../utils/api';
 import { setAlert } from './alert';
 import {
     GET_PATIENTS,
+    GET_HOSPITAL_PATIENTS,
     GET_PATIENT,
     ADD_PATIENT,
     UPDATE_PATIENT,
@@ -9,7 +10,26 @@ import {
     PATIENT_ERROR
 } from './types';
 
-// Get patients from Server
+// Get hospital patients  from Server
+export const getHospitalPatients = () => async dispatch => {
+    try {
+        // Wait for the server response with the patients
+        const res = await api.get('/patients');
+
+        // Save it to payload
+        dispatch({
+            type: GET_HOSPITAL_PATIENTS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: PATIENT_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+};
+
+// Get hospital patients  from Server
 export const getPatients = () => async dispatch => {
     try {
         // Wait for the server response with the patients
@@ -27,7 +47,6 @@ export const getPatients = () => async dispatch => {
         });
     }
 };
-
 // Get patient
 export const getPatient = id => async dispatch => {
     try {

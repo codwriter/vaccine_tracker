@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { LOGOUT } from './redux/action/types';
 
-import Landing from './components/layout/Landing';
+import Landing from './components/Views/Landing';
 import Routes from './routing/Routes';
 import { loadUser } from './redux/action/auth';
 import setAuthToken from './utils/setAuthToken';

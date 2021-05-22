@@ -1,5 +1,6 @@
 import {
     GET_PATIENT,
+    GET_HOSPITAL_PATIENTS,
     GET_PATIENTS,
     ADD_PATIENT,
     UPDATE_PATIENT,
@@ -19,6 +20,7 @@ function patientReducer(state = initialState, action) {
 
     switch (type) {
         case GET_PATIENTS:
+        case GET_HOSPITAL_PATIENTS:
             return {
                 ...state,
                 patients: payload,
