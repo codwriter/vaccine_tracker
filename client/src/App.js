@@ -10,6 +10,7 @@ import { loadUser } from './redux/action/auth';
 import setAuthToken from './utils/setAuthToken';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import Alert  from './components/layout/Alert';
 
 const App = () => {
   useEffect(() => {
@@ -28,6 +29,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <BrowserRouter>
+        <Alert/>
         <Fragment>
           <Switch>
             <Route exact path="/" component={Landing} />

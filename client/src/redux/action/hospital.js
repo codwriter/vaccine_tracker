@@ -110,7 +110,7 @@ export const linkHospital = (id, history) => async (dispatch) => {
       type: GET_HOSPITAL,
       payload: res.data
     });
-
+    
     dispatch(setAlert('User linked to hospital!', 'success'));
     history.push('/dashboard');
   } catch (err) {

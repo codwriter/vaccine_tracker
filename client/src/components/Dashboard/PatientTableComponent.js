@@ -3,12 +3,7 @@ import {
     Card, CardHeader, CardBody, CardTitle, CardFooter, CardSubtitle,
     Row, Col,
     Button,
-    CustomInput,
-    FormGroup,
-    Label,
-    InputGroup,
-    InputGroupAddon,
-    
+    CustomInput,    
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -16,7 +11,7 @@ import { getHospitalPatients, getPatients } from '../../redux/action/patient';
 import useModal from '../Modals/useModal';
 import PatientModal from '../Modals/PatientModal';
 import XTable from './table';
-import Alert from '../layout/Alert'
+
 
 const PatientTable = ({
     hospital,
@@ -79,7 +74,6 @@ const PatientTable = ({
                 <Row>
                     <Col md="12">
                         <Card className="card">
-                            <Alert />
                             <CardHeader className="card-header">
                                 <Row>
                                     <Col>
