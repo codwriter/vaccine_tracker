@@ -20,7 +20,7 @@
   margin: 30px;
 }
 
-.align-self-center{
+.align-self-center {
   align-self: center;
 }
 .tab_button {
@@ -49,4 +49,8 @@
   margin-bottom: -30px;
   list-style: none;
   justify-content: space-between;
+}
+.hospital-switch > label {
+  font-size: 13px;
+  padding: 4px 2px;
 }

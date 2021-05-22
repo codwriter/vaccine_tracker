@@ -2,10 +2,10 @@ import React, { Fragment, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import { Row, Col,Container, Spinner, Card, CardTitle, CardFooter, CardHeader } from "reactstrap";
-import { getCurrentHospital } from '../redux/action/hospital';
+import { Row, Col, Container, Spinner, Card, CardTitle, CardFooter, CardHeader } from "reactstrap";
+import { getCurrentHospital } from '../../redux/action/hospital';
 import PatientsTable from './PatientTableComponent';
-import AvailableDoses from './Statistics/AvailableDoses';
+import AvailableDoses from '../Statistics/AvailableDoses';
 //import Sidebar from './Sidebar/Sidebar';
 
 const Dashboard = ({
@@ -13,7 +13,7 @@ const Dashboard = ({
     hospital: { hospital, loading }
 }) => {
     useEffect(() => {
-       getCurrentHospital();
+        getCurrentHospital();
     }, [getCurrentHospital]);
 
 
@@ -23,28 +23,29 @@ const Dashboard = ({
             {loading ? (
                 <Spinner />
             ) : (
-                <Container>
+                <Container >
                     {hospital != null ? (
                         <>
                             <Row>
-                                <Col lg="9" md="6">
-                                    <Card>
-                                        <CardHeader>
+                                <Col >
+                                    <Card >
+                                        <CardHeader >
                                             <CardTitle className="align-self-center" ><h1 className="large text-primary text-center" >{hospital && hospital.name} Hospital</h1>
-                                                </CardTitle>
+                                            </CardTitle>
                                         </CardHeader>
                                         <CardFooter></CardFooter>
                                     </Card>
                                 </Col>
-
-                                {hospital.numberOfDosesAvailable>=0 ? <Col lg="3" md="6" sm="6" >
-                                    <AvailableDoses doses={hospital.numberOfDosesAvailable} />
+                                </Row>
+                                <Row>
+                                    {hospital.vaccines ? <Col lg="12" md="12" sm="12"  >
+                                    <AvailableDoses vaccines={hospital.vaccines} />
                                 </Col> : ''}
                             </Row>
 
                             <Row>
                                 <Col lg="12" md="12" sm="12" >
-                                    <PatientsTable />
+                                    <PatientsTable hospital={hospital} />
                                 </Col>
                             </Row>
                         </>

@@ -5,7 +5,7 @@ import {
   CardImg,
 } from 'reactstrap';
 import classnames from 'classnames';
-import Alert from '../../components/layout/Alert';
+import Alert from '../layout/Alert';
 import Login from '../auth/Login';
 import Register from '../auth/Register';
 
