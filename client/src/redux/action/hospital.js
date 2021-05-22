@@ -6,9 +6,8 @@ import {
   GET_HOSPITAL,
   GET_HOSPITALS,
   LINK_HOSPITAL,
-  UNLINK_HOSPITAL,
   HOSPITAL_ERROR,
-  UPDATE_HOSPITAL, //     ΔΕΝ ΧΡΗΣΙΜΟΠΟΙΕΊΤΑΙ ΓΙΑΤΙ ΕΙΝΑΙ ΣΥΜΠΤΙΓΜΕΝΑ ΟΛΑ ΣΕ ΜΙΑ ΣΥΝΑΡΤΗΣΗ 
+  UPDATE_HOSPITAL,
   CLEAR_HOSPITAL,
   DELETE_HOSPITAL
 
@@ -26,7 +25,7 @@ export const getCurrentHospital = () => async dispatch => { // () σημαίνε
   } catch (err) {
     dispatch({
       type: HOSPITAL_ERROR,
-      payload: err/* { msg: err.response.statusText, status: err.response.status } PROVLIMA SE SERVER */
+      payload: { msg: err.response.statusText, status: err.response.status }
     });
   }
 };
@@ -56,7 +55,7 @@ export const createHospital = (formData, history) => async (dispatch) => {  //H 
     }
     dispatch({
       type: HOSPITAL_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status } //PROVLIMA SE SERVER
+      payload: { msg: err.response.statusText, status: err.response.status }
     });
   }
 }
@@ -85,10 +84,10 @@ export const updateHospital = (formdata) => async (dispatch) => {
 }
 
 //GET ALL HOSPITALS
-export const getHospitals = (id) => async (dispatch) => {
+export const getHospitals = () => async (dispatch) => {
 
   try {
-    const res = await api.get(`/hospital/${id}`); ///PATH ????
+    const res = await api.get('/hospital/'); 
 
     dispatch({
       type: GET_HOSPITALS,
@@ -103,33 +102,38 @@ export const getHospitals = (id) => async (dispatch) => {
 };
 
 //LINK HOSPITAL
-export const linkhospital = () => async (dispatch) => {
+export const linkHospital = (id, history) => async (dispatch) => {
   try {
-    const res = await api.get('/hospital/link'); ///PATH
+    const res = await api.put(`/hospital/link/${id}`);
 
     dispatch({
-      type: LINK_HOSPITAL,
+      type: GET_HOSPITAL,
       payload: res.data
     });
+
+    dispatch(setAlert('User linked to hospital!', 'success'));
+    history.push('/dashboard');
   } catch (err) {
     dispatch({
-      type: HOSPITAL_ERROR
+      type: HOSPITAL_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
     });
   }
 };
 
 //UNLINK HOSPITAL
-export const unlinkhospital = () => async (dispatch) => {
+export const unlinkHospital = () => async (dispatch) => {
   try {
-    const res = await api.get('/hospital/unlink'); ///PATH
+    const res = await api.put('/hospital/unlink'); 
 
     dispatch({
-      type: UNLINK_HOSPITAL,
-      payload: res.data
+      type: CLEAR_HOSPITAL,
     });
+    dispatch(setAlert('User unlinked from Hospital', 'success'));
   } catch (err) {
     dispatch({
-      type: HOSPITAL_ERROR
+      type: HOSPITAL_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
     });
   }
 };

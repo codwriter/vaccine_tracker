@@ -15,7 +15,6 @@ hospitalRouter.get('/me', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id);
         const hospital = await Hospitals.findById(user.hospital).select('-keypair');
-        console.log(req.user);
         if (!hospital) {
             return res.status(400).json({ msg: 'There is no hospital linked to this user' });
         }
@@ -35,7 +34,7 @@ hospitalRouter.get('/', auth, async (req, res) => {
         if (!hospitals) {
             return res.status(400).json({ msg: 'There are no hospitals' });
         }
-        res.json(hospitals);
+        res.status(200).json(hospitals);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server error')
@@ -128,14 +127,15 @@ hospitalRouter.put('/unlink', auth, async (req, res) => {
 // @route   put api/hospital/link
 // @desc    Link to an existing  Hospital
 // @access   Private
-hospitalRouter.put('/link', auth, async (req, res) => {
+hospitalRouter.put('/link/:id', auth, async (req, res) => {
     try {
         const user = await User.findByIdAndUpdate(
             { _id: req.user.id },
-            { $set: { hospital: req.body.hospitalID } },
+            { $set: { hospital: req.params.id } },
             { new: true }
         );
-        res.json({ msg: "User is now linked!" });
+        const hospital = await Hospitals.findById(user.hospital);
+        res.json(hospital);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server error');
