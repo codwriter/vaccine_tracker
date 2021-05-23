@@ -29,9 +29,8 @@ var User = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Hospital'
     },
-    birthday: {
+    birthdate: {
         type: Date,
-        default: Date.now,
         required: true
     },
     amkaUser: {
