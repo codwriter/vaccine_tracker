@@ -4,13 +4,15 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AvForm, AvGroup, AvFeedback, AvInput } from 'availity-reactstrap-validation';
 import { createHospital, updateHospital, getCurrentHospital } from '../../redux/action/hospital';
-import { Button, Label, Spinner, Card, CardHeader, CardBody, Row, Col } from 'reactstrap';
-import Alert from '../../components/layout/Alert';
+import { Button, Label, Spinner, Card, CardHeader, CardBody, Row, Col, CardTitle } from 'reactstrap';
+
 const initialState = {
   name: '',
   afm: '',
   address: '',
-  numberOfDosesAvailable: null
+  city: '',
+  country: '',
+  vaccines: [{vaccineBrand:'',doses:null,}]
 };
 
 const Hospitalregister = ({
@@ -36,7 +38,7 @@ const Hospitalregister = ({
   }, [loading, getCurrentHospital, hospital]);
 
 
-  const { name, address, afm, numberOfDosesAvailable } = formData;
+  const { name, address, afm, city, country } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -55,7 +57,7 @@ const Hospitalregister = ({
       {loading ? <Spinner /> : (
         <Card>
           <CardHeader>
-            <h1 className="text-primary text-center">{title}</h1>
+            <CardTitle className="text-primary text-center">{title}</CardTitle>
           </CardHeader>
           <CardBody>
             <AvForm className="form" onValidSubmit={handleValidSubmit}>
@@ -74,7 +76,7 @@ const Hospitalregister = ({
               </AvGroup>
 
               <AvGroup>
-                <Label>Hospital Address</Label>
+                <Label>Address</Label>
                 <AvInput
                   autoComplete="true"
                   type="text"
@@ -86,6 +88,38 @@ const Hospitalregister = ({
                 />
                 <AvFeedback>The address of the hospital is required!</AvFeedback>
               </AvGroup>
+              <Row>
+                <Col>
+                  <AvGroup>
+                    <Label>City</Label>
+                    <AvInput
+                      autoComplete="true"
+                      type="text"
+                      placeholder="Hospital City"
+                      name="city"
+                      value={city}
+                      onChange={onChange}
+                      required
+                    />
+                    <AvFeedback>The city of the hospital is required!</AvFeedback>
+                  </AvGroup>
+                </Col>
+                <Col>
+                  <AvGroup>
+                    <Label>Country</Label>
+                    <AvInput
+                      autoComplete="true"
+                      type="text"
+                      placeholder="Hospital Country"
+                      name="country"
+                      value={country}
+                      onChange={onChange}
+                      required
+                    />
+                    <AvFeedback>The country of the hospital is required!</AvFeedback>
+                  </AvGroup>
+                </Col>
+              </Row>
 
               <AvGroup>
                 <Label for="afm">Tax Identification Number</Label>
@@ -107,20 +141,7 @@ const Hospitalregister = ({
               </AvGroup>
 
               <AvGroup>
-                <Label for="numberOfDosesAvailable">Number of Doses</Label>
-                <AvInput
-                  autoComplete="true"
-                  id="numberOfDosesAvailable"
-                  type="number"
-                  placeholder="Number of Doses"
-                  name="numberOfDosesAvailable"
-                  value={numberOfDosesAvailable}
-                  onChange={onChange}
-                  min="0"
-                />
-              </AvGroup>
-              <AvGroup>
-                <Button type="submit">Submit</Button>
+                <Button className="pull-right" type="submit">Submit</Button>
               </AvGroup>
             </AvForm>
           </CardBody>
