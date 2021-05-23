@@ -20,7 +20,6 @@ import { logout } from '../../redux/action/auth';
 import logo from '../../assets/images/white_logo.png'
 
 
-
 const NavbarComponent = ({ auth: { isAuthenticated }, logout }) => {
   const [isOpen, set_isOpen] = useState(false);
   const authLinks = (
@@ -38,7 +37,7 @@ const NavbarComponent = ({ auth: { isAuthenticated }, logout }) => {
   );
 
   const guestLinks = (
-    <>
+    <>  
     
     </>
   );
