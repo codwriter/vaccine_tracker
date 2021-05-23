@@ -22,8 +22,8 @@ router.post('/signup',
     .withMessage('Is not an Amka type')
     .notEmpty()
     .withMessage('Amka of User is required'),
-  check('birthday', 'Birthday of User is required')
-    .matches(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/([12][0-9]{3})$/)
+  check('birthdate')
+    .isDate()
     .withMessage('Is not a date type dd/mm/yyyy')
     .notEmpty()
     .withMessage('Date of birth required'),
@@ -33,7 +33,7 @@ router.post('/signup',
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password } = req.body;
+    const { email, password,firstname,lastname,amkaUser,birthdate } = req.body;
 
     try {
       let user = await User.findOne({ email });
@@ -46,7 +46,11 @@ router.post('/signup',
       //Create the user
       user = new User({
         email,
-        password
+        password,
+        firstname,
+        lastname,
+        amkaUser,
+        birthdate
       });
 
       //Hash the password
@@ -139,7 +143,7 @@ router.put('/:userId', auth,
     .withMessage('Is not an Amka type')
     .notEmpty()
     .withMessage('Amka of User is required'),
-  check('birthday', 'Birthday of User is required')
+  check('birthdate')
     .matches(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/([12][0-9]{3})$/)
     .withMessage('Is not a date type dd/mm/yyyy')
     .notEmpty()
