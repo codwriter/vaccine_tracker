@@ -10,6 +10,7 @@ import Dashboard from '../components/Dashboard'
 import HospitalForm from '../components/Forms/HospitalProfileForm';
 import Hospital from '../components/profile/Hospital';
 import Navbar from '../components/layout/Navbar';
+import Statistics from '../components/views/Statistics';
 
 const Routes = props => {
     return (
@@ -23,6 +24,7 @@ const Routes = props => {
                     <PrivateRoute exact path="/dashboard" component={Dashboard} />
                     <PrivateRoute exact path="/create-hospital-profile" component={() => <HospitalForm title="Create New Profile" />} />
                     <PrivateRoute exact path="/profile" component={Hospital} />
+                    <PrivateRoute exact path="/statistics" component={Statistics} />
                     <Route component={NotFound} />
                 </Switch>
             </Container>
