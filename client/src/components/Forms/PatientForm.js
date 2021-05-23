@@ -257,7 +257,6 @@ const PatientForm = ({ addPatient, updatePatient, removePatient, patient, hide }
                             <AvGroup>
                                 <Label for="appointmentA">First Appointment:</Label>
                                 <AvInput
-
                                     type="date"
                                     id="appointmentA"
                                     name="appointmentA"
@@ -310,7 +309,6 @@ const PatientForm = ({ addPatient, updatePatient, removePatient, patient, hide }
                             value={additionalInfo}
                             placeholder="symptoms..etc"
                         />
-
                     </AvGroup>
                 </Collapse>
 
@@ -327,7 +325,7 @@ PatientForm.propTypes = {
     removePatient: PropTypes.func.isRequired,
     addPatient: PropTypes.func.isRequired,
     updatePatient: PropTypes.func.isRequired,
-    // getVaccines:PropTypes.func.isRequired,
+    getVaccines:PropTypes.func.isRequired,
     isAuthenticated: PropTypes.object.isRequired
 };
 
