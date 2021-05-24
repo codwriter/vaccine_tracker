@@ -41,9 +41,9 @@ export const getVaccine = id => async dispatch => {
 };
 
 // Add Vaccine 
-export const addVaccine = () => async dispatch => {
+export const addVaccine = (formdata) => async dispatch => {
     try {
-        const res = await api.post('/hospital/vaccines');
+        const res = await api.put('/hospital/vaccines',formdata);
 
         dispatch({
             type: ADD_VACCINE,
@@ -62,9 +62,9 @@ export const addVaccine = () => async dispatch => {
 
 
 // Update vaccine
-export const updateVaccine = id => async dispatch => {
+export const updateVaccine = (id,formdata) => async dispatch => {
     try {
-        const res = await api.put(`/hospital/vaccines/${id}`);
+        const res = await api.put(`/hospital/vaccines/${id}`,formdata);
 
         dispatch({
             type: UPDATE_VACCINE,

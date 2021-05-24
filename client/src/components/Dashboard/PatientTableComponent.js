@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { getHospitalPatients, getPatients } from '../../redux/action/patient';
 import useModal from '../Modals/useModal';
 import PatientModal from '../Modals/PatientModal';
-import XTable from './table';
+import XTable from './PatientTable';
 
 const PatientTable = ({
     hospital,

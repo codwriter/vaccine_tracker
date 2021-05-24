@@ -133,7 +133,7 @@ router.post('/login',
     }
   });
 
-router.put('/:userId', auth,
+router.put('/', auth,
   check('firstname', 'The firstname of the user is required').notEmpty(),
   check('lastname', 'The lastname of the user is required').notEmpty(),
   check('amkaUser')
@@ -153,7 +153,7 @@ router.put('/:userId', auth,
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     } else {
-      User.findByIdAndUpdate(req.params.userId, {
+      User.findByIdAndUpdate(req.user.id, {
         $set: req.body
       }, { new: true })
         .then((user) => {
@@ -165,8 +165,8 @@ router.put('/:userId', auth,
     }
   })
 
-router.delete('/:userId', auth, async (req, res) => {
-  if (req.user.id = req.params.userId) {
+router.delete('/', auth, async (req, res) => {
+  if (req.user.id == req.params.userId) {
     User.findByIdAndRemove(req.params.userId)
       .then((resp) => {
         res.statusCode = 200;
