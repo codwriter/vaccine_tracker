@@ -49,18 +49,6 @@ import {
           hospitals: payload,
           loading: false
         };
-      case LINK_HOSPITAL:
-         return {
-           ...state,
-           hospital: payload,
-           loading: false
-         };
-      case UNLINK_HOSPITAL:
-        return {
-          ...state,
-          hospital: null,
-          loading: false
-        };
       default:
         return state;
     }
