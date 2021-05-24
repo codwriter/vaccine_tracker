@@ -12,7 +12,7 @@ import {
 // Get vaccines from server
 export const getVaccines = () => async dispatch => {
     try {
-        const res = await api.get('/api/hospital/vaccines');
+        const res = await api.get('/hospital/vaccines');
         dispatch({
             type: GET_VACCINES,
             payload: res.data
@@ -27,7 +27,7 @@ export const getVaccines = () => async dispatch => {
 
 export const getVaccine = id => async dispatch => {
     try {
-        const res = await api.get(`/api/hospital/vaccines/${id}`);
+        const res = await api.get(`/hospital/vaccines/${id}`);
         dispatch({
             type: GET_VACCINE,
             payload: res.data
@@ -43,7 +43,7 @@ export const getVaccine = id => async dispatch => {
 // Add Vaccine 
 export const addVaccine = () => async dispatch => {
     try {
-        const res = await api.post('/api/hospital/vaccines');
+        const res = await api.post('/hospital/vaccines');
 
         dispatch({
             type: ADD_VACCINE,
@@ -64,7 +64,7 @@ export const addVaccine = () => async dispatch => {
 // Update vaccine
 export const updateVaccine = id => async dispatch => {
     try {
-        const res = await api.put(`/api/hospital/vaccines/${id}`);
+        const res = await api.put(`/hospital/vaccines/${id}`);
 
         dispatch({
             type: UPDATE_VACCINE,
@@ -82,7 +82,7 @@ export const updateVaccine = id => async dispatch => {
 // Remove vaccine
 export const removeVaccine = id => async dispatch => {
     try {
-        const res = await api.delete(`/api/hospital/vaccines/${id}`);
+        const res = await api.delete(`/hospital/vaccines/${id}`);
 
         dispatch({
             type: REMOVE_VACCINE,
