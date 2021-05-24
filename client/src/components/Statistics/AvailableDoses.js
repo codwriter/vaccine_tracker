@@ -14,7 +14,7 @@ const AvailableDoses = ({ vaccines }) => {
                             <Row>
                                 <Col lg="2" md="2" sm="2">
                                     <div className="icon-big text-center">
-                                        {vaccine.doses <= 200 ? (<i className="fas fa-syringe text-warning" />) : (<i className="fas fa-syringe text-success " />) }
+                                        {vaccine.doses <= 200 ? (<i className="fas fa-syringe text-danger" />) : (<i className="fas fa-syringe text-success " />) }
                                     </div>
                                 </Col>
 

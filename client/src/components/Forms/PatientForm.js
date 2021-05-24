@@ -253,7 +253,7 @@ const PatientForm = ({
                     <AvGroup>
                         <Label for="vaccineBrand">Vaccine Brand:</Label>
                         <AvInput type="select" name="vaccineBrand" id="vaccineBrand" onChange={onChange} value={vaccineBrand} required>
-                            {vaccines ? (vaccines.map((vaccine) => (<option value={vaccine.vaccineBrand}>{vaccine.vaccineBrand}</option>))) : ""}
+                            {vaccines ? (vaccines.map((vaccine) => (<option key={vaccine._id} value={vaccine.vaccineBrand}>{vaccine.vaccineBrand}</option>))) : ""}
                         </AvInput>
                         
                     </AvGroup>
@@ -322,7 +322,7 @@ const PatientForm = ({
                     <Button type="submit">Submit</Button>
                 </AvGroup>
             </AvForm>
-            {patient ? <Button color="danger " className="float-right" onClick={removeVaccination}>Delete Patient</Button> : ""}
+            {patient ? <Button color="danger " className="float-right mr-2" onClick={removeVaccination}>Delete Patient</Button> : ""}
         </Fragment>
     );
 }

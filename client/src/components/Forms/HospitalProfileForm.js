@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 import { AvForm, AvGroup, AvFeedback, AvInput } from 'availity-reactstrap-validation';
 import { createHospital, updateHospital, getCurrentHospital } from '../../redux/action/hospital';
 import { Button, Label, Spinner, Card, CardHeader, CardBody, Row, Col, CardTitle } from 'reactstrap';
+import VaccineTable from '../profile/VaccineTable';
+import vaccineModal from '../Modals/vaccineModal';
+import useModal from '../Modals/useModal';
+import VaccineModal from '../Modals/vaccineModal';
 
 const initialState = {
   name: '',
@@ -12,7 +16,6 @@ const initialState = {
   address: '',
   city: '',
   country: '',
-  vaccines: [{vaccineBrand:'',doses:null,}]
 };
 
 const Hospitalregister = ({
@@ -24,7 +27,11 @@ const Hospitalregister = ({
   hospital: { hospital, loading }
 }) => {
   const [formData, setFormData] = useState(initialState);
+  const { isShowing, toggle } = useModal();
+  const [vaccine, setVaccine] = useState(null);
+  const [modalTitle, setModalTitle] = useState("");
   const [disabled, setdisabled] = useState(false);
+
   useEffect(() => {
     if (!hospital) getCurrentHospital();
     if (!loading && hospital) {
@@ -33,15 +40,15 @@ const Hospitalregister = ({
         if (key in hospitalData) hospitalData[key] = hospital[key];
       }
       setFormData(hospitalData);
-      setdisabled(true);
     }
-  }, [loading, getCurrentHospital, hospital]);
+  }, [loading, getCurrentHospital, hospital,]);
 
 
   const { name, address, afm, city, country } = formData;
 
-  const onChange = (e) =>
+  const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
 
 
   const handleValidSubmit = async (e) => {
@@ -57,10 +64,10 @@ const Hospitalregister = ({
       {loading ? <Spinner /> : (
         <Card>
           <CardHeader>
-            <CardTitle className="text-primary text-center">{title}</CardTitle>
+            <CardTitle className="text-primary text-center h6">{title}</CardTitle>
           </CardHeader>
           <CardBody>
-            <AvForm className="form" onValidSubmit={handleValidSubmit}>
+            <AvForm className="form" onValidSubmit={handleValidSubmit} onChange={onChange}>
               <AvGroup>
                 <Label>Hospital Name</Label>
                 <AvInput
@@ -139,14 +146,45 @@ const Hospitalregister = ({
                 />
                 <AvFeedback>The afm is required and must be 9 numbers in length!</AvFeedback>
               </AvGroup>
-
-              <AvGroup>
-                <Button className="pull-right" type="submit">Submit</Button>
-              </AvGroup>
+              <Row>
+                <Col>
+                  <Row>
+                    <Col className="text-center">
+                      <Button className="btn-primary" type="submit">Submit</Button>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
             </AvForm>
+
           </CardBody>
         </Card>
       )}
+      <Card className="card">
+        <CardHeader>
+
+          <Row>
+            <Col>
+              <CardTitle className="text-primary text-center h6">Vaccines</CardTitle>
+            </Col>
+            <Col sm="1" md="1" lg="1">
+              <Button
+                onClick={() => { setModalTitle("Add Vaccine"); toggle(); setVaccine(null); }}
+                className=" btn-sm btn-icon btn-primary btn-round pull-right">
+                <i className="fas fa-plus"></i>
+              </Button>
+            </Col>
+          </Row>
+        </CardHeader>
+        <CardBody>
+          <Row className="mt-4">
+            <VaccineModal isShowing={isShowing} hide={toggle} vaccine={vaccine} title={modalTitle} />
+            <Col>
+              <VaccineTable vaccines={hospital.vaccines} loading={loading} toggle={toggle} setTitle={setModalTitle} setVaccine={setVaccine} />
+            </Col>
+          </Row>
+        </CardBody>
+      </Card>
     </Fragment>
   );
 };
