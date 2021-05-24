@@ -13,13 +13,14 @@ import {
   Col,
   Spinner,
 } from "reactstrap";
-import { getCurrentHospital } from '../../redux/action/hospital';
+import { getCurrentHospital,unlinkHospital } from '../../redux/action/hospital';
 import { Redirect } from "react-router";
 import avatar from '../../assets/images/man.svg';
 
 const Hospital = ({
   auth:{user},
   getCurrentHospital,
+  unlinkHospital,
   hospital: { hospital, loading }
 }) => {
   useEffect(() => {
@@ -87,9 +88,12 @@ const Hospital = ({
               <Col md="8">
                 <HospitalProfileForm hospital={hospital} title="Edit Hospital Info" />
               </Col>
+              <Col>
+                <Button onClick={unlinkHospital}>Unlink from hospital</Button>
+              </Col>
             </Row>
           </div>)
-            : <Redirect to='/create-hospital-profile' />
+            : <Redirect to='/intro' />
           }</>
       )}
     </>
@@ -108,4 +112,4 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default connect(mapStateToProps, { getCurrentHospital })(Hospital);
+export default connect(mapStateToProps, { getCurrentHospital,unlinkHospital })(Hospital);

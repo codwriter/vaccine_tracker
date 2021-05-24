@@ -86,7 +86,7 @@ var patientsSchema = new Schema({
     additionalInfo: {
         type: String,
         trim:true,
-        default: "..."
+        default: ""
     }
 }, {
     timestamps: true

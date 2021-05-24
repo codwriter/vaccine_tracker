@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { AvForm, AvGroup, AvFeedback, AvInput } from 'availity-reactstrap-validation';
 import { Button, Label, Row, Col, FormText, Collapse } from 'reactstrap';
 import { addPatient, updatePatient, removePatient } from '../../redux/action/patient';
-
+import { getVaccines } from '../../redux/action/vaccine';
 
 
 const initialState = {
@@ -24,19 +24,26 @@ const initialState = {
     additionalInfo: ''
 };
 
-const PatientForm = ({ addPatient, updatePatient, removePatient, patient, hide }) => {
+const PatientForm = ({
+    addPatient,
+    updatePatient,
+    removePatient,
+    patient,
+    getVaccines,
+    vaccines:{vaccines},
+    hide
+}) => {
     const [formData, setFormData] = useState({ initialState });
-   
     const [addInfoOpen, setaddInfoOpen] = useState(false);
     const [patientInfoOpen, setpatientInfoOpen] = useState(true);
     const [vacInfoOpen, setvacInfoOpen] = useState(true);
 
     //Vaccine brand Date
     var currentDate = new Date().toISOString().split('T');;
-   // var nextVaccineDate = new Date();
-   // nextVaccineDate.setDate(currentDate.getDate() + 0);
+    // var nextVaccineDate = new Date();
+    // nextVaccineDate.setDate(currentDate.getDate() + 0);
     //nextVaccineDate = nextVaccineDate.toISOString().split('T');
-    
+
     useEffect(() => {
         if (patient) {
             const patientData = { ...initialState };
@@ -45,6 +52,7 @@ const PatientForm = ({ addPatient, updatePatient, removePatient, patient, hide }
             }
             setFormData(patientData);
         }
+        getVaccines();
     }, [patient]);
 
     const {
@@ -97,6 +105,7 @@ const PatientForm = ({ addPatient, updatePatient, removePatient, patient, hide }
             hide();
         }
     }
+
 
     return (
         <Fragment>
@@ -170,7 +179,7 @@ const PatientForm = ({ addPatient, updatePatient, removePatient, patient, hide }
                     <Row>
                         <Col>
                             <AvGroup>
-                                <Label for="afm">AMKA:</Label>
+                                <Label for="amka">AMKA:</Label>
                                 <AvInput
                                     type="text"
                                     id="amka"
@@ -243,14 +252,10 @@ const PatientForm = ({ addPatient, updatePatient, removePatient, patient, hide }
                 <Collapse isOpen={vacInfoOpen}>
                     <AvGroup>
                         <Label for="vaccineBrand">Vaccine Brand:</Label>
-                        <AvInput
-                            id="vaccineBrand"
-                            type="text"
-                            placeholder="The brand of the vaccine"
-                            name="vaccineBrand"
-                            value={vaccineBrand}
-                            onChange={onChange}
-                        />
+                        <AvInput type="select" name="vaccineBrand" id="vaccineBrand" onChange={onChange} value={vaccineBrand} required>
+                            {vaccines ? (vaccines.map((vaccine) => (<option value={vaccine.vaccineBrand}>{vaccine.vaccineBrand}</option>))) : ""}
+                        </AvInput>
+                        
                     </AvGroup>
                     <Row>
                         <Col>
@@ -267,7 +272,8 @@ const PatientForm = ({ addPatient, updatePatient, removePatient, patient, hide }
                                 />
                                 <AvFeedback>The First Appointment is required!</AvFeedback>
                             </AvGroup>
-                        </Col> <Col>
+                        </Col>
+                        <Col>
                             <AvGroup>
                                 <Label for="appointmentB">Second Appointment:</Label>
                                 <AvInput
@@ -325,12 +331,13 @@ PatientForm.propTypes = {
     removePatient: PropTypes.func.isRequired,
     addPatient: PropTypes.func.isRequired,
     updatePatient: PropTypes.func.isRequired,
-    getVaccines:PropTypes.func.isRequired,
+    getVaccines: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.auth
+    isAuthenticated: state.auth,
+    vaccines: state.vaccineReducer
 });
 
-export default connect(mapStateToProps, { addPatient, updatePatient, removePatient })(PatientForm);
+export default connect(mapStateToProps, { addPatient, updatePatient, removePatient, getVaccines })(PatientForm);
