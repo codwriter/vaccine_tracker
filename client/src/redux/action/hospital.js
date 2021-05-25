@@ -8,6 +8,8 @@ import {
   HOSPITAL_ERROR,
   UPDATE_HOSPITAL,
   CLEAR_HOSPITAL,
+  PATIENT_CLEAR,
+  VACCINE_CLEAR,
 } from './types';
 
 //Get current users Hospital profile info
@@ -126,6 +128,12 @@ export const unlinkHospital = () => async (dispatch) => {
 
     dispatch({
       type: CLEAR_HOSPITAL,
+    });
+    dispatch({
+      type: PATIENT_CLEAR,
+    });
+    dispatch({
+      type: VACCINE_CLEAR,
     });
     dispatch(setAlert('User unlinked from Hospital', 'success'));
   } catch (err) {

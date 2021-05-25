@@ -14,9 +14,6 @@ import XTable from './PatientTable';
 import { setAlert } from '../../redux/action/alert';
 
 
-
-
-
 const PatientTable = ({
     hospital,
     getPatients,
@@ -32,7 +29,7 @@ const PatientTable = ({
 
     useEffect(() => {
         getHospitalPatients();
-    }, [getHospitalPatients, loading]);
+    }, [getHospitalPatients]);
 
     const allhospitalVaccination = () => {
         if (!switchHospital) {
@@ -121,7 +118,7 @@ return (
                         </CardHeader>
 
                         <CardBody className="card-body">
-                            {patients!=[]?
+                            {patients!==[]?
                                 (<XTable columns={listHeader} loading={loading} data={patients} toggle={toggle} setTitle={setModalTitle} setPatient={setPatient} />)
                                 : <div className="text-center text-big">No Vaccinations yet...Start by adding one</div>
                             }

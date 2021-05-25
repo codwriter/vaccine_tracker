@@ -48,7 +48,7 @@ const PatientForm = ({
     const [vacInfoOpen, setvacInfoOpen] = useState(true);
     const [hideAppointment, sethideAppointment] = useState(true);
     //Vaccine brand Date
-    var currentDate = new Date().toISOString().split('T');;
+    var currentDate = new Date().toISOString().split('T');
     // var nextVaccineDate = new Date();
     // nextVaccineDate.setDate(currentDate.getDate() + 0);
     //nextVaccineDate = nextVaccineDate.toISOString().split('T');
@@ -124,11 +124,10 @@ const PatientForm = ({
 
     const handleValidSubmit = async (e) => {
         if (patient != null) {
-
+            formData.age = getAge(formData.birthdate);
             updatePatient(patient._id, formData);
             console.log(formData);
         } else {
-            console.log(currentDate[0], formData.birthdate)
             formData.age = getAge(formData.birthdate);
             addPatient(formData);
             console.log(formData);
@@ -207,6 +206,7 @@ const PatientForm = ({
                                     name="birthdate"
                                     value={birthdate}
                                     onChange={onChange}
+                                    max={currentDate[0]}
                                     required
                                 />
                                 <AvFeedback>The Birthdate is required!</AvFeedback>
