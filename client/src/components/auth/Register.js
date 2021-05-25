@@ -11,11 +11,7 @@ import {
   InputGroup,
 } from 'reactstrap';
 
-import {
-  Card, 
-  CardBody,
-  CardSubtitle
-} from 'reactstrap';
+import { Card, CardBody, CardSubtitle } from 'reactstrap';
 
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
@@ -27,7 +23,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    password2: ''
+    password2: '',
   });
 
   const { email, password, password2 } = formData;
@@ -45,79 +41,78 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to='/dashboard' />;
   }
 
   return (
     <Form onSubmit={onSubmit}>
       <Card>
         <CardBody>
-          <CardSubtitle tag="h6" className="mb-2 text-muted">
-            <i className="fas fa-user" />   Create Your Account
+          <CardSubtitle tag='h6' className='mb-2 text-muted'>
+            <i className='fas fa-user' /> Create Your Account
           </CardSubtitle>
 
           <br></br>
 
-          <FormGroup className="mb-3">
-            <Label className="text-muted">Email</Label>
-            <InputGroup className="input-group-alternative">
-              <InputGroupAddon addonType="prepend">
+          <FormGroup className='mb-3'>
+            <Label className='text-muted'>Email</Label>
+            <InputGroup className='input-group-alternative'>
+              <InputGroupAddon addonType='prepend'>
                 <InputGroupText>
-                  <i class="fas fa-envelope"></i> 
+                  <i class='fas fa-envelope'></i>
                 </InputGroupText>
               </InputGroupAddon>
               <Input
-                type="email"
-                placeholder="Enter Email"
-                name="email"
+                type='email'
+                placeholder='Enter Email'
+                name='email'
                 value={email}
                 onChange={onChange}
               />
             </InputGroup>
           </FormGroup>
 
-          <FormGroup className="mb-3">
-            <Label className="text-muted">Password</Label>
-            <InputGroup className="input-group-alternative">
-              <InputGroupAddon addonType="prepend">
+          <FormGroup className='mb-3'>
+            <Label className='text-muted'>Password</Label>
+            <InputGroup className='input-group-alternative'>
+              <InputGroupAddon addonType='prepend'>
                 <InputGroupText>
-                  <i class="fas fa-key"></i> 
+                  <i class='fas fa-key'></i>
                 </InputGroupText>
               </InputGroupAddon>
               <Input
-                type="password"
-                placeholder="Your Password"
-                name="password"
+                type='password'
+                placeholder='Your Password'
+                name='password'
                 value={password}
                 onChange={onChange}
               />
             </InputGroup>
           </FormGroup>
 
-          <FormGroup className="mb-3">
-            <Label className="text-muted">Retype Password</Label>
-            <InputGroup className="input-group-alternative">
-              <InputGroupAddon addonType="prepend">
+          <FormGroup className='mb-3'>
+            <Label className='text-muted'>Retype Password</Label>
+            <InputGroup className='input-group-alternative'>
+              <InputGroupAddon addonType='prepend'>
                 <InputGroupText>
-                  <i class="fas fa-key"></i> 
+                  <i class='fas fa-key'></i>
                 </InputGroupText>
               </InputGroupAddon>
               <Input
-                type="password"
-                placeholder="Retype Your Password"
-                name="password2"
+                type='password'
+                placeholder='Retype Your Password'
+                name='password2'
                 value={password2}
                 onChange={onChange}
               />
             </InputGroup>
-
           </FormGroup>
 
-          <Button color="secondary" round outline type="submit">
+          <Button color='secondary' round outline type='submit'>
             Sign Up
           </Button>
 
-         {/*  <div className="my-3">
+          {/*  <div className="my-3">
             Already have an account? <Link to="/login">Sign In</Link>
           </div> */}
         </CardBody>
@@ -129,11 +124,11 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { setAlert, register })(Register);
