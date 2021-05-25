@@ -17,7 +17,6 @@ import { setAlert } from '../../redux/action/alert';
 
 
 
-
 const PatientTable = ({
     hospital,
     getPatients,
