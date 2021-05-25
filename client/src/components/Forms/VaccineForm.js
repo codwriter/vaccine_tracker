@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { AvForm, AvGroup, AvFeedback, AvInput } from 'availity-reactstrap-validation';
-import { Button, Label, Spinner, Row, Col } from 'reactstrap';
+import { Button, Label, Row, Col } from 'reactstrap';
 import { removeVaccine, updateVaccine, addVaccine } from '../../redux/action/vaccine';
 
 const initialState = {
@@ -30,9 +30,9 @@ const VaccineForm = ({
     const { vaccineBrand, doses, appointments } = formData;
 
     const onChange = (e) => {
-        if (e.target.name == "doses") {
+        if (e.target.name === "doses") {
             setFormData({ ...formData, [e.target.name]: e.target.value });
-        } else if (e.target.name == "appointments") {
+        } else if (e.target.name === "appointments") {
             setFormData({ ...formData, [e.target.name]: e.target.value });
         }
         setFormData({ ...formData, [e.target.name]: e.target.value });

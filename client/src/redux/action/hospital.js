@@ -5,12 +5,9 @@ import { setAlert } from './alert';
 import {
   GET_HOSPITAL,
   GET_HOSPITALS,
-  LINK_HOSPITAL,
   HOSPITAL_ERROR,
   UPDATE_HOSPITAL,
   CLEAR_HOSPITAL,
-  DELETE_HOSPITAL
-
 } from './types';
 
 //Get current users Hospital profile info
@@ -124,7 +121,7 @@ export const linkHospital = (id, history) => async (dispatch) => {
 //UNLINK HOSPITAL
 export const unlinkHospital = () => async (dispatch) => {
   try {
-    const res = await api.put('/hospital/unlink'); 
+     await api.put('/hospital/unlink'); 
 
     dispatch({
       type: CLEAR_HOSPITAL,

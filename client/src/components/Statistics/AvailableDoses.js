@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Row, Col, Card, CardBody, CardTitle, CardFooter } from "reactstrap";
 
 const AvailableDoses = ({ vaccines }) => {
-    const [cardColor, setcardColor] = useState("white");
-
+  
     return (
         <> <Row>
             {vaccines.map(vaccine =>

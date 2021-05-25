@@ -6,7 +6,6 @@ import { AvForm, AvGroup, AvFeedback, AvInput } from 'availity-reactstrap-valida
 import { createHospital, updateHospital, getCurrentHospital } from '../../redux/action/hospital';
 import { Button, Label, Spinner, Card, CardHeader, CardBody, Row, Col, CardTitle } from 'reactstrap';
 import VaccineTable from '../profile/VaccineTable';
-import vaccineModal from '../Modals/vaccineModal';
 import useModal from '../Modals/useModal';
 import VaccineModal from '../Modals/vaccineModal';
 
@@ -30,7 +29,7 @@ const Hospitalregister = ({
   const { isShowing, toggle } = useModal();
   const [vaccine, setVaccine] = useState(null);
   const [modalTitle, setModalTitle] = useState("");
-  const [disabled, setdisabled] = useState(false);
+  //const [disabled, setdisabled] = useState(false);
 
   useEffect(() => {
     if (!hospital) getCurrentHospital();
@@ -142,7 +141,6 @@ const Hospitalregister = ({
                   maxLength="9"
                   pattern="^[0-9]+$"
                   required
-                  disabled={disabled}
                 />
                 <AvFeedback>The afm is required and must be 9 numbers in length!</AvFeedback>
               </AvGroup>

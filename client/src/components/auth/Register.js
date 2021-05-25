@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 
 import {
-  Form,
-  FormGroup,
   Label,
-  Input,
   Button,
   InputGroupAddon,
   InputGroupText,
@@ -42,7 +39,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
-    console.log(formData);
     e.preventDefault();
     if (password !== password2) {
       setAlert('Passwords do not match', 'danger');

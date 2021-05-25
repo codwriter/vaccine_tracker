@@ -6,7 +6,16 @@ import { Button, Label, Row, Col, FormText, Collapse } from 'reactstrap';
 import { addPatient, updatePatient, removePatient } from '../../redux/action/patient';
 import { getVaccines } from '../../redux/action/vaccine';
 
-
+function getAge(dateString) {
+    var today = new Date();
+    var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
 const initialState = {
     firstname: '',
     lastname: '',
@@ -30,14 +39,14 @@ const PatientForm = ({
     removePatient,
     patient,
     getVaccines,
-    vaccines:{vaccines},
+    vaccines: { vaccines },
     hide
 }) => {
     const [formData, setFormData] = useState({ initialState });
     const [addInfoOpen, setaddInfoOpen] = useState(false);
     const [patientInfoOpen, setpatientInfoOpen] = useState(true);
     const [vacInfoOpen, setvacInfoOpen] = useState(true);
-
+    const [hideAppointment, sethideAppointment] = useState(true);
     //Vaccine brand Date
     var currentDate = new Date().toISOString().split('T');;
     // var nextVaccineDate = new Date();
@@ -48,19 +57,34 @@ const PatientForm = ({
         if (patient) {
             const patientData = { ...initialState };
             for (const key in patient) {
-                if (key in patientData) patientData[key] = patient[key];
+                if (key in patientData) {
+                    if (key === 'birthdate') {
+                        let tempDate = patient[key].split('T');
+                        patientData[key] = tempDate[0];
+                    } else if (key === 'appointmentA') {
+                        let tempDate = patient[key].split('T');
+                        patientData[key] = tempDate[0];
+                    } else if (key === 'appointmentB') {
+                        if (patient[key] === null) {
+                            sethideAppointment(false);
+                        } else {
+                            let tempDate = patient[key].split('T');
+                            patientData[key] = tempDate[0];
+                        }
+                    } else
+                        patientData[key] = patient[key]
+                };
             }
             setFormData(patientData);
         }
         getVaccines();
-    }, [patient]);
+    }, [patient, getVaccines]);
 
     const {
         firstname,
         lastname,
         birthdate,
         sex,
-        age,
         amka,
         address,
         city,
@@ -85,18 +109,31 @@ const PatientForm = ({
     }
 
     const onChange = (e) => {
+        if (e.target.name === "vaccineBrand") {
+            for (let vaccine of vaccines) {
+                if (vaccine.vaccineBrand === e.target.value) {
+                    if (vaccine.appointments === 1) {
+                        sethideAppointment(false);
+                    } else
+                        sethideAppointment(true);
+                }
+            }
+        }
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
     const handleValidSubmit = async (e) => {
         if (patient != null) {
-            formData.age = currentDate[0] - formData.birthdate;
+
             updatePatient(patient._id, formData);
+            console.log(formData);
         } else {
-            formData.age = currentDate[0] - formData.birthdate;
+            console.log(currentDate[0], formData.birthdate)
+            formData.age = getAge(formData.birthdate);
             addPatient(formData);
-            hide();
+            console.log(formData);
         }
+        hide();
     }
     const removeVaccination = async (e) => {
         const confirm = (window.confirm('Are you sure you wish to delete this vaccination?'));
@@ -253,9 +290,10 @@ const PatientForm = ({
                     <AvGroup>
                         <Label for="vaccineBrand">Vaccine Brand:</Label>
                         <AvInput type="select" name="vaccineBrand" id="vaccineBrand" onChange={onChange} value={vaccineBrand} required>
+                            <option value="">Not Selected</option>
                             {vaccines ? (vaccines.map((vaccine) => (<option key={vaccine._id} value={vaccine.vaccineBrand}>{vaccine.vaccineBrand}</option>))) : ""}
                         </AvInput>
-                        
+
                     </AvGroup>
                     <Row>
                         <Col>
@@ -273,21 +311,22 @@ const PatientForm = ({
                                 <AvFeedback>The First Appointment is required!</AvFeedback>
                             </AvGroup>
                         </Col>
-                        <Col>
-                            <AvGroup>
-                                <Label for="appointmentB">Second Appointment:</Label>
-                                <AvInput
-                                    type="date"
-                                    id="appointmentB"
-                                    name="appointmentB"
-                                    value={appointmentB}
-                                    onChange={onChange}
-                                    min={currentDate[0]}
-                                    required
-                                />
-                                <AvFeedback>The second appointment is required!</AvFeedback>
-                            </AvGroup>
-                        </Col>
+                        <Collapse isOpen={hideAppointment} >
+                            <Col>
+                                <AvGroup>
+                                    <Label for="appointmentB">Second Appointment:</Label>
+                                    <AvInput
+                                        type="date"
+                                        id="appointmentB"
+                                        name="appointmentB"
+                                        value={appointmentB}
+                                        onChange={onChange}
+                                        min={currentDate[0]}
+                                    />
+                                    <AvFeedback>The second appointment is required!</AvFeedback>
+                                </AvGroup>
+                            </Col>
+                        </Collapse>
                     </Row>
                     <AvGroup>
                         <Label for="vaccineStatus">Status of Vaccination:</Label>

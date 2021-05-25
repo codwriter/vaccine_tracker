@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Spinner, Table, Button, Row, Col, } from "reactstrap";
+import { Spinner, Table, Button } from "reactstrap";
 import { getVaccines } from '../../redux/action/vaccine';
 
 const VaccineTable = ({

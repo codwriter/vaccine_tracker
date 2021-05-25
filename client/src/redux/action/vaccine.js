@@ -82,7 +82,7 @@ export const updateVaccine = (id,formdata) => async dispatch => {
 // Remove vaccine
 export const removeVaccine = id => async dispatch => {
     try {
-        const res = await api.delete(`/hospital/vaccines/${id}`);
+        await api.delete(`/hospital/vaccines/${id}`);
 
         dispatch({
             type: REMOVE_VACCINE,
