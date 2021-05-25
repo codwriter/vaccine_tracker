@@ -56,13 +56,15 @@ const Statistics = ({
   var allPatients = patients.length;
 
   //Line Chart
-  var sum;
+  var sum = 0;
+  var age = {};
 
   for (let i=0; i<patients.length; i++) {
-    if (patients[i].age <= 20) {
-      for (let j=0;j<vaccines.length; j++) {
+    if (patients[i].age <= 30) {
+      for (let j=0; j<vaccines.length; j++) {
         if (vaccines[j].vaccineBrand === patients[i].vaccineBrand) {
-          sum[vaccines[j].vaccineBrand] = sum + 1;
+          sum = sum + 1;
+          console.log(sum)
         }
       }
     } 
