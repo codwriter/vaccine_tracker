@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
-import PatientForm from '../Forms/PatientForm';
-const PatientModal = ({ isShowing, hide, patient, title }) =>
+import Register from '../auth/Register';
+const RegisterModal = ({ isShowing, hide }) =>
   isShowing
     ? ReactDOM.createPortal(
         <>
           <div>
-            <Modal isOpen={isShowing} size='lg'>
-              <ModalHeader toggle={hide}>{title}</ModalHeader>
+            <Modal isOpen={isShowing}>
+              <ModalHeader toggle={hide}></ModalHeader>
               <ModalBody>
-                <PatientForm hide={hide} patient={patient} />
+                <Register hide={hide} />
               </ModalBody>
             </Modal>
           </div>
@@ -19,4 +19,4 @@ const PatientModal = ({ isShowing, hide, patient, title }) =>
       )
     : null;
 
-export default PatientModal;
+export default RegisterModal;
