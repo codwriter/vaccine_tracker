@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import {
-  Collapse,
   Navbar,
-  NavbarToggler,
   NavbarBrand,
   Nav,
   NavItem,
-
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem,
-  NavbarText
+  DropdownItem
 } from "reactstrap";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -53,7 +49,7 @@ const NavbarComponent = ({ auth: { isAuthenticated }, logout }) => {
 
       <Link className="nav-link btn-magnify statistics" to="/Statistics">
         <div className="stats-fa">
-          <i class="far fa-chart-bar fa-lg" />{' '}
+          <i className="far fa-chart-bar fa-lg" />{' '}
           <span className="hide-sm">Statistics</span>
         </div>
       </Link>
@@ -61,7 +57,7 @@ const NavbarComponent = ({ auth: { isAuthenticated }, logout }) => {
       
       <UncontrolledDropdown  inNavbar >
         <DropdownToggle nav caret>
-          <i class="far fa-user fa-lg"></i>
+          <i className="far fa-user fa-lg"></i>
         </DropdownToggle>
         
         <DropdownMenu right>

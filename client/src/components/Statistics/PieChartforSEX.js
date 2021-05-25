@@ -1,15 +1,15 @@
-const PieChartOneHospital = (patientsCompleted, patientsPending, patientsCancelled) => {
+const PieChartforSEX = (patientsMale, patientsFemale) => {
   return ({
     data: (canvas) => {
       return {
-        labels: ["Completed", "Pending", "Cancelled"],
+        labels: ["Male", "Female"],
         datasets: [
           {
             pointRadius: 0,
             pointHoverRadius: 0,
-            backgroundColor: ["#e3e3e3", "#3462B2","#B31B1B" ],
+            backgroundColor: ["#e3e3e3", "#4acccd"],
             borderWidth: 0,
-            data: [patientsCompleted, patientsPending, patientsCancelled]
+            data: [patientsMale, patientsFemale],
           },
         ],
       };
@@ -59,7 +59,6 @@ const PieChartOneHospital = (patientsCompleted, patientsPending, patientsCancell
       },
     },
   })
-}
-
-
-module.exports = { PieChartOneHospital };
+};
+  
+module.exports = { PieChartforSEX };

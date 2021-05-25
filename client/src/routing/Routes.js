@@ -9,7 +9,7 @@ import Dashboard from '../components/Dashboard/Dashboard';
 import Hospital from '../components/profile/Hospital';
 import Navbar from '../components/layout/Navbar';
 import Intro from '../components/Views/Intro';
-import Statistics from '../components/views/Statistics';
+import Statistics from '../components/Views/Statistics';
 
 const Routes = props => {
     return (

@@ -10,7 +10,7 @@ import {
 } from './types';
 
 // Get vaccines from server
-const getVaccines = () => async dispatch => {
+export const getVaccines = () => async dispatch => {
     try {
         const res = await api.get('/api/hospital/vaccines');
         dispatch({
@@ -25,7 +25,7 @@ const getVaccines = () => async dispatch => {
     }
 };
 
-const getVaccine = id => async dispatch => {
+export const getVaccine = id => async dispatch => {
     try {
         const res = await api.get(`/api/hospital/vaccines/${id}`);
         dispatch({
