@@ -11,60 +11,58 @@ import {
   InputGroup,
 } from 'reactstrap';
 
-import {
-  Card, 
-  CardBody, 
-  CardSubtitle
-} from 'reactstrap';
+import { Card, CardBody, CardSubtitle, CardFooter } from 'reactstrap';
 
 import { login } from '../../redux/action/auth';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
+import useModal from '../Modals/useModal';
+import RegisterModal from '../Modals/RegisterModal';
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
   });
+  const { isShowing, toggle } = useModal();
 
   const { email, password } = formData;
 
-  const onChange = e =>
+  const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     login(email, password);
   };
 
   if (isAuthenticated) {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to='/dashboard' />;
   }
-  
+
   return (
-    <Form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit} className='forma'>
       <Card>
         <CardBody>
-          <CardSubtitle tag="h6" className="mb-2 text-muted">
-            <i className="fas fa-user" />   Sign Into Your Account
+          <CardSubtitle tag='h6' className='mb-2 text-muted'>
+            <i className='fas fa-user' /> Sign Into Your Account
           </CardSubtitle>
-        
+
           <br></br>
 
-          <FormGroup className="mb-3">
-            <Label className="text-muted">Email</Label>
-            <InputGroup className="input-group-alternative">
-              <InputGroupAddon addonType="prepend">
+          <FormGroup className='mb-3'>
+            <Label className='text-muted'>Email</Label>
+            <InputGroup className='input-group-alternative'>
+              <InputGroupAddon addonType='prepend'>
                 <InputGroupText>
-                  <i class="fas fa-envelope"></i> 
+                  <i class='fas fa-envelope'></i>
                 </InputGroupText>
               </InputGroupAddon>
               <Input
-                type="email"
-                placeholder="Enter Email"
-                name="email"
+                type='email'
+                placeholder='Enter Email'
+                name='email'
                 value={email}
                 onChange={onChange}
                 required
@@ -72,33 +70,39 @@ const Login = ({ login, isAuthenticated }) => {
             </InputGroup>
           </FormGroup>
 
-          <FormGroup className="mb-3">
-            <Label className="text-muted">Password</Label>
-            <InputGroup className="input-group-alternative">
-              <InputGroupAddon addonType="prepend">
+          <FormGroup className='mb-3'>
+            <Label className='text-muted'>Password</Label>
+            <InputGroup className='input-group-alternative'>
+              <InputGroupAddon addonType='prepend'>
                 <InputGroupText>
-                  <i class="fas fa-key"></i> 
+                  <i class='fas fa-key'></i>
                 </InputGroupText>
               </InputGroupAddon>
               <Input
-                type="password"
-                placeholder="Your Password"
-                name="password"
+                type='password'
+                placeholder='Your Password'
+                name='password'
                 value={password}
                 onChange={onChange}
-                minLength="6"
+                minLength='6'
               />
             </InputGroup>
           </FormGroup>
 
-          <Button color="secondary" round outline type="submit">
+          <Button className='new' round outline type='submit'>
             Sign In
           </Button>
 
-         {/*  <div className="my-3">
+          {/*  <div className="my-3">
             Don't have an account? <Link to="/register">Sign Up</Link>
           </div> */}
         </CardBody>
+        <CardFooter>
+          <RegisterModal isShowing={isShowing} hide={toggle} />
+          <Button className='new' onClick={toggle}>
+            Create New Account
+          </Button>
+        </CardFooter>
       </Card>
     </Form>
   );
@@ -106,11 +110,11 @@ const Login = ({ login, isAuthenticated }) => {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { login })(Login);
