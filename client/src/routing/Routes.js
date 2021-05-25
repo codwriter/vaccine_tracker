@@ -9,6 +9,7 @@ import Dashboard from '../components/Dashboard/Dashboard';
 import Hospital from '../components/profile/Hospital';
 import Navbar from '../components/layout/Navbar';
 import Intro from '../components/Views/Intro';
+import Statistics from '../components/Views/Statistics';
 
 const Routes = props => {
     return (
@@ -21,6 +22,7 @@ const Routes = props => {
                     <PrivateRoute exact path="/dashboard" component={Dashboard} />
                     <PrivateRoute exact path="/intro" component={Intro} />
                     <PrivateRoute exact path="/profile" component={Hospital} />
+                    <PrivateRoute exact path="/statistics" component={Statistics} />
                     <Route component={NotFound} />
                 </Switch>
             </Container>
