@@ -17,7 +17,7 @@ var patientsSchema = new Schema({
         required: true
 
     }, 
-    birthday: {
+    birthdate: {
         type: Date,
         default: Date.now,
         required: true

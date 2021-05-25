@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import { Row, Col, Container, Spinner, Card, CardTitle, CardFooter, CardHeader, ListGroup, ListGroupItem, Collapse, Button } from "reactstrap";
+import { Row, Col, Spinner, ListGroup, ListGroupItem, Collapse, Button } from "reactstrap";
 import { getHospitals, linkHospital } from '../../redux/action/hospital';
 import HospitalProfileForm from '../Forms/HospitalProfileForm';
 

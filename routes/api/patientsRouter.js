@@ -63,7 +63,7 @@ patientsRouter.route('/hospital')
             res.status(500).send('Server error');
         }
     })
-    // @route    GET api / patients 
+    // @route    Post api / patients /hospital
     // @desc     Post a new patient to mongo and bigChain
     // @access   Private
     .post(auth,
