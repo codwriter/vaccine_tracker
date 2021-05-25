@@ -16,21 +16,21 @@ const VaccineTable = ({
     }, [getVaccines, loading])
 
     return (
-        <>
-            <Table className="table" hover responsive>
+        <> {!loading ? (
+            vaccines!==[{}] ? (
+                <Table className="table" hover responsive>
 
-                <thead >
-                    <tr className="text-center ">
-                        <th>Vaccine Brand</th>
-                        <th>Available Doses</th>
-                        <th>Appointments</th>
-                    </tr>
+                    <thead >
+                        <tr className="text-center ">
+                            <th>Vaccine Brand</th>
+                            <th>Available Doses</th>
+                            <th>Appointments</th>
+                        </tr>
 
-                </thead>
+                    </thead>
 
-                <tbody>
-                    {!loading ? (
-                        vaccines ? (vaccines.map(vaccine => {
+                    <tbody>
+                        {(vaccines.map(vaccine => {
                             return (
                                 <tr className="text-center" key={vaccine._id} onClick={() => { setTitle("Edit Vaccine"); setVaccine(vaccine); toggle(); }}>
                                     <td>{vaccine.vaccineBrand}</td>
@@ -39,9 +39,9 @@ const VaccineTable = ({
                                     <td><Button className=" btn-simple btn-sm  btn-round btn-icon"><i className="far fa-edit"></i></Button></td>
                                 </tr>
                             )
-                        })) : ("There no vaccines yet please add one")) : <Spinner />}
-                </tbody>
-            </Table>
+                        }))}
+                    </tbody>
+                </Table>) : (<p className = "d-flex justify-self-center">There no vaccines yet please add one</p>)) : <Spinner />}
         </>
     )
 }

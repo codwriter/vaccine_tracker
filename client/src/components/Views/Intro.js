@@ -34,7 +34,7 @@ const Intro = ({
                 </Col>
                 <ListGroup >
                     {hospitals?hospitals.map(hospital =>
-                        <ListGroupItem tag="a"
+                        <ListGroupItem tag="a" key={hospital._id}
                             onClick={() => { linkHospital(hospital._id,history);}}>
                             {hospital.name} Hospital
                         </ListGroupItem>):''}
@@ -55,7 +55,8 @@ const Intro = ({
 
 Intro.propTypes = {
     getHospitals: PropTypes.func.isRequired,
-    linkHospital: PropTypes.func.isRequired
+    linkHospital: PropTypes.func.isRequired,
+    hospitals:PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

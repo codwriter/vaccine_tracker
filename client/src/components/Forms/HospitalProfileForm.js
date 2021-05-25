@@ -178,7 +178,7 @@ const Hospitalregister = ({
           <Row className="mt-4">
             <VaccineModal isShowing={isShowing} hide={toggle} vaccine={vaccine} title={modalTitle} />
             <Col>
-              <VaccineTable vaccines={hospital.vaccines} loading={loading} toggle={toggle} setTitle={setModalTitle} setVaccine={setVaccine} />
+              <VaccineTable loading={loading} toggle={toggle} setTitle={setModalTitle} setVaccine={setVaccine} />
             </Col>
           </Row>
         </CardBody>

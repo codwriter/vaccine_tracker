@@ -84,7 +84,7 @@ export const updateHospital = (formdata) => async (dispatch) => {
 export const getHospitals = () => async (dispatch) => {
 
   try {
-    const res = await api.get('/hospital/'); 
+    const res = await api.get('/hospital/');
 
     dispatch({
       type: GET_HOSPITALS,
@@ -104,13 +104,14 @@ export const linkHospital = (id, history) => async (dispatch) => {
     const res = await api.put(`/hospital/link/${id}`);
 
     dispatch({
-      type: GET_HOSPITALS,
+      type: GET_HOSPITAL,
       payload: res.data
     });
-    
+
     dispatch(setAlert('User linked to hospital!', 'success'));
     history.push('/dashboard');
   } catch (err) {
+    console.log(err);
     dispatch({
       type: HOSPITAL_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }
@@ -121,7 +122,7 @@ export const linkHospital = (id, history) => async (dispatch) => {
 //UNLINK HOSPITAL
 export const unlinkHospital = () => async (dispatch) => {
   try {
-     await api.put('/hospital/unlink'); 
+    await api.put('/hospital/unlink');
 
     dispatch({
       type: CLEAR_HOSPITAL,

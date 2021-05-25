@@ -56,7 +56,7 @@ hospitalRouter.post('/', auth,
     check('address', 'Address of Hospital is required').notEmpty(),
     check('city', 'City of the Hospital is required').notEmpty(),
     check('country', 'Country of the Hospital is required').notEmpty(),
-    check('vaccines', 'Vaccines of the Hospital is required').notEmpty(),
+    /* check('vaccines', 'Vaccines of the Hospital is required').notEmpty(), */
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -134,7 +134,7 @@ hospitalRouter.put('/link/:id', auth, async (req, res) => {
             { $set: { hospital: req.params.id } },
             { new: true }
         );
-        const hospital = await Hospitals.findById(user.hospital);
+        const hospital = await Hospitals.findById(user.hospital).select('-keypair');;
         res.json(hospital);
     } catch (err) {
         console.error(err.message);
