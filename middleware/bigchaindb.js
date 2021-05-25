@@ -4,14 +4,14 @@ const Hospitals = require('../models/hospital');
 const API_PATH = 'http://localhost:9984/api/v1/';
 const conn = new driver.Connection(API_PATH);
 
-exports.createPatient = (hospital, patient) => {
-    return new Promise((resolve, reject) => {
+exports.createPatient = async (hospital, patient) => {
+    /* return new Promise((resolve, reject) => { */
+    try {
         var patientAssetData = patient.id;
         var patientMetaData = patient;
         patientMetaData.hospital = (({ _id, name }) => ({ _id, name, }))(hospital);
-        // patientMetaData.hospital = {"_id" :hospital.id,"name":hospital.name};
 
-        console.log("the metadata is ", patientMetaData);
+        //console.log("the metadata is ", patientMetaData);
         const assetdata = {
             "patient": patientAssetData
         }
@@ -26,17 +26,19 @@ exports.createPatient = (hospital, patient) => {
 
         //Sign the transaction
         const assetCreateTxSigned = driver.Transaction.signTransaction(assetCreateTx, hospital.keypair.privateKey);
-        console.log('\n\nPosting signed create transaction for User:\n', assetCreateTxSigned);
-        //Send the transaction
-        conn.postTransactionCommit(assetCreateTxSigned).then(postedTransaction => {
 
-            //Let the promice resolve the created transaction.
-            resolve(postedTransaction);
-        }).catch(err => {
-            reject(new Error(err));
-        });
-    });
+        console.log('\n\nPosting signed create transaction for User:\n', assetCreateTxSigned);
+
+        //Send the transaction
+        const postedTransaction = await conn.postTransactionCommit(assetCreateTxSigned);
+
+        return (postedTransaction);
+    } catch (err) {
+        console.error(err.message);
+        return false;
+    }
 }
+
 // Get patients from a hospital
 exports.getPatients = async (hospitalId) => {
     try {
@@ -89,7 +91,10 @@ exports.getPatient = async (patientId) => {
         console.error(error.message);
     }
 }
-exports.editPatients = async (patientId, editedPatient) => {
+// Edit Patient
+// Input PatientID,editedPatient
+// Output Patient
+exports.editPatient = async (patientId, editedPatient) => {
     try {
         let patient = await conn.searchMetadata(patientId);
         // Take the most recent metadata of the patient
@@ -110,8 +115,10 @@ exports.editPatients = async (patientId, editedPatient) => {
         console.log(txTransferToMyself);
         // Send it to Bigchain
         await conn.postTransactionCommit(txTransferToMyselfSigned);
+        return true
     } catch (error) {
         console.error(error.message);
+        return false;
     }
 }
 // Delete: change metadata to null, make transction non transferable

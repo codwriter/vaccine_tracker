@@ -4,13 +4,17 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AvForm, AvGroup, AvFeedback, AvInput } from 'availity-reactstrap-validation';
 import { createHospital, updateHospital, getCurrentHospital } from '../../redux/action/hospital';
-import { Button, Label, Spinner, Card, CardHeader, CardBody, Row, Col } from 'reactstrap';
-import Alert from '../../components/layout/Alert';
+import { Button, Label, Spinner, Card, CardHeader, CardBody, Row, Col, CardTitle } from 'reactstrap';
+import VaccineTable from '../profile/VaccineTable';
+import useModal from '../Modals/useModal';
+import VaccineModal from '../Modals/vaccineModal';
+
 const initialState = {
   name: '',
   afm: '',
   address: '',
-  numberOfDosesAvailable: null
+  city: '',
+  country: '',
 };
 
 const Hospitalregister = ({
@@ -22,7 +26,11 @@ const Hospitalregister = ({
   hospital: { hospital, loading }
 }) => {
   const [formData, setFormData] = useState(initialState);
-  const [disabled, setdisabled] = useState(false);
+  const { isShowing, toggle } = useModal();
+  const [vaccine, setVaccine] = useState(null);
+  const [modalTitle, setModalTitle] = useState("");
+  //const [disabled, setdisabled] = useState(false);
+
   useEffect(() => {
     if (!hospital) getCurrentHospital();
     if (!loading && hospital) {
@@ -31,15 +39,15 @@ const Hospitalregister = ({
         if (key in hospitalData) hospitalData[key] = hospital[key];
       }
       setFormData(hospitalData);
-      setdisabled(true);
     }
-  }, [loading, getCurrentHospital, hospital]);
+  }, [loading, getCurrentHospital, hospital,]);
 
 
-  const { name, address, afm, numberOfDosesAvailable } = formData;
+  const { name, address, afm, city, country } = formData;
 
-  const onChange = (e) =>
+  const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
 
 
   const handleValidSubmit = async (e) => {
@@ -55,14 +63,14 @@ const Hospitalregister = ({
       {loading ? <Spinner /> : (
         <Card>
           <CardHeader>
-            <h1 className="large text-primary">{title}</h1>
+            <CardTitle className="text-primary text-center h6">{title}</CardTitle>
           </CardHeader>
           <CardBody>
-            <AvForm className="form text-white" onValidSubmit={handleValidSubmit}>
+            <AvForm className="form" onValidSubmit={handleValidSubmit} onChange={onChange}>
               <AvGroup>
                 <Label>Hospital Name</Label>
                 <AvInput
-                  autocomplete="true"
+                  autoComplete="true"
                   type="text"
                   placeholder="The name of the hospital"
                   name="name"
@@ -74,9 +82,9 @@ const Hospitalregister = ({
               </AvGroup>
 
               <AvGroup>
-                <Label>Hospital Address</Label>
+                <Label>Address</Label>
                 <AvInput
-                  autocomplete="true"
+                  autoComplete="true"
                   type="text"
                   placeholder="Hospital Address"
                   name="address"
@@ -86,11 +94,43 @@ const Hospitalregister = ({
                 />
                 <AvFeedback>The address of the hospital is required!</AvFeedback>
               </AvGroup>
+              <Row>
+                <Col>
+                  <AvGroup>
+                    <Label>City</Label>
+                    <AvInput
+                      autoComplete="true"
+                      type="text"
+                      placeholder="Hospital City"
+                      name="city"
+                      value={city}
+                      onChange={onChange}
+                      required
+                    />
+                    <AvFeedback>The city of the hospital is required!</AvFeedback>
+                  </AvGroup>
+                </Col>
+                <Col>
+                  <AvGroup>
+                    <Label>Country</Label>
+                    <AvInput
+                      autoComplete="true"
+                      type="text"
+                      placeholder="Hospital Country"
+                      name="country"
+                      value={country}
+                      onChange={onChange}
+                      required
+                    />
+                    <AvFeedback>The country of the hospital is required!</AvFeedback>
+                  </AvGroup>
+                </Col>
+              </Row>
 
               <AvGroup>
                 <Label for="afm">Tax Identification Number</Label>
                 <AvInput
-                  autocomplete="true"
+                  autoComplete="true"
                   type="text"
                   id="afm"
                   placeholder="Tax Identification Number(AFM)"
@@ -101,31 +141,48 @@ const Hospitalregister = ({
                   maxLength="9"
                   pattern="^[0-9]+$"
                   required
-                  disabled={disabled}
                 />
                 <AvFeedback>The afm is required and must be 9 numbers in length!</AvFeedback>
               </AvGroup>
-
-              <AvGroup>
-                <Label for="numberOfDosesAvailable">Number of Doses</Label>
-                <AvInput
-                  autocomplete="true"
-                  id="numberOfDosesAvailable"
-                  type="number"
-                  placeholder="Number of Doses"
-                  name="numberOfDosesAvailable"
-                  value={numberOfDosesAvailable}
-                  onChange={onChange}
-                  min="0"
-                />
-              </AvGroup>
-              <AvGroup>
-                <Button type="submit">Submit</Button>
-              </AvGroup>
+              <Row>
+                <Col>
+                  <Row>
+                    <Col className="text-center">
+                      <Button className="btn-primary" type="submit">Submit</Button>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
             </AvForm>
+
           </CardBody>
         </Card>
       )}
+      <Card className="card">
+        <CardHeader>
+
+          <Row>
+            <Col>
+              <CardTitle className="text-primary text-center h6">Vaccines</CardTitle>
+            </Col>
+            <Col sm="1" md="1" lg="1">
+              <Button
+                onClick={() => { setModalTitle("Add Vaccine"); toggle(); setVaccine(null); }}
+                className=" btn-sm btn-icon btn-primary btn-round pull-right">
+                <i className="fas fa-plus"></i>
+              </Button>
+            </Col>
+          </Row>
+        </CardHeader>
+        <CardBody>
+          <Row className="mt-4">
+            <VaccineModal isShowing={isShowing} hide={toggle} vaccine={vaccine} title={modalTitle} />
+            <Col>
+              <VaccineTable loading={loading} toggle={toggle} setTitle={setModalTitle} setVaccine={setVaccine} />
+            </Col>
+          </Row>
+        </CardBody>
+      </Card>
     </Fragment>
   );
 };

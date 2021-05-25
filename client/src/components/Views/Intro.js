@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import { Row, Col, Container, Spinner, Card, CardTitle, CardFooter, CardHeader, ListGroup, ListGroupItem, Collapse, Button } from "reactstrap";
+import { Row, Col, Spinner, ListGroup, ListGroupItem, Collapse, Button } from "reactstrap";
 import { getHospitals, linkHospital } from '../../redux/action/hospital';
 import HospitalProfileForm from '../Forms/HospitalProfileForm';
 
@@ -34,7 +34,7 @@ const Intro = ({
                 </Col>
                 <ListGroup >
                     {hospitals?hospitals.map(hospital =>
-                        <ListGroupItem tag="a"
+                        <ListGroupItem tag="a" key={hospital._id}
                             onClick={() => { linkHospital(hospital._id,history);}}>
                             {hospital.name} Hospital
                         </ListGroupItem>):''}
@@ -55,7 +55,8 @@ const Intro = ({
 
 Intro.propTypes = {
     getHospitals: PropTypes.func.isRequired,
-    linkHospital: PropTypes.func.isRequired
+    linkHospital: PropTypes.func.isRequired,
+    hospitals:PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

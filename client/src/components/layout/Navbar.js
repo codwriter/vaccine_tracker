@@ -1,18 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
 import {
-  Collapse,
   Navbar,
-  NavbarToggler,
   NavbarBrand,
   Nav,
   NavItem,
-
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText
 } from "reactstrap";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -22,8 +18,8 @@ import logo from '../../assets/images/white_logo.png'
 
 
 const NavbarComponent = ({ auth: { isAuthenticated }, logout }) => {
-  const [isOpen, set_isOpen] = useState(false);
-  const authLinks = (
+/*   const [isOpen, set_isOpen] = useState(false);
+ */  const authLinks = (
     <>
       <NavItem>
         <Link to="/Profile" className="nav-link btn-magnify">Hospital</Link>
@@ -39,32 +35,32 @@ const NavbarComponent = ({ auth: { isAuthenticated }, logout }) => {
 
   const guestLinks = (
     <>
-    
+
     </>
   );
 
-  const toggle = () => set_isOpen(!isOpen);
+  /*   const toggle = () => set_isOpen(!isOpen); */
 
   return (
     <Navbar light expand="md" className="bg-primary text-white navbar">
-      <NavbarBrand href={isAuthenticated ? '/dashboard':'/'}>
-        <img src={logo} className='nav-logo' />
+      <NavbarBrand href={isAuthenticated ? '/dashboard' : '/'}>
+        <img src={logo} alt="logo" className='nav-logo' />
       </NavbarBrand>
 
 
       <Link className="nav-link btn-magnify statistics" to="/Statistics">
         <div className="stats-fa">
-          <i class="far fa-chart-bar fa-lg" />{' '}
+          <i className="far fa-chart-bar fa-lg" />{' '}
           <span className="hide-sm">Statistics</span>
         </div>
       </Link>
-   
-      
-      <UncontrolledDropdown  inNavbar >
+
+
+      <UncontrolledDropdown inNavbar >
         <DropdownToggle nav caret>
-          <i class="far fa-user fa-lg"></i>
+          <i className="far fa-user fa-lg"></i>
         </DropdownToggle>
-        
+
         <DropdownMenu right>
           <DropdownItem>
             <Nav className="mr-auto" >

@@ -1,22 +1,28 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import {
-    Card, CardHeader, CardBody, CardTitle, CardFooter, CardSubtitle,
+    Card, CardHeader, CardBody, CardTitle, CardSubtitle,
     Row, Col,
     Button,
-    CustomInput,    
+    CustomInput,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getHospitalPatients, getPatients } from '../../redux/action/patient';
 import useModal from '../Modals/useModal';
 import PatientModal from '../Modals/PatientModal';
-import XTable from './table';
+import XTable from './PatientTable';
+import { setAlert } from '../../redux/action/alert';
+
+
+
 
 
 const PatientTable = ({
     hospital,
     getPatients,
-    patients: { loading, patients }
+    getHospitalPatients,
+    setAlert,
+    patientsReducer: { loading, patients }
 }) => {
     const { isShowing, toggle } = useModal();
     const [patient, setPatient] = useState(null);
@@ -25,8 +31,8 @@ const PatientTable = ({
     const [switchHospital, setSwitchHospital] = useState(false);
 
     useEffect(() => {
-        getPatients();
-    }, [getPatients, loading]);
+        getHospitalPatients();
+    }, [getHospitalPatients, loading]);
 
     const allhospitalVaccination = () => {
         if (!switchHospital) {
@@ -43,15 +49,20 @@ const PatientTable = ({
 
     const listHeader = [
         {
-            Header:"Fullname",
+            Header: "Firstname",
             className: "t-cell-1 text-center",
-            accessor: "fullname",
+            accessor: "firstname",
+        },
+        {
+            Header: "Lastname",
+            className: "t-cell-1 text-center",
+            accessor: "lastname",
         },
         {
             Header: "Amka",
             accessor: "amka",
             className: "t-cell-2 text-center",
-            
+
         },
         {
             Header: "City",
@@ -65,67 +76,74 @@ const PatientTable = ({
         }
     ];
 
+    const checkVaccines = () => {
+        if (hospital.vaccines>-1) {
+            console.log("there", hospital.vaccines)
+             setAlert('There are no vaccines for vaccinations please add some!','danger');
+        } else {
+             setModalTitle("Add Vaccination"); toggle(); setPatient(null);
+        }
+    }
 
-
-    return (
-        <Fragment>
-            <PatientModal isShowing={isShowing} hide={toggle} patient={patient} title={modalTitle} />
-            <div className="content">
-                <Row>
-                    <Col md="12">
-                        <Card className="card">
-                            <CardHeader className="card-header">
-                                <Row>
-                                    <Col>
-                                        <CardTitle tag="h4" className="card-title">{tableTitle}
-                                        </CardTitle>
-                                    </Col>
-                                    <Col>
-                                        <CardSubtitle className="text-right">
-                                            <Button
-                                                onClick={() => { setModalTitle("Add Vaccination"); toggle(); setPatient(null); }}
-                                                className=" btn-sm btn-outline-info  btn-round pull-right">Add Vaccination
+return (
+    <Fragment>
+        <PatientModal isShowing={isShowing} hide={toggle} patient={patient} title={modalTitle} />
+        <div className="content">
+            <Row>
+                <Col md="12">
+                    <Card className="card">
+                        <CardHeader className="card-header">
+                            <Row>
+                                <Col>
+                                    <CardTitle tag="h4" className="card-title">{tableTitle}
+                                    </CardTitle>
+                                </Col>
+                                <Col>
+                                    <CardSubtitle className="text-right">
+                                        <Button
+                                            onClick={checkVaccines}
+                                            className=" btn-sm btn-outline-info  btn-round pull-right">Add Vaccination
                                         </Button>
-                                        </CardSubtitle>
-                                    </Col>
-                                </Row>
-                                <span className="float-right ">
-                                    <CustomInput
-                                        checked={switchHospital}
-                                        className="hospital-switch "
-                                        type="switch"
-                                        name="customSwitch"
-                                        id="cudtomHospitalSwitch"
-                                        label="All Hospital"
-                                        onChange={allhospitalVaccination}
-                                    />
-                                </span>
-                            </CardHeader>
+                                    </CardSubtitle>
+                                </Col>
+                            </Row>
+                            <span className="float-right ">
+                                <CustomInput
+                                    checked={switchHospital}
+                                    className="hospital-switch "
+                                    type="switch"
+                                    name="customSwitch"
+                                    id="cudtomHospitalSwitch"
+                                    label="All Hospital"
+                                    onChange={allhospitalVaccination}
+                                />
+                            </span>
+                        </CardHeader>
 
-
-                            <CardBody className="card-body">
-                                {patients ?
-                                    (<XTable columns={listHeader} loading={loading} data={patients} toggle={toggle} setTitle={setModalTitle} setPatient={setPatient} />)
-                                    : <div className="text-center text-big">No Vaccinations yet...Start by adding one</div>
-                                }
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
-            </div>
-        </Fragment>
-    );
+                        <CardBody className="card-body">
+                            {patients!=[]?
+                                (<XTable columns={listHeader} loading={loading} data={patients} toggle={toggle} setTitle={setModalTitle} setPatient={setPatient} />)
+                                : <div className="text-center text-big">No Vaccinations yet...Start by adding one</div>
+                            }
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
+        </div>
+    </Fragment >
+);
 }
 PatientTable.propTypes = {
+    setAlert: PropTypes.func.isRequired,
     getPatients: PropTypes.func.isRequired,
     getHospitalPatients: PropTypes.func.isRequired,
-    patients: PropTypes.object.isRequired,
+    patientsReducer: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-    patients: state.patientReducer
+    patientsReducer: state.patientReducer
 });
 
-export default connect(mapStateToProps, { getPatients, getHospitalPatients })(
+export default connect(mapStateToProps, { setAlert, getPatients, getHospitalPatients })(
     PatientTable
 );

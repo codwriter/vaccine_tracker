@@ -33,17 +33,16 @@ function vaccineReducer(state = initialState, action) {
         case ADD_VACCINE:
             return {
                 ...state,
-                vaccines: [payload, ...state.vaccines],
+                vaccines: payload,
                 loading: false
             };
         case UPDATE_VACCINE:
             return {
                 ...state,
                 vaccines: state.vaccines.map((vaccine) =>
-                    vaccine._id === payload.id ? { ...vaccine, vaccine: payload.vaccine } : vaccine
+                    vaccine._id === payload.id ? vaccine = payload.vaccine : vaccine
                 ),
                 loading: false
-
             };
         case REMOVE_VACCINE:
             return {
