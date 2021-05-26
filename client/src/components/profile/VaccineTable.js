@@ -23,7 +23,7 @@ const VaccineTable = ({
                 <Card className="card">
                     <CardHeader>
                         <Row>
-                            <Col>
+                            <Col className="offset-1">
                                 <CardTitle className="text-primary text-center h6">Vaccines</CardTitle>
                             </Col>
                             <Col sm="1" md="1" lg="1">
