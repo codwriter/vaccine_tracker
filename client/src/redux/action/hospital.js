@@ -44,7 +44,7 @@ export const createHospital = (formData, history) => async (dispatch) => {  //H 
     dispatch(setAlert('Hospital Created', 'success'));
 
     //Αν δημιουργήσω ενα καινιούργιο νοσοκομείο θα πρέπει να κάνει redirect 
-    history.push('/dashboard');
+    history.push('/vaccines');
 
   } catch (err) {
     const errors = err.response.data.errors;    //Σε περίπτωση που ξεχάσω καποια απο τα υποχρεωτικά πεδία θα μου βγάλει alert

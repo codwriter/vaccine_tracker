@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { AvForm, AvGroup, AvFeedback, AvInput } from 'availity-reactstrap-validation';
-import { Button, Label, Row, Col, FormText, Collapse } from 'reactstrap';
+import { AvForm, AvGroup, AvFeedback, AvInput, AvField } from 'availity-reactstrap-validation';
+import { Button, Label, Row, Col, FormText, Collapse, Fade } from 'reactstrap';
 import { addPatient, updatePatient, removePatient } from '../../redux/action/patient';
 import { getVaccines } from '../../redux/action/vaccine';
 
@@ -34,6 +34,7 @@ const initialState = {
 };
 
 const PatientForm = ({
+    switchHospital,
     addPatient,
     updatePatient,
     removePatient,
@@ -48,6 +49,7 @@ const PatientForm = ({
     const [vacInfoOpen, setvacInfoOpen] = useState(true);
     const [hideAppointment, sethideAppointment] = useState(true);
     const [required, setrequired] = useState(false);
+    const [disabled, setdisabled] = useState(false);
     //Vaccine brand Date
     var currentDate = new Date().toISOString().split('T');
     // var nextVaccineDate = new Date();
@@ -65,7 +67,7 @@ const PatientForm = ({
                     } else if (key === 'appointmentA') {
                         let tempDate = patient[key].split('T');
                         patientData[key] = tempDate[0];
-                    } else if (key === 'appointmentB' && patient[key]!==null) {
+                    } else if (key === 'appointmentB' && patient[key] !== null) {
                         sethideAppointment(true);
                         let tempDate = patient[key].split('T');
                         patientData[key] = tempDate[0];
@@ -112,12 +114,19 @@ const PatientForm = ({
         if (e.target.name === "vaccineBrand") {
             for (let vaccine of vaccines) {
                 if (vaccine.vaccineBrand === e.target.value) {
+                    if (vaccine.doses < vaccine.appointments) {
+
+                        setdisabled(true);
+                    } else {
+                        setdisabled(false);
+                    }
                     if (vaccine.appointments === 1) {
                         sethideAppointment(false);
                         setrequired(false);
                     } else {
                         setrequired(true);
-                        sethideAppointment(true);}
+                        sethideAppointment(true);
+                    }
                 }
             }
         }
@@ -144,10 +153,9 @@ const PatientForm = ({
         }
     }
 
-
     return (
         <Fragment>
-            <AvForm className="form" onValidSubmit={handleValidSubmit}>
+            <AvForm className="form" onValidSubmit={handleValidSubmit} disabled={switchHospital}>
 
                 <FormText type="button" className="h6 pb-2 " onClick={togglePatientInfo}>
                     Patient Info
@@ -167,7 +175,7 @@ const PatientForm = ({
                                     onChange={onChange}
                                     required
                                 />
-                                <AvFeedback>The firstname name of the patient is required!</AvFeedback>
+                                <AvFeedback >The firstname name of the patient is required!</AvFeedback>
                             </AvGroup>
                         </Col>
 
@@ -190,7 +198,7 @@ const PatientForm = ({
                         <Col>
                             <AvGroup>
                                 <Label for="sex">Sex:</Label>
-                                <AvInput type="select" name="sex" id="sex" onChange={onChange} value={sex} required>
+                                <AvInput type="select" name="sex" id="sex" onChange={onChange} value={sex} required className="form-check">
                                     <option value="">Select</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
@@ -291,12 +299,16 @@ const PatientForm = ({
                 <Collapse isOpen={vacInfoOpen}>
                     <AvGroup>
                         <Label for="vaccineBrand">Vaccine Brand:</Label>
-                        <AvInput type="select" name="vaccineBrand" id="vaccineBrand" onChange={onChange} value={vaccineBrand} required>
-                            <option value="">Not Selected</option>
-                            {vaccines ? (vaccines.map((vaccine) => (<option key={vaccine._id} value={vaccine.vaccineBrand}>{vaccine.vaccineBrand}</option>))) : ""}
-                        </AvInput>
-
+                        {!switchHospital ? (
+                            <AvInput type="select" name="vaccineBrand" id="vaccineBrand" onChange={onChange} value={vaccineBrand} required>
+                                <option value="">Not Selected</option>
+                                {vaccines ? (vaccines.map((vaccine) => (<option key={vaccine._id} value={vaccine.vaccineBrand}>{vaccine.vaccineBrand}</option>))) : ""}
+                            </AvInput>) : <AvField type="text" name="vaccineBrand" value={vaccineBrand}></AvField>}
+                        {disabled ? <FormText className="h6 text-danger text-center my-2 m-3">
+                            The vaccine has not enough doses for the vaccination. Choose another one!
+                                </FormText> : ""}
                     </AvGroup>
+
                     <Row>
                         <Col>
                             <AvGroup>
@@ -360,11 +372,11 @@ const PatientForm = ({
                     </AvGroup>
                 </Collapse>
 
-                <AvGroup className="float-right">
-                    <Button type="submit">Submit</Button>
-                </AvGroup>
+                {disabled ? (<AvGroup className="float-right">
+                    <Button disabled={disabled || switchHospital} type="submit">Submit</Button>
+                </AvGroup>) : ''}
             </AvForm>
-            {patient ? <Button color="danger " className="float-right mr-2" onClick={removeVaccination}>Delete Patient</Button> : ""}
+            {disabled ? (patient ? <Button color="danger" disabled={switchHospital} className="float-right mr-2" onClick={removeVaccination}>Delete Patient</Button> : "") : ''}
         </Fragment>
     );
 }
