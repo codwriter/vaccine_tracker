@@ -8,7 +8,7 @@ import {
     // useAsyncDebounce,
 } from "react-table";
 
-import { Spinner, Table } from "reactstrap";
+import { Spinner, Table, Button } from "reactstrap";
 import {
     Label,
     Input,
@@ -198,6 +198,7 @@ const XTable = ({ columns, data, loading = true, toggle, setTitle, setPatient })
                                                     >
                                                         {cell.render("Cell")}
                                                     </td>
+                                                    
                                                 );
                                             })}
                                         </tr>

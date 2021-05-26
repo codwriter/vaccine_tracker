@@ -10,6 +10,7 @@ import Hospital from '../components/profile/Hospital';
 import Navbar from '../components/layout/Navbar';
 import Intro from '../components/Views/Intro';
 import Statistics from '../components/Views/Statistics';
+import VaccineTable from '../components/profile/VaccineTable';
 
 const Routes = props => {
     return (
@@ -23,6 +24,7 @@ const Routes = props => {
                     <PrivateRoute exact path="/intro" component={Intro} />
                     <PrivateRoute exact path="/profile" component={Hospital} />
                     <PrivateRoute exact path="/statistics" component={Statistics} />
+                    <PrivateRoute exact path="/vaccines" component={VaccineTable} />
                     <Route component={NotFound} />
                 </Switch>
             </Container>
