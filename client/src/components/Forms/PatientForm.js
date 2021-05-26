@@ -115,7 +115,6 @@ const PatientForm = ({
             for (let vaccine of vaccines) {
                 if (vaccine.vaccineBrand === e.target.value) {
                     if (vaccine.doses < vaccine.appointments) {
-
                         setdisabled(true);
                     } else {
                         setdisabled(false);
@@ -371,12 +370,12 @@ const PatientForm = ({
                         />
                     </AvGroup>
                 </Collapse>
-
-                {disabled ? (<AvGroup className="float-right">
+                      
+                {!switchHospital ? (<AvGroup className="float-right">
                     <Button disabled={disabled || switchHospital} type="submit">Submit</Button>
                 </AvGroup>) : ''}
             </AvForm>
-            {disabled ? (patient ? <Button color="danger" disabled={switchHospital} className="float-right mr-2" onClick={removeVaccination}>Delete Patient</Button> : "") : ''}
+            {!switchHospital ? (patient? <Button color="danger" disabled={switchHospital} className="float-right mr-2" onClick={removeVaccination}>Delete Patient</Button> : "") : ''}
         </Fragment>
     );
 }
