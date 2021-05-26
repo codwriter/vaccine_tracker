@@ -370,7 +370,7 @@ const PatientForm = ({
                         />
                     </AvGroup>
                 </Collapse>
-
+                      
                 {!switchHospital ? (<AvGroup className="float-right">
                     <Button disabled={disabled || switchHospital} type="submit">Submit</Button>
                 </AvGroup>) : ''}
