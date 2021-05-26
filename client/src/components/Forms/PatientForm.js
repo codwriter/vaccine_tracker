@@ -47,6 +47,7 @@ const PatientForm = ({
     const [patientInfoOpen, setpatientInfoOpen] = useState(true);
     const [vacInfoOpen, setvacInfoOpen] = useState(true);
     const [hideAppointment, sethideAppointment] = useState(true);
+    const [required, setrequired] = useState(false);
     //Vaccine brand Date
     var currentDate = new Date().toISOString().split('T');
     // var nextVaccineDate = new Date();
@@ -64,15 +65,14 @@ const PatientForm = ({
                     } else if (key === 'appointmentA') {
                         let tempDate = patient[key].split('T');
                         patientData[key] = tempDate[0];
-                    } else if (key === 'appointmentB') {
-                        if (patient[key] === null) {
-                            sethideAppointment(false);
-                        } else {
-                            let tempDate = patient[key].split('T');
-                            patientData[key] = tempDate[0];
-                        }
-                    } else
+                    } else if (key === 'appointmentB' && patient[key]!==null) {
+                        sethideAppointment(true);
+                        let tempDate = patient[key].split('T');
+                        patientData[key] = tempDate[0];
+                    } else {
+                        sethideAppointment(false);
                         patientData[key] = patient[key]
+                    }
                 };
             }
             setFormData(patientData);
@@ -114,8 +114,10 @@ const PatientForm = ({
                 if (vaccine.vaccineBrand === e.target.value) {
                     if (vaccine.appointments === 1) {
                         sethideAppointment(false);
-                    } else
-                        sethideAppointment(true);
+                        setrequired(false);
+                    } else {
+                        setrequired(true);
+                        sethideAppointment(true);}
                 }
             }
         }
@@ -322,6 +324,7 @@ const PatientForm = ({
                                         value={appointmentB}
                                         onChange={onChange}
                                         min={currentDate[0]}
+                                        required={required}
                                     />
                                     <AvFeedback>The second appointment is required!</AvFeedback>
                                 </AvGroup>
