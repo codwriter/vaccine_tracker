@@ -1,4 +1,4 @@
-import { USER_LOADED, REGISTER_SUCCESS, LOGIN_SUCCESS, AUTH_ERROR, LOGOUT } from '../action/types';
+import { USER_LOADED, REGISTER_SUCCESS, LOGIN_SUCCESS, AUTH_ERROR, LOGOUT, DELETE_USER } from '../action/types';
 
 const initialState = {
     token: localStorage.getItem('token'),
@@ -35,6 +35,14 @@ function authReducer(state = initialState, action) {
                 loading: false,
                 user: null
             };
+        case DELETE_USER:
+            localStorage.removeItem('token');
+            return {
+                ...state,
+                token: null,
+                isAuthenticated: false,
+                loading: false
+            }
         default:
             return state;
     }
