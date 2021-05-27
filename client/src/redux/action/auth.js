@@ -7,6 +7,7 @@ import {
     AUTH_ERROR,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
+    DELETE_USER,
     LOGOUT
 } from './types';
 
@@ -76,6 +77,20 @@ export const login = (email, password) => async dispatch => {
         });
     }
 };
+
+export const deleteUser = () => async dispatch => {
+    if(window.confirm('Are you sure? The user will be permanently deleted')) {
+    try{
+        const res = await api.delete('/users/');
+
+        dispatch({type: DELETE_USER});
+
+        dispatch(setAlert('User was permanently deleted'));
+    } catch(err) {
+        dispatch(setAlert('An error occured during the deletion'));
+    }
+}
+}
 
 // Logout
 export const logout = () => ({ type: LOGOUT });
