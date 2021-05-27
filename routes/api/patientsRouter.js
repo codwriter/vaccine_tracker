@@ -16,7 +16,7 @@ const mongo = true;
 patientsRouter.get('/', auth, async (req, res) => {
     try {
         if (mongo) {
-            const patients = await Patients.find({});
+            const patients = await Patients.find({}).populate('hospital', ['name', 'city', 'address', 'country', '_id', 'afm']);
             if (!patients) {
                 res.status(204).json({ msg: "There are no patients" });
             } else
@@ -46,7 +46,7 @@ patientsRouter.route('/hospital')
             const hospital = await Hospital.findById(user.hospital);
 
             if (mongo) {
-                const patients = await Patients.find({ hospital: hospital.id });
+                const patients = await Patients.find({ hospital: hospital.id }).populate('hospital', ['name', 'city', 'address', 'country', '_id', 'afm']);
                 if (!patients) {
                     res.status(204).json({ msg: "There are no patients" });
                 } else
@@ -150,7 +150,7 @@ patientsRouter.route('/hospital')
                             .json({ errors: [{ msg: 'Patient already exists' }] });
                     }
 
-                    patient = await Patients.create(patientFields);
+                    patient = (await Patients.create(patientFields)).populate('hospital', ['name', 'city', 'address', 'country', '_id', 'afm']);
 
                     //Delete vaccine doses - from appointments
                     for (let vaccine of _hospital.vaccines) {
@@ -161,6 +161,8 @@ patientsRouter.route('/hospital')
                     }
 
                     if (!mongo) {
+                        patient = await Patients.findById(patient._id).populate('hospital', ['name', 'city', 'address', 'country', '_id', 'afm']);
+                        console.log(patient);
                         let bgPatient = await bgchain.createPatient(_hospital, patient);
 
                         if (!bgPatient) {
@@ -186,7 +188,7 @@ patientsRouter.route('/:patientId')
         async (req, res) => {
             try {
                 if (mongo) {
-                    var patient = await Patients.findById(req.params.patientId)
+                    var patient = await Patients.findById(req.params.patientId).populate('hospital', ['name', 'city', 'address', 'country', '_id', 'afm']);
                     if (!patient) {
                         res.status(204).json({ msg: "There is not a patient with that id" });
                     } else
@@ -234,7 +236,6 @@ patientsRouter.route('/:patientId')
         check('appointmentA')
             .isDate()
             .withMessage('The appointment is not a date type yyyy/mm/dd')
-            .isAfter()
             .withMessage('The Appointment cannot be a date prior to today.')
             .notEmpty()
             .withMessage('Appointment of vaccinetaion is required'),
@@ -245,17 +246,56 @@ patientsRouter.route('/:patientId')
             } else {
                 try {
                     const user = await User.findById(req.user.id).select('-password');
-                    var patient = await Patients.findByIdAndUpdate(req.params.patientId, {
-                        $set: req.body
-                    }, { new: true });
+                    const _hospital = await Hospital.findById(user.hospital);
+                    var patient = await Patients.findById(req.params.patientId);
+
+                    if (patient.vaccineStatus === "Cancelled") {
+                        if (req.body.vaccineStatus === "Pending") {
+                            //Update from Cancelled to pending
+                            for (let vaccine of _hospital.vaccines) {
+                                if (vaccine.vaccineBrand == patient.vaccineBrand) {
+                                    vaccine.doses = vaccine.doses - vaccine.appointments;
+                                    await _hospital.save();
+                                }
+                            }
+                            patient = await Patients.findOneAndUpdate(req.params.patientId, {
+                                $set: req.body
+                            }, { new: true });
+                        }
+                        //Update From Pending to Completed
+                        else {
+                            patient = await Patients.findOneAndUpdate(req.params.patientId, {
+                                $set: req.body
+                            }, { new: true });
+                        }
+                        //Update from Pending to Cancelled
+                    } else if (req.body.vaccineStatus === "Cancelled") {
+
+                        patient = await Patients.findOneAndUpdate(req.params.patientId, {
+                            $set: req.body
+                        }, { new: true });
+
+                        for (let vaccine of _hospital.vaccines) {
+                            if (vaccine.vaccineBrand === patient.vaccineBrand) {
+                                vaccine.doses = vaccine.doses + vaccine.appointments;
+                                await _hospital.save();
+                            }
+                        }
+                    } else {
+                        patient = await Patients.findOneAndUpdate(req.params.patientId, {
+                            $set: req.body
+                        }, { new: true });
+                    }
 
                     if (!mongo) {
+                        patient = await Patients.findById(patient._id).populate('hospital', ['name', 'city', 'address', 'country', '_id', 'afm']);
                         var bgPatient = await bgchain.editPatient(req.params.patientId, patient);
 
                         if (!bgPatient) {
                             return res.status(400).json({ errors: [{ msg: 'The patient was not edited in BigChainDB' }] });
                         }
                     }
+                    console.log(patient)
                     res.status(200).json(patient);
                 } catch (err) {
                     console.error(err.message);

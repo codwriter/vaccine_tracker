@@ -9,7 +9,7 @@ exports.createPatient = async (hospital, patient) => {
     try {
         var patientAssetData = patient.id;
         var patientMetaData = patient;
-        patientMetaData.hospital = (({ _id, name }) => ({ _id, name, }))(hospital);
+        /* patientMetaData.hospital = (({ _id, name }) => ({ _id, name, }))(hospital); */
 
         //console.log("the metadata is ", patientMetaData);
         const assetdata = {
