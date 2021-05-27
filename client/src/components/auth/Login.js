@@ -42,7 +42,7 @@ const Login = ({ login, isAuthenticated }) => {
   }
 
   return (
-    <Form onSubmit={onSubmit} className='forma'>
+    <Form onSubmit={onSubmit} className='logins'>
       <Card>
         <CardBody>
           <CardSubtitle tag='h6' className='mb-2 text-muted'>
