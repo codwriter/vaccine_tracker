@@ -28,9 +28,9 @@ const Dashboard = ({
                         <>
                             <Row>
                                 <Col >
-                                    <Card >
+                                    <Card>
                                         <CardHeader >
-                                            <CardTitle className="align-self-center" ><h1 className="large text-primary text-center" >{hospital && hospital.name} Hospital</h1>
+                                                <CardTitle className="align-self-center" ><h1 className="text-primary large text-center">{hospital && hospital.name} Hospital</h1>
                                             </CardTitle>
                                         </CardHeader>
                                         <CardFooter></CardFooter>

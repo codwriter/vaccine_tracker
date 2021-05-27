@@ -78,7 +78,7 @@ export const addPatient = (formData) => async dispatch => {
         });
 
         dispatch(getCurrentHospital());
-       
+
         dispatch(setAlert('Patient Created', 'success'));
 
     } catch (err) {
@@ -103,7 +103,7 @@ export const updatePatient = (id, formData) => async dispatch => {
             type: UPDATE_PATIENT,
             payload: { id, patient: res.data }
         });
-
+        dispatch(getCurrentHospital());
         dispatch(setAlert('Patient Updated', 'success'));
 
     } catch (err) {
