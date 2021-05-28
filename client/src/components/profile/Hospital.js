@@ -13,13 +13,13 @@ import {
   Col,
   Spinner,
 } from "reactstrap";
-import { getCurrentHospital,unlinkHospital } from '../../redux/action/hospital';
+import { getCurrentHospital, unlinkHospital } from '../../redux/action/hospital';
 import { Redirect } from "react-router";
 import avatar from '../../assets/images/man.svg';
 import VaccineTable from '../profile/VaccineTable'
 
 const Hospital = ({
-  auth:{user},
+  auth: { user },
   getCurrentHospital,
   unlinkHospital,
   hospital: { hospital, loading }
@@ -35,6 +35,7 @@ const Hospital = ({
             <Row>
               <Col md="4">
                 <Card className="card-user">
+
                   <div className="image" >
                     {/*   <img
                     alt="..."
@@ -44,14 +45,14 @@ const Hospital = ({
                   <CardBody>
                     <div className="author">
                       <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                          <img
-                        alt="..."
-                        className="avatar border-gray"
-                        src={avatar}
-                      /> 
+                        <img
+                          alt="..."
+                          className="avatar border-gray"
+                          src={avatar}
+                        />
                         <h5 className="title">{user && user.email}</h5>
                       </a>
-                     {/*  <p className="description">@chetfaker</p> */}
+                      <p className="title">{user.firstname + " " + user.lastname}</p>
                     </div>
                     {/* <p className="description text-center">
                       "I like the way you work it <br />
@@ -60,7 +61,8 @@ const Hospital = ({
                   </CardBody>
                   <CardFooter>
                     <hr />
-                {/*     <div className="button-container">
+                    <div className="button-container justify-content-center"><Button className="btn-sm btn-round btn-accent" onClick={unlinkHospital}>Unlink from hospital</Button></div>
+                    {/*     <div className="button-container">
                       <Row>
                         <Col className="ml-auto" lg="3" md="6" xs="6">
                           <h5>
@@ -84,14 +86,11 @@ const Hospital = ({
                     </div> */}
                   </CardFooter>
                 </Card>
-              
+
               </Col>
               <Col md="8">
                 <HospitalProfileForm hospital={hospital} title="Edit Hospital Info" />
                 <VaccineTable />
-              </Col>
-              <Col>
-                <Button onClick={unlinkHospital}>Unlink from hospital</Button>
               </Col>
             </Row>
           </div>)
@@ -103,15 +102,15 @@ const Hospital = ({
 }
 
 Hospital.propTypes = {
-  getCurrentHospital:PropTypes.func.isRequired,
+  getCurrentHospital: PropTypes.func.isRequired,
   hospital: PropTypes.object.isRequired,
-  auth:PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 const mapStateToProps = (state) => ({
-  auth:state.auth,
-  getCurrentHospital:state.hospitalReducer,
+  auth: state.auth,
+  getCurrentHospital: state.hospitalReducer,
   hospital: state.hospitalReducer
 });
 
 
-export default connect(mapStateToProps, { getCurrentHospital,unlinkHospital })(Hospital);
+export default connect(mapStateToProps, { getCurrentHospital, unlinkHospital })(Hospital);
