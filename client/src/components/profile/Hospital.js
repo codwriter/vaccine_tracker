@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 import { getCurrentHospital, unlinkHospital } from '../../redux/action/hospital';
 import { Redirect } from "react-router";
-import avatar from '../../assets/images/man.svg';
+import {UserProfileForm} from "../Forms/UserProfileForm";
 
 const Hospital = ({
   auth:{user},
@@ -40,23 +40,6 @@ const Hospital = ({
                     src={avatar}
                   />  */}
                   </div>
-                  <CardBody>
-                    <div className="author">
-                      <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                          <img
-                        alt="..."
-                        className="avatar border-gray"
-                        src={avatar}
-                      /> 
-                        <h5 className="title">{user && user.email}</h5>
-                      </a>
-                     {/*  <p className="description">@chetfaker</p> */}
-                    </div>
-                    {/* <p className="description text-center">
-                      "I like the way you work it <br />
-                    No diggity <br />I wanna bag it up"
-                  </p> */}
-                  </CardBody>
                   <CardFooter>
                     <hr />
                 {/*     <div className="button-container">
@@ -83,7 +66,6 @@ const Hospital = ({
                     </div> */}
                   </CardFooter>
                 </Card>
-              
               </Col>
               <Col md="8">
                 <HospitalProfileForm hospital={hospital} title="Edit Hospital Info" />

@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import { Row, Col, Container, Spinner, Card, CardTitle, CardFooter, CardHeader, ListGroup, ListGroupItem, Collapse, Button } from "reactstrap";
+import { Row, Col, Container, Spinner, Card, CardTitle, CardFooter, CardHeader, ListGroup, ListGroupItem, Collapse, Button, Input } from "reactstrap";
 import { getHospitals, linkHospital } from '../../redux/action/hospital';
 import HospitalProfileForm from '../Forms/HospitalProfileForm';
 
@@ -34,19 +34,27 @@ const Intro = ({
                         <Col lg='12' md='6' sm='6'>
                             <h2 className='text-primary'> Select your hospital</h2>
                         </Col>
-                        <ListGroup >
+                        {/* <ListGroup >
                             {hospitals ? hospitals.map(hospital =>
                                 <ListGroupItem tag="a"
                                     onClick={() => { linkHospital(hospital._id, history); }}>
                                     {hospital.name} Hospital
                         </ListGroupItem>) : ''}
-                        </ListGroup>
-                    <Row>
-                    <Col lg='12' md='6' sm='6'>
-                            Can't find your hospital?
+                            </ListGroup> */}
+                        <Input type="select" >
+                            <option>Select hospital</option>
+                            {hospitals ? hospitals.map(hospital =>
+                                <option tag="a" key={hospital._id}
+                                    onClick={() => { linkHospital(hospital._id, history); }}>
+                                    {hospital.name} Hospital
+                        </option>) : ''}
+                        </Input>
+                        <Row>
+                            <Col lg='12' md='6' sm='6'>
+                                Can't find your hospital?
                 </Col>
-                </Row>
-                </Fragment>
+                        </Row>
+                    </Fragment>
                 )}
                 <Button color="primary" onClick={toggle} style={{ marginBottom: '1rem' }}>{isOpen ? 'Select Hospital' : 'Create Hospital'}</Button>
                 <Collapse isOpen={isOpen}>
