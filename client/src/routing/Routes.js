@@ -24,7 +24,7 @@ const Routes = props => {
                     <PrivateRoute exact path="/intro" component={Intro} />
                     <PrivateRoute exact path="/profile" component={Hospital} />
                     <PrivateRoute exact path="/statistics" component={Statistics} />
-                    <PrivateRoute exact path="/vaccines" component={VaccineTable} />
+                    <PrivateRoute exact path="/vaccines" component={() => {return <VaccineTable intro={true} /> }} />
                     <Route component={NotFound} />
                 </Switch>
             </Container>

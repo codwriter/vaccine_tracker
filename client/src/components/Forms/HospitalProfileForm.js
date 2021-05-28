@@ -21,7 +21,7 @@ const Hospitalregister = ({
   updateHospital,
   title,
   history,
-  isAuthenticated:{user},
+  isAuthenticated: { user },
   hospital: { hospital, loading }
 }) => {
   const [formData, setFormData] = useState(initialState);
@@ -51,7 +51,7 @@ const Hospitalregister = ({
     } else {
       setdisabled(true);
     }
-}
+  }
 
   const handleValidSubmit = async (e) => {
     console.log(formData);
@@ -65,8 +65,8 @@ const Hospitalregister = ({
     <Fragment>
       {loading ? <Spinner /> : (
         <Card>
-          <CardHeader className="bg-primary ">
-            <CardTitle className="text-white text-center h6">{disabled?"Hospital Info":title}</CardTitle>
+          <CardHeader className="bg-accent">
+            <CardTitle className="text-white text-center h6">{disabled ? "Hospital Info" : title}</CardTitle>
           </CardHeader>
           <CardBody>
             <AvForm className="form" onValidSubmit={handleValidSubmit} onChange={onChange} disabled={disabled}>
@@ -151,7 +151,7 @@ const Hospitalregister = ({
                 <Col>
                   <Row>
                     <Col className="text-center">
-                      {!disabled ? <Button className="btn-primary" type="submit">Submit</Button> : ""}
+                      {!disabled ? <Button className="btn-wd btn-accent" type="submit">Submit</Button> : ""}
                     </Col>
                   </Row>
                 </Col>
