@@ -16,6 +16,7 @@ import {
 import { getCurrentHospital,unlinkHospital } from '../../redux/action/hospital';
 import { Redirect } from "react-router";
 import avatar from '../../assets/images/man.svg';
+import VaccineTable from '../profile/VaccineTable'
 
 const Hospital = ({
   auth:{user},
@@ -87,6 +88,7 @@ const Hospital = ({
               </Col>
               <Col md="8">
                 <HospitalProfileForm hospital={hospital} title="Edit Hospital Info" />
+                <VaccineTable />
               </Col>
               <Col>
                 <Button onClick={unlinkHospital}>Unlink from hospital</Button>
