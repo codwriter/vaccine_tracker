@@ -8,6 +8,8 @@ import {
   HOSPITAL_ERROR,
   UPDATE_HOSPITAL,
   CLEAR_HOSPITAL,
+  PATIENT_CLEAR,
+  VACCINE_CLEAR,
 } from './types';
 
 //Get current users Hospital profile info
@@ -42,7 +44,7 @@ export const createHospital = (formData, history) => async (dispatch) => {  //H 
     dispatch(setAlert('Hospital Created', 'success'));
 
     //Αν δημιουργήσω ενα καινιούργιο νοσοκομείο θα πρέπει να κάνει redirect 
-    history.push('/dashboard');
+    history.push('/vaccines');
 
   } catch (err) {
     const errors = err.response.data.errors;    //Σε περίπτωση που ξεχάσω καποια απο τα υποχρεωτικά πεδία θα μου βγάλει alert
@@ -126,6 +128,12 @@ export const unlinkHospital = () => async (dispatch) => {
 
     dispatch({
       type: CLEAR_HOSPITAL,
+    });
+    dispatch({
+      type: PATIENT_CLEAR,
+    });
+    dispatch({
+      type: VACCINE_CLEAR,
     });
     dispatch(setAlert('User unlinked from Hospital', 'success'));
   } catch (err) {
