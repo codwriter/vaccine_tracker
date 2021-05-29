@@ -11,12 +11,13 @@ import Navbar from '../components/layout/Navbar';
 import Intro from '../components/Views/Intro';
 import Statistics from '../components/Views/Statistics';
 import VaccineTable from '../components/profile/VaccineTable';
-
+import Alert from '../components/layout/Alert'
 const Routes = props => {
     return (
         <>
             <Navbar />
             <Container>
+                <Alert/>
                 <Switch>
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />
@@ -24,7 +25,7 @@ const Routes = props => {
                     <PrivateRoute exact path="/intro" component={Intro} />
                     <PrivateRoute exact path="/profile" component={Hospital} />
                     <PrivateRoute exact path="/statistics" component={Statistics} />
-                    <PrivateRoute exact path="/vaccines" component={VaccineTable} />
+                    <PrivateRoute exact path="/vaccines" component={() => {return <VaccineTable intro={true} /> }} />
                     <Route component={NotFound} />
                 </Switch>
             </Container>

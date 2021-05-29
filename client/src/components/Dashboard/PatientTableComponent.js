@@ -70,11 +70,11 @@ const PatientTable = ({
             Header: "Vaccine Status",
             accessor: "vaccineStatus",
             Filter: SelectColumnFilter,
-            filter:'equals',
+            filter: 'equals',
             className: "t-cell-4 text-center"
         },
         {
-            id:'action',
+            id: 'action',
             Cell: <Button className=" btn-simple btn-sm  btn-round btn-icon"><i className="far fa-edit"></i></Button>,
             className: "t-cell-5 text-center",
             disableSortBy: true,
@@ -82,6 +82,44 @@ const PatientTable = ({
             notShowSortingDisplay: true
         }
     ];
+    const AllPatientListHeaders = [
+        {
+            Header: "Firstname",
+            className: "t-cell-1 text-center",
+            accessor: "firstname",
+        },
+        {
+            Header: "Lastname",
+            className: "t-cell-1 text-center",
+            accessor: "lastname",
+        },
+        {
+            Header: "Hospital",
+            accessor: "hospital.name",
+            className: "t-cell-2 text-center",
+
+        },
+        {
+            Header: "Hospital City",
+            accessor: "hospital.city",
+            className: "t-cell-3 text-center"
+        },
+        {
+            Header: "Vaccine Status",
+            accessor: "vaccineStatus",
+            Filter: SelectColumnFilter,
+            filter: 'equals',
+            className: "t-cell-4 text-center"
+        },
+        {
+            id: 'action',
+            Cell: <Button className=" btn-simple btn-sm  btn-round btn-icon"><i className="far fa-edit"></i></Button>,
+            className: "t-cell-5 text-center",
+            disableSortBy: true,
+            disableFilters: true,
+            notShowSortingDisplay: true
+        }
+    ]
 
     const checkVaccines = () => {
         if (!hospital.vaccines[0]) {
@@ -108,7 +146,7 @@ const PatientTable = ({
                                         <CardSubtitle className="text-right">
                                             <Button
                                                 onClick={checkVaccines}
-                                                className=" btn-sm btn-outline-info  btn-round pull-right">Add Vaccination
+                                                className=" btn-sm btn-primary  btn-round pull-right">Add Vaccination
                                         </Button>
                                         </CardSubtitle>
                                     </Col>
@@ -127,8 +165,8 @@ const PatientTable = ({
                             </CardHeader>
 
                             <CardBody className="card-body">
-                                {patients [0]?
-                                    (<XTable columns={listHeader} loading={loading} data={patients} toggle={toggle} setTitle={setModalTitle} setPatient={setPatient} />)
+                                {patients[0] ?
+                                    (<XTable columns={!switchHospital ? listHeader : AllPatientListHeaders} loading={loading} data={patients} toggle={toggle} setTitle={setModalTitle} setPatient={setPatient} />)
                                     : <div className="text-center text-big">No Vaccinations yet...Start by adding one</div>
                                 }
                             </CardBody>

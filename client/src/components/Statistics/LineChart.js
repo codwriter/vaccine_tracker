@@ -1,4 +1,5 @@
-const LineChart = () => {
+const LineChart = (age20, age30, age40, age50, age60, age70, age80, age90, age100) => {
+  console.log(age20)
   return ({
     data: {
       labels: [
@@ -14,7 +15,7 @@ const LineChart = () => {
       ],
       datasets: [
         {
-          data: [0, 19, 15, 20, 30, 40, 40, 50, 25],
+          data: [age20, age30, age40, age50, age60, age70, age80, age90, age100],
           label: "Pfizer",
           fill: false,
           borderColor: "#fbc658",
@@ -25,7 +26,7 @@ const LineChart = () => {
           pointBorderWidth: 8,
         },
         {
-          data: [0, 5, 10, 12, 20, 27, 30, 34, 42],
+          data: [age20, age30, age40, age50, age60, age70, age80, age90, age100],
           label: "AstraZeneca",
           fill: false,
           borderColor: "#51CACF",
@@ -36,7 +37,7 @@ const LineChart = () => {
           pointBorderWidth: 8,
         },
         {
-            data: [0, 22, 19, 34, 45, 20, 30, 40, 62],
+            data: [age20, age30, age40, age50, age60, age70, age80, age90, age100],
             label: "Johnson & Johnson",
             fill: false,
             borderColor: "#144db8",
@@ -47,7 +48,7 @@ const LineChart = () => {
             pointBorderWidth: 8,
         },
         {
-            data: [0, 30, 40, 45, 55, 40, 30, 60, 61],
+            data: [age20, age30, age40, age50, age60, age70, age80, age90, age100],
             label: "Moderna",
             fill: false,
             borderColor: "#b81c14",

@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import { Row, Col, Spinner, ListGroup, ListGroupItem, Collapse, Button } from "reactstrap";
+import { Row, Col, Container, Spinner, Card, CardTitle, CardFooter, CardHeader, ListGroup, ListGroupItem, Collapse, Button, Input, UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle } from "reactstrap";
 import { getHospitals, linkHospital } from '../../redux/action/hospital';
 import HospitalProfileForm from '../Forms/HospitalProfileForm';
 
@@ -29,34 +29,56 @@ const Intro = ({
                         <h1 className="large text-primary">Let's get started! </h1>
                     </Col>
                 </Row>
-                <Col lg='12' md='6' sm='6'>
-                    <h2 className='text-primary'> Select your hospital</h2>
+                {isOpen ? "" : (
+                    <Fragment>
+                        <Col lg='12' md='6' sm='6'>
+                            <h2 className='text-primary'> Select your hospital</h2>
+                        </Col>
+                        {/* <ListGroup >
+                            {hospitals ? hospitals.map(hospital =>
+                                <ListGroupItem tag="a"
+                                    onClick={() => { linkHospital(hospital._id, history); }}>
+                                    {hospital.name} Hospital
+                        </ListGroupItem>) : ''}
+                            </ListGroup> */}
+                        {/* <Input type="select" >
+                            <option>Select hospital</option>
+                            {hospitals ? hospitals.map(hospital =>
+                                <option tag="a" key={hospital._id}
+                                    onClick={() => { linkHospital(hospital._id, history); }}>
+                                    {hospital.name} Hospital
+                        </option>) : ''}
+                        </Input> */}
+                        <UncontrolledButtonDropdown>
+                            <DropdownToggle className="btn-wd"caret>
+                                Select Hospital
+                        </DropdownToggle>
+                            <DropdownMenu>
+                                {hospitals ? hospitals.map(hospital =>
+                                    <DropdownItem tag="a" key={hospital._id}
+                                        onClick={() => { linkHospital(hospital._id, history); }}>
+                                        {hospital.name} Hospital </DropdownItem> ) :""}
+                            </DropdownMenu>
+                        </UncontrolledButtonDropdown>
+                        <Row>
+                            <Col lg='12' md='6' sm='6'>
+                                Can't find your hospital?
                 </Col>
-                <ListGroup >
-                    {hospitals?hospitals.map(hospital =>
-                        <ListGroupItem tag="a" key={hospital._id}
-                            onClick={() => { linkHospital(hospital._id,history);}}>
-                            {hospital.name} Hospital
-                        </ListGroupItem>):''}
-                </ListGroup>
-                <Row>
-                    <Col lg='12' md='6' sm='6'>
-                        Can't find your hospital?
-                </Col>
-                </Row>
-                <Button color="primary" onClick={toggle} style={{ marginBottom: '1rem' }}>Create Hospital</Button>
+                        </Row>
+                    </Fragment>
+                )}
+                <Button color="primary" onClick={toggle} style={{ marginBottom: '1rem' }}>{isOpen ? 'Select Hospital' : 'Create Hospital'}</Button>
                 <Collapse isOpen={isOpen}>
                     <HospitalProfileForm title="Create New Hospital" />
                 </Collapse>
-            </Fragment>
+            </Fragment >
         )
     );
 };
 
 Intro.propTypes = {
     getHospitals: PropTypes.func.isRequired,
-    linkHospital: PropTypes.func.isRequired,
-    hospitals:PropTypes.object.isRequired,
+    linkHospital: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({

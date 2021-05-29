@@ -5,10 +5,15 @@ import { Spinner, Table, Button, Row, Col, Card, CardBody, CardHeader, CardTitle
 import { getVaccines } from '../../redux/action/vaccine';
 import VaccineModal from '../Modals/vaccineModal';
 import useModal from '../Modals/useModal';
+import { useHistory } from 'react-router-dom'
+import { setAlert } from "../../redux/action/alert";
+import Dashboard from "../Dashboard/Dashboard";
 
 const VaccineTable = ({
     vaccines: { vaccines, loading },
-    getVaccines
+    getVaccines,
+    intro,
+    setAlert,
 }) => {
     useEffect(() => {
         getVaccines();
@@ -16,6 +21,15 @@ const VaccineTable = ({
     const { isShowing, toggle } = useModal();
     const [vaccine, setVaccine] = useState(null);
     const [modalTitle, setModalTitle] = useState("");
+    const history = useHistory();
+
+    const start = () => {
+        if (vaccines[0]) {
+            history.push('/dashboard')
+        } else
+            setAlert("No vaccines...Please add one to start!", 'warning');
+    }
+
     return (
         <>
             {!loading ? (
@@ -29,7 +43,7 @@ const VaccineTable = ({
                             <Col sm="1" md="1" lg="1">
                                 <Button
                                     onClick={() => { setModalTitle("Add Vaccine"); toggle(); setVaccine(null); }}
-                                    className=" btn-sm btn-icon btn-primary btn-round pull-right">
+                                    className=" btn-sm btn-icon btn-accent btn-round pull-right">
                                     <i className="fas fa-plus"></i>
                                 </Button>
                             </Col>
@@ -68,20 +82,22 @@ const VaccineTable = ({
                                             }))}
                                         </tbody>
                                     </Table>
-                                 ) : (<p className=" text-center">There no vaccines yet. Please add one to start!</p>)}
+                                ) : (<p className=" text-center">There no vaccines yet. Please add one to start!</p>)}
                             </Col>
                         </Row>
                     </CardBody>
                 </Card>) : <Spinner />
-        }
+            }
+            {intro ? (<div className="d-flex justify-content-center"><Button className="btn-wd btn-primary" onClick={start}>Let's Start</Button></div>) : ""}
         </>
     )
 }
 VaccineTable.propTypes = {
     getVaccines: PropTypes.func.isRequired,
+    setAlert: PropTypes.func.isRequired,
     vaccines: PropTypes.object.isRequired,
 };
 const mapStateToProps = (state) => ({
     vaccines: state.vaccineReducer
 });
-export default connect(mapStateToProps, { getVaccines })(VaccineTable);
+export default connect(mapStateToProps, { getVaccines, setAlert })(VaccineTable);

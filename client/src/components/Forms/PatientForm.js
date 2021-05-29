@@ -98,6 +98,7 @@ const PatientForm = ({
         additionalInfo
     } = formData;
 
+
     const togglePatientInfo = () => setpatientInfoOpen(!patientInfoOpen);
 
     const toggleVacInfo = () => setvacInfoOpen(!vacInfoOpen);
@@ -197,7 +198,7 @@ const PatientForm = ({
                         <Col>
                             <AvGroup>
                                 <Label for="sex">Sex:</Label>
-                                <AvInput type="select" name="sex" id="sex" onChange={onChange} value={sex} required className="form-check">
+                                <AvInput type="select" name="sex" id="sex" onChange={onChange} value={sex} required className="form-check custom-select">
                                     <option value="">Select</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
@@ -216,6 +217,7 @@ const PatientForm = ({
                                     value={birthdate}
                                     onChange={onChange}
                                     max={currentDate[0]}
+                                    className="custom-date"
                                     required
                                 />
                                 <AvFeedback>The Birthdate is required!</AvFeedback>
@@ -299,7 +301,7 @@ const PatientForm = ({
                     <AvGroup>
                         <Label for="vaccineBrand">Vaccine Brand:</Label>
                         {!switchHospital ? (
-                            <AvInput type="select" name="vaccineBrand" id="vaccineBrand" onChange={onChange} value={vaccineBrand} required>
+                            <AvInput type="select" className="custom-select" name="vaccineBrand" id="vaccineBrand" onChange={onChange} value={vaccineBrand} required>
                                 <option value="">Not Selected</option>
                                 {vaccines ? (vaccines.map((vaccine) => (<option key={vaccine._id} value={vaccine.vaccineBrand}>{vaccine.vaccineBrand}</option>))) : ""}
                             </AvInput>) : <AvField type="text" name="vaccineBrand" value={vaccineBrand}></AvField>}
@@ -313,6 +315,7 @@ const PatientForm = ({
                             <AvGroup>
                                 <Label for="appointmentA">First Appointment:</Label>
                                 <AvInput
+                                    className="custom-date"
                                     type="date"
                                     id="appointmentA"
                                     name="appointmentA"
@@ -324,11 +327,12 @@ const PatientForm = ({
                                 <AvFeedback>The First Appointment is required!</AvFeedback>
                             </AvGroup>
                         </Col>
-                        <Collapse isOpen={hideAppointment} >
-                            <Col>
+                        <Collapse isOpen={hideAppointment} className="w-50">
+                            <Col >
                                 <AvGroup>
                                     <Label for="appointmentB">Second Appointment:</Label>
                                     <AvInput
+                                        className="custom-date"
                                         type="date"
                                         id="appointmentB"
                                         name="appointmentB"
@@ -344,11 +348,11 @@ const PatientForm = ({
                     </Row>
                     <AvGroup>
                         <Label for="vaccineStatus">Status of Vaccination:</Label>
-                        <AvInput type="select" name="vaccineStatus" id="vaccineStatus" onChange={onChange} value={vaccineStatus} required>
+                        <AvInput type="select" name="vaccineStatus" id="vaccineStatus" className="custom-select" onChange={onChange} value={vaccineStatus} required>
                             <option value="">Not Scheduled</option>
                             <option value="Pending">Pending</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Cancelled">Cancelled</option>
+                            {patient ? (<><option value="Completed">Completed</option>
+                                <option value="Cancelled">Cancelled</option></>) : ""}
                         </AvInput>
                     </AvGroup>
                 </Collapse>
@@ -370,12 +374,13 @@ const PatientForm = ({
                         />
                     </AvGroup>
                 </Collapse>
-                      
-                {!switchHospital ? (<AvGroup className="float-right">
-                    <Button disabled={disabled || switchHospital} type="submit">Submit</Button>
+                {!switchHospital ? (<AvGroup>
+                    <Button className="clearfix btn btn-primary btn-wd btn-block" disabled={disabled || switchHospital} onClick={() => { setaddInfoOpen(true); setvacInfoOpen(true); setpatientInfoOpen(true) }} type="submit">Submit</Button>
                 </AvGroup>) : ''}
             </AvForm>
-            {!switchHospital ? (patient? <Button color="danger" disabled={switchHospital} className="float-right mr-2" onClick={removeVaccination}>Delete Patient</Button> : "") : ''}
+          
+           {!switchHospital ? (patient ? <Button disabled={switchHospital} className="clearfix float-left btn btn-wd btn-outline-danger btn-block" onClick={removeVaccination}>Delete Patient</Button> : "") : ''}
+            
         </Fragment>
     );
 }

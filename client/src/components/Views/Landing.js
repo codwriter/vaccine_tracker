@@ -18,69 +18,20 @@ const Landing = () => {
   };
 
   return (
-    <Container className='landing_margin'>
-      <Row>
-        <Col>
-          <Card>
-            <Row>
-              <CardImg src={VaccineLogo} />
-            </Row>
-          </Card>
-        </Col>
+    <div className="container-fluid w-100">
+      <div className="row">
+        <div className="col-sm"><div className="d-flex justify-content-center "><img src={VaccineLogo} width="45%" /></div></div>
+        <div className="col-sm">
+          <Login /></div>
+      </div>
 
-        <Col >
-          <Card>
-            <Nav tabs className='loginRegister'>
-              <Row>
-                <Col >
-                  <NavItem tag='h3' className='tab_button'>
-                    <NavLink
-                      className={classnames({ active: activeTab === '1' })}
-                      onClick={() => {
-                        toggle('1');
-                      }}
-                    >
-                      Login
-                    </NavLink>
-                  </NavItem>
-                </Col>
 
-                <Col  >
-                  <NavItem tag='h3' className='tab_button'>
-                    <NavLink
-                      className={classnames({ active: activeTab === '2' })}
-                      onClick={() => {
-                        toggle('2');
-                      }}
-                    >
-                      Register
-                </NavLink>
-                  </NavItem>
-                </Col>
-              </Row>
-            </Nav>
-          </Card>
 
-          <TabContent activeTab={activeTab}>
-            <Alert/>
-            <TabPane tabId='1'>
-              <Row className='justify_center'>
-                <Col>
-                  <Login />
-                </Col>
-              </Row>
-            </TabPane>
-            <TabPane tabId='2'>
-              <Row className='justify_center'>
-                <Col>
-                  <Register />
-                </Col>
-              </Row>
-            </TabPane>
-          </TabContent>
-        </Col>
-      </Row>
-    </Container>
+
+
+
+
+    </div>
   );
 };
 

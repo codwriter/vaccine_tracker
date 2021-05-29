@@ -78,6 +78,7 @@ export const login = (email, password) => async dispatch => {
     }
 };
 
+
 export const deleteUser = () => async dispatch => {
     if(window.confirm('Are you sure? The user will be permanently deleted!')) {
     try{
@@ -91,6 +92,23 @@ export const deleteUser = () => async dispatch => {
     }
 }
 }
+
+// Edit User info
+export const editUser = (formData) => async dispatch => {
+    try {
+       
+        await api.put('user', formData);
+
+        dispatch(loadUser());
+    } catch (err) {
+        const errors = err.response.data.errors;
+
+        if (errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        }
+    }
+}
+
 
 // Logout
 export const logout = () => ({ type: LOGOUT });

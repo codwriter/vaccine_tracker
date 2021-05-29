@@ -43,12 +43,6 @@ function hospitalReducer(state = initialState, action) {
         hospital: null,
         loading: false
       };
-    case GET_HOSPITALS:
-      return {
-        ...state,
-        hospitals: payload,
-        loading: false
-      };
     default:
       return state;
   }

@@ -1,5 +1,9 @@
+.table-responsive::-webkit-scrollbar{
+  display: none  !important; 
+  width: 0px;
+ }
 .table {
-
+  
   .img-wrapper {
     width: 40px;
     height: 40px;
