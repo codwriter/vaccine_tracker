@@ -13,13 +13,17 @@ import {
   Col,
   Spinner,
 } from "reactstrap";
-import { getCurrentHospital, unlinkHospital } from '../../redux/action/hospital';
+
+import { getCurrentHospital,unlinkHospital } from '../../redux/action/hospital';
+import { deleteUser } from '../../redux/action/auth';
 import { Redirect } from "react-router";
 import avatar from '../../assets/images/man.svg';
 import VaccineTable from '../profile/VaccineTable'
 
 const Hospital = ({
-  auth: { user },
+
+  auth:{user},
+  deleteUser,
   getCurrentHospital,
   unlinkHospital,
   hospital: { hospital, loading }
@@ -69,6 +73,14 @@ const Hospital = ({
                 <HospitalProfileForm hospital={hospital} title="Edit Hospital Info" />
                 <VaccineTable />
               </Col>
+
+              <Col>
+                <Button onClick={unlinkHospital}>Unlink from hospital</Button>
+              </Col>
+              <Col>
+                <Button className="btn btn-danger" onClick={deleteUser}>Delete my account</Button>
+              </Col>
+
             </Row>
           </div>)
             : <Redirect to='/intro' />
@@ -79,7 +91,8 @@ const Hospital = ({
 }
 
 Hospital.propTypes = {
-  getCurrentHospital: PropTypes.func.isRequired,
+  getCurrentHospital:PropTypes.func.isRequired,
+  deleteUser: PropTypes.func.isRequired,
   hospital: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
@@ -90,4 +103,6 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default connect(mapStateToProps, { getCurrentHospital, unlinkHospital })(Hospital);
+
+export default connect(mapStateToProps, { getCurrentHospital,unlinkHospital, deleteUser })(Hospital);
+

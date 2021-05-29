@@ -29,5 +29,5 @@ export const UPDATE_VACCINE = 'UPDATE_VACCINE';
 export const REMOVE_VACCINE = 'REMOVE_VACCINE';
 export const VACCINE_ERROR = 'VACCINE_ERROR';
 export const VACCINE_CLEAR = 'VACCINE_CLEAR';
-
+export const DELETE_USER = 'DELETE_USER';
 
