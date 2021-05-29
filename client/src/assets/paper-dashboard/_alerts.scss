@@ -4,12 +4,11 @@
     color: $white-color;
     padding-top: .9rem;
     padding-bottom: .9rem;
-    position: fixed;
     text-align: center;
     top:0;
     right: 0;
     width: 100%;
-    z-index: 1;
+    z-index: 2;
 
     &.alert-success{
         background-color: lighten($success-color, 5%);

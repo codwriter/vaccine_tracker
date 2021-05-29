@@ -50,40 +50,17 @@ const Hospital = ({
                           className="avatar border-gray"
                           src={avatar}
                         />
-                        <h5 className="title">{user && user.email}</h5>
+                        <h5 className="title">Email: {user && user.email}</h5>
                       </a>
-                      <p className="title">{user.firstname + " " + user.lastname}</p>
+                      <p className=" title text-center">Fullname: {user.firstname + " " + user.lastname}</p>
+                      <p className=" title text-center">Amka: {user.amkaUser}</p>
+                      <p className=" title text-center">Birthdate: {user.birthdate}</p>
                     </div>
-                    {/* <p className="description text-center">
-                      "I like the way you work it <br />
-                    No diggity <br />I wanna bag it up"
-                  </p> */}
+                    
                   </CardBody>
                   <CardFooter>
                     <hr />
                     <div className="button-container justify-content-center"><Button className="btn-sm btn-round btn-accent" onClick={unlinkHospital}>Unlink from hospital</Button></div>
-                    {/*     <div className="button-container">
-                      <Row>
-                        <Col className="ml-auto" lg="3" md="6" xs="6">
-                          <h5>
-                            12 <br />
-                            <small>Files</small>
-                          </h5>
-                        </Col>
-                        <Col className="ml-auto mr-auto" lg="4" md="6" xs="6">
-                          <h5>
-                            2GB <br />
-                            <small>Used</small>
-                          </h5>
-                        </Col>
-                        <Col className="mr-auto" lg="3">
-                          <h5>
-                            24,6$ <br />
-                            <small>Spent</small>
-                          </h5>
-                        </Col>
-                      </Row>
-                    </div> */}
                   </CardFooter>
                 </Card>
 

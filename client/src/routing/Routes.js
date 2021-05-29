@@ -11,12 +11,13 @@ import Navbar from '../components/layout/Navbar';
 import Intro from '../components/Views/Intro';
 import Statistics from '../components/Views/Statistics';
 import VaccineTable from '../components/profile/VaccineTable';
-
+import Alert from '../components/layout/Alert'
 const Routes = props => {
     return (
         <>
             <Navbar />
             <Container>
+                <Alert/>
                 <Switch>
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />

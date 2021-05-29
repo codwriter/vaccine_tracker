@@ -146,7 +146,7 @@ const PatientTable = ({
                                         <CardSubtitle className="text-right">
                                             <Button
                                                 onClick={checkVaccines}
-                                                className=" btn-sm btn-outline-info  btn-round pull-right">Add Vaccination
+                                                className=" btn-sm btn-primary  btn-round pull-right">Add Vaccination
                                         </Button>
                                         </CardSubtitle>
                                     </Col>

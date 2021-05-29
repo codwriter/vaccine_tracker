@@ -327,8 +327,8 @@ const PatientForm = ({
                                 <AvFeedback>The First Appointment is required!</AvFeedback>
                             </AvGroup>
                         </Col>
-                        <Collapse isOpen={hideAppointment} >
-                            <Col>
+                        <Collapse isOpen={hideAppointment} className="w-50">
+                            <Col >
                                 <AvGroup>
                                     <Label for="appointmentB">Second Appointment:</Label>
                                     <AvInput
@@ -374,12 +374,13 @@ const PatientForm = ({
                         />
                     </AvGroup>
                 </Collapse>
-
-                {!switchHospital ? (<AvGroup className="float-right">
-                    <Button disabled={disabled || switchHospital} onClick={() => { setaddInfoOpen(true); setvacInfoOpen(true); setpatientInfoOpen(true) }} type="submit">Submit</Button>
+                {!switchHospital ? (<AvGroup>
+                    <Button className="clearfix btn btn-primary btn-wd btn-block" disabled={disabled || switchHospital} onClick={() => { setaddInfoOpen(true); setvacInfoOpen(true); setpatientInfoOpen(true) }} type="submit">Submit</Button>
                 </AvGroup>) : ''}
             </AvForm>
-            {!switchHospital ? (patient ? <Button color="danger" disabled={switchHospital} className="float-right mr-2" onClick={removeVaccination}>Delete Patient</Button> : "") : ''}
+          
+           {!switchHospital ? (patient ? <Button disabled={switchHospital} className="clearfix float-left btn btn-wd btn-outline-danger btn-block" onClick={removeVaccination}>Delete Patient</Button> : "") : ''}
+            
         </Fragment>
     );
 }
