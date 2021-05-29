@@ -27,14 +27,14 @@ const PatientTable = ({
     const { isShowing, toggle } = useModal();
     const [patient, setPatient] = useState(null);
     const [modalTitle, setModalTitle] = useState("");
-    const [tableTitle, settableTitle] = useState(`Vaccinations in ${hospital.name}`) --
-    const [switchHospital, setSwitchHospital] = useState(false); --
+    const [tableTitle, settableTitle] = useState(`Vaccinations in ${hospital.name}`)
+    const [switchHospital, setSwitchHospital] = useState(false);
 
     useEffect(() => {
         getHospitalPatients();
     }, [getHospitalPatients, loading]);
 
-    /* const allhospitalVaccination = () => {
+    const allhospitalVaccination = () => {
         if (!switchHospital) {
             settableTitle("All Vaccinations");
             getPatients();
@@ -43,7 +43,7 @@ const PatientTable = ({
         else {
             settableTitle(`Vaccinations in ${hospital.name}`);
             getHospitalPatients();
-            setSwitchHospital(!switchHospital); */
+            setSwitchHospital(!switchHospital);
         }
     }
 
@@ -107,7 +107,7 @@ return (
                                     </CardSubtitle>
                                 </Col>
                             </Row>
-                            {/* <span className="float-right ">
+                            {<span className="float-right ">
                                 <CustomInput
                                     checked={switchHospital}
                                     className="hospital-switch "
@@ -117,7 +117,7 @@ return (
                                     label="All Hospital"
                                     onChange={allhospitalVaccination}
                                 />
-                            </span> */}
+                            </span>}
                         </CardHeader>
 
                         <CardBody className="card-body">
