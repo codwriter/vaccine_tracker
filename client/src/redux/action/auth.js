@@ -79,9 +79,9 @@ export const login = (email, password) => async dispatch => {
 };
 
 export const deleteUser = () => async dispatch => {
-    if(window.confirm('Are you sure? The user will be permanently deleted')) {
+    if(window.confirm('Are you sure? The user will be permanently deleted!')) {
     try{
-        const res = await api.delete('/users/');
+        const res = await api.delete('/users');
 
         dispatch({type: DELETE_USER});
 
