@@ -1,16 +1,13 @@
-const { application } = require('express');
 const express = require('express');
-const mongoose = require('mongoose');
-
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 const Patients = require('../../models/patients');
 const Hospital = require('../../models/hospital');
 const bgchain = require('../../middleware/bigchaindb');
+const User = require('../../models/user');
 const patientsRouter = express.Router();
 
 patientsRouter.use(express.json());
-
 const mongo = true;
 
 // @route    GET api/patients/
@@ -39,15 +36,12 @@ patientsRouter.get('/', auth, async (req, res) => {
 });
 
 
-
-patientsRouter.route('/')
-    .get(auth, async (req, res) => {
+// @route    GET api/patients/hospital
+// @desc     Get patients from connected hospital
+// @access   Private
+patientsRouter.route('/hospital')
+    .get(auth, async (req, res,) => {
         try {
-
-            const patients = await Patients.find(req.query).select('-keypair');
-            if (!patients) {
-                return res.status(400).json({ msg: 'There are no patients' });
-
             const user = await User.findById(req.user.id).select('-password');
             const hospital = await Hospital.findById(user.hospital);
 
@@ -63,17 +57,23 @@ patientsRouter.route('/')
                     res.status(204).json({ msg: "There are no patients" });
                 } else
                     res.status(200).json(bgPatients);
-
             }
-            res.status(200).json(hospitals); 
         } catch (err) {
             console.error(err.message);
-            res.status(500).send('Server error')
+            res.status(500).send('Server error');
         }
     })
+    // @route    Post api / patients /hospital
+    // @desc     Post a new patient to mongo and bigChain
+    // @access   Private
     .post(auth,
-        check('firstname', 'The firstname of the user is required').notEmpty(),
-        check('lastname', 'The lastname of the user is required').notEmpty(),
+        check('firstname', 'The firstname of the Patient is required').notEmpty(),
+        check('lastname', 'The lastname of the Patient is required').notEmpty(),
+        check('birthdate')
+            .isDate()
+            .withMessage('Birthdate is not a date type yyyy/mm/dd')
+            .notEmpty()
+            .withMessage('Date of birth required'),
         check('amka')
             .isLength({ min: 11, max: 11 })
             .withMessage('Amka must be 11 numbers')
@@ -88,30 +88,21 @@ patientsRouter.route('/')
         check('address', 'Address of Patient is required').notEmpty(),
         check('city', 'City of Patient is required').notEmpty(),
         check('country', 'Country of Patient is required').notEmpty(),
-        (req, res, next) => {
+        check('sex', 'Sex of Patient is required').notEmpty(),
+        check('vaccineStatus', 'The Status of vaccination of Patient is required').notEmpty(),
+        check('vaccineBrand', 'The brand of the vaccine of Patient is required').notEmpty(),
+        check('appointmentA')
+            .isDate()
+            .withMessage('The appointment is not a date type yyyy/mm/dd')
+            .isAfter()
+            .withMessage('The Appointment cannot be a date prior to today.')
+            .notEmpty()
+            .withMessage('Appointment of vaccinetaion is required'),
+        async (req, res,) => {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return res.status(400).json({ errors: errors.array() });
             } else {
-                Hospital.findOne({ user: req.user.id })
-                    .then(hospital => {
-                        req.body.hospital = hospital.id;
-                        Patients.create(req.body)
-                            .then((patient) => {
-                                hospital.numberOfDosesAvailable -= 1;
-                                hospital.save()
-                                    .then(hospital => {
-                                    }, (err) => next(err));
-                                //Create Asset and send it to bigchain
-                                bgchain.createPatient(patient, req.user.id, hospital);//TODO:Check if is created
-                                console.log("The patient created", patient);
-                                res.statusCode = 200;
-                                res.json(patient);
-                            }, (err) => next(err))
-                            .catch((err) => next(err));
-                    }, (err) => next(err))
-                    .catch((err) => next(err));
-
                 try {
                     const user = await User.findById(req.user.id).select('-password');
                     const _hospital = await Hospital.findById(user.hospital);
@@ -185,41 +176,14 @@ patientsRouter.route('/')
                     console.error(err.message);
                     res.status(500).send('Server error');
                 }
-
             }
-        })
-
-    .put(auth, (req, res, next) => {
-        res.statusCode = 403;
-        res.end('PUT operation not supported on /patients');
-    })
-    .delete(auth, async (req, res) => {
-        try {
-            const resp = await Patients.remove();
-            console.log(resp);
-            res.json({ msg: "Patients deleted: " + resp.deletedCount });
-        } catch (err) {
-            console.error(err.message);
-            res.status(500).send('Server error');
         }
-    });
+    );
 
-
+// @route    GET api / patients/:paitientId 
+// @desc     Get a patient with id from  mongo and bigChain
+// @access   Private
 patientsRouter.route('/:patientId')
-    .get(auth, (req, res, next) => {
-        Patients.findById(req.params.patientId)
-            .then((patient) => {
-                res.statusCode = 200;
-                res.setHeader('Content-Type', 'application/json');
-                res.json(patient);
-            }, (err) => next(err))
-            .catch((err) => next(err));
-    })
-    .post(auth, (req, res, next) => {
-        res.statusCode = 403;
-        res.end('POST operation not supported on /patients/' + req.params.patientId);
-    })
-
     .get(auth,
         async (req, res) => {
             try {
@@ -244,10 +208,14 @@ patientsRouter.route('/:patientId')
     // @route    Put api / patients/:paitientId 
     // @desc     Edit a patient with id from  mongo and bigChain
     // @access   Private
-
     .put(auth,
-        check('firstname', 'The firstname of the user is required').notEmpty(),
-        check('lastname', 'The lastname of the user is required').notEmpty(),
+        check('firstname', 'The firstname of the Patient is required').notEmpty(),
+        check('lastname', 'The lastname of the Patient is required').notEmpty(),
+        check('birthdate')
+            .isDate()
+            .withMessage('Birthdate is not a date type yyyy/mm/dd')
+            .notEmpty()
+            .withMessage('Date of birth required'),
         check('amka')
             .isLength({ min: 11, max: 11 })
             .withMessage('Amka must be 11 numbers')
@@ -262,9 +230,6 @@ patientsRouter.route('/:patientId')
         check('address', 'Address of Patient is required').notEmpty(),
         check('city', 'City of Patient is required').notEmpty(),
         check('country', 'Country of Patient is required').notEmpty(),
-
-        (req, res, next) => {
-
         check('sex', 'Sex of Patient is required').notEmpty(),
         check('vaccineStatus', 'The Status of vaccination of Patient is required').notEmpty(),
         check('vaccineBrand', 'The brand of the vaccine of Patient is required').notEmpty(),
@@ -279,17 +244,6 @@ patientsRouter.route('/:patientId')
             if (!errors.isEmpty()) {
                 return res.status(400).json({ errors: errors.array() });
             } else {
-
-                Patients.findByIdAndUpdate(req.params.patientId, {
-                    $set: req.body
-                }, { new: true })
-                    .then((patient) => {
-                        res.statusCode = 200;
-                        res.setHeader('Content-type', 'application/json');
-                        res.json(patient);
-                    }, (err) => next(err))
-                    .catch((err) => next(err));
-
                 try {
                     const user = await User.findById(req.user.id).select('-password');
                     const _hospital = await Hospital.findById(user.hospital);
@@ -368,18 +322,11 @@ patientsRouter.route('/:patientId')
                 res.status(200).json(patientDeleted)
             } else {
                 return res.status(400).json({ msg: 'The user is unauthorized to delete Patient' });
-
             }
-        })
-
-    .delete(auth, (req, res, next) => {
-        Patients.findByIdAndRemove(req.params.patientId)
-            .then((resp) => {
-                res.statusCode = 200;
-                res.setHeader('Content-type', 'application/json');
-                res.json(resp);
-            }, (err) => next(err))
-            .catch((err) => next(err));
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server error');
+        }
     });
 
 module.exports = patientsRouter;
