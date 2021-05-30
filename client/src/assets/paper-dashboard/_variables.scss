@@ -68,22 +68,22 @@ $pale-bg:                    #FFFCF5 !default;
 $medium-pale-bg:             #F1EAE0 !default;
 $default-body-bg:                 #f4f3ef !default;
 
-$primary-color:              #4f6377 !default;
+$primary-color:              #28e0bb !default;
 $primary-states-color:       darken($primary-color, 10%) !default;
 
-$success-color:              #4d985c !default;
+$success-color:              #26532b !default;
 $success-states-color:       darken($success-color, 10%) !default;
 
-$info-color:                 #19406b !default;
+$info-color:                 #4392f1 !default;
 $info-states-color:          darken($info-color, 10%) !default;
 
 $warning-color:              #ca8824 !default;
 $warning-states-color:       darken($warning-color, 10%) !default;
 
-$danger-color:               #f44336 !default;
+$danger-color:               #bf1a2f !default;
 $danger-states-color:        darken($danger-color, 8%) !default;
 
-$accent-color:               #7E4F6A !default;
+$accent-color:               #0b4f6c !default;
 $accent-states-color:        darken($accent-color, 8%) !default;
 
 $link-disabled-color:        #666666 !default;
@@ -128,6 +128,7 @@ $brand-info:                 $info-color !default;
 $brand-success:              $success-color !default;
 $brand-warning:              $warning-color !default;
 $brand-danger:               $danger-color !default;
+$brand-accent:               $accent-color !default;
 $brand-inverse:              $black-color !default;
 
 $link-disabled-color:        #666666 !default;

@@ -127,7 +127,7 @@ const XTable = ({ columns, data, loading = true, toggle, setTitle, setPatient })
                         <>
                             <tr key={i} className="theader" {...headerGroup.getHeaderGroupProps()}>
                                 {headerGroup.headers.map((column, j) => (
-                                    <th key={j} className="text-center" {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                    <th key={j} className="text-accent text-center" {...column.getHeaderProps(column.getSortByToggleProps())}>
                                         {column.render("Header")}
                                         <span className="float-right">
                                             {!column.notShowSortingDisplay ? (

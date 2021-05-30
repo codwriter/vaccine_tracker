@@ -14,15 +14,16 @@ import {
   Spinner,
 } from "reactstrap";
 
-import { getCurrentHospital,unlinkHospital } from '../../redux/action/hospital';
+import { getCurrentHospital, unlinkHospital } from '../../redux/action/hospital';
 import { deleteUser } from '../../redux/action/auth';
 import { Redirect } from "react-router";
 import avatar from '../../assets/images/man.svg';
 import VaccineTable from '../profile/VaccineTable'
+import UserInfoForm from "../Forms/UserInfoForm";
 
 const Hospital = ({
 
-  auth:{user},
+  auth: { user },
   deleteUser,
   getCurrentHospital,
   unlinkHospital,
@@ -38,49 +39,15 @@ const Hospital = ({
           {hospital ? (<div className="content" >
             <Row>
               <Col md="4">
-                <Card className="card-user">
-
-                  <div className="image" >
-                    {/*   <img
-                    alt="..."
-                    src={avatar}
-                  />  */}
-                  </div>
-                  <CardBody>
-                    <div className="author">
-                      <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                        <img
-                          alt="..."
-                          className="avatar border-gray"
-                          src={avatar}
-                        />
-                        <h5 className="title">Email: {user && user.email}</h5>
-                      </a>
-                      <p className=" title text-center">Fullname: {user.firstname + " " + user.lastname}</p>
-                      <p className=" title text-center">Amka: {user.amkaUser}</p>
-                      <p className=" title text-center">Birthdate: {user.birthdate}</p>
-                    </div>
-                    
-                  </CardBody>
-                  <CardFooter>
-                    <hr />
-                    <div className="button-container justify-content-center"><Button className="btn-sm btn-round btn-accent" onClick={unlinkHospital}>Unlink from hospital</Button></div>
-                  </CardFooter>
-                </Card>
-
+                <UserInfoForm />
               </Col>
               <Col md="8">
-                <HospitalProfileForm hospital={hospital} title="Edit Hospital Info" />
-                <VaccineTable />
+               
+                  <HospitalProfileForm hospital={hospital} title="Edit Hospital Info" />
+                
+                  <VaccineTable />
+             
               </Col>
-
-              <Col>
-                <Button onClick={unlinkHospital}>Unlink from hospital</Button>
-              </Col>
-              <Col>
-                <Button className="btn btn-danger" onClick={deleteUser}>Delete my account</Button>
-              </Col>
-
             </Row>
           </div>)
             : <Redirect to='/intro' />
@@ -91,7 +58,7 @@ const Hospital = ({
 }
 
 Hospital.propTypes = {
-  getCurrentHospital:PropTypes.func.isRequired,
+  getCurrentHospital: PropTypes.func.isRequired,
   deleteUser: PropTypes.func.isRequired,
   hospital: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
@@ -104,5 +71,5 @@ const mapStateToProps = (state) => ({
 
 
 
-export default connect(mapStateToProps, { getCurrentHospital,unlinkHospital, deleteUser })(Hospital);
+export default connect(mapStateToProps, { getCurrentHospital, unlinkHospital, deleteUser })(Hospital);
 

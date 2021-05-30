@@ -75,7 +75,7 @@ const PatientTable = ({
         },
         {
             id: 'action',
-            Cell: <Button className=" btn-simple btn-sm  btn-round btn-icon"><i className="far fa-edit"></i></Button>,
+            Cell: <Button className=" btn-outline-info btn-sm  btn-round btn-icon"><i className="far fa-edit"></i></Button>,
             className: "t-cell-5 text-center",
             disableSortBy: true,
             disableFilters: true,
@@ -113,7 +113,7 @@ const PatientTable = ({
         },
         {
             id: 'action',
-            Cell: <Button className=" btn-simple btn-sm  btn-round btn-icon"><i className="far fa-edit"></i></Button>,
+            Cell: <Button className="btn-sm btn-accent btn-round btn-icon"><i className="far fa-edit"></i></Button>,
             className: "t-cell-5 text-center",
             disableSortBy: true,
             disableFilters: true,
@@ -139,7 +139,8 @@ const PatientTable = ({
                             <CardHeader className="card-header">
                                 <Row>
                                     <Col>
-                                        <CardTitle tag="h4" className="card-title">{tableTitle}
+                                        <CardTitle tag="h4" className="text-accent card-title">
+                                            {tableTitle}
                                         </CardTitle>
                                     </Col>
                                     <Col>
@@ -167,7 +168,7 @@ const PatientTable = ({
                             <CardBody className="card-body">
                                 {patients[0] ?
                                     (<XTable columns={!switchHospital ? listHeader : AllPatientListHeaders} loading={loading} data={patients} toggle={toggle} setTitle={setModalTitle} setPatient={setPatient} />)
-                                    : <div className="text-center text-big">No Vaccinations yet...Start by adding one</div>
+                                    : <div className="text-center text-big m-5">No Vaccinations yet...Start by adding one</div>
                                 }
                             </CardBody>
                         </Card>

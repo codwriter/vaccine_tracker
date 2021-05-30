@@ -96,9 +96,12 @@ export const deleteUser = () => async dispatch => {
 // Edit User info
 export const editUser = (formData) => async dispatch => {
     try {
-       
-        await api.put('user', formData);
-
+       const res= await api.put('/users', formData);
+        if (res) {
+            dispatch(setAlert("User Updated", "success"));
+        } else
+            dispatch(setAlert("User did not updated", "danger"));
+    
         dispatch(loadUser());
     } catch (err) {
         const errors = err.response.data.errors;

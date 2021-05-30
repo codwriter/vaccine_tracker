@@ -7,15 +7,12 @@ import {
   InputGroupText,
   InputGroup,
   FormText,
-} from 'reactstrap';
-import { AvForm, AvGroup, AvFeedback, AvInput } from 'availity-reactstrap-validation';
-import {
   Row, Col,
   Card,
   CardBody,
   CardSubtitle
 } from 'reactstrap';
-
+import { AvForm, AvGroup, AvFeedback, AvInput } from 'availity-reactstrap-validation';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { setAlert } from '../../redux/action/alert';
@@ -52,7 +49,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   }
 
   return (
-    <AvForm className="form" onValidSubmit={onSubmit}>
+    <AvForm className="form p-2" onValidSubmit={onSubmit}>
       <Card>
         <CardBody>
           <CardSubtitle tag="h6" className="mb-2 text-muted">
@@ -178,6 +175,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                   id="birthdate"
                   name="birthdate"
                   onChange={onChange}
+                  className="custom-date"
                   required
                 />
                 <AvFeedback>The Birthdate is required!</AvFeedback>

@@ -38,12 +38,12 @@ const VaccineTable = ({
                     <CardHeader>
                         <Row>
                             <Col className="offset-1">
-                                <CardTitle className="text-primary text-center h6">Vaccines</CardTitle>
+                                <CardTitle className="text-accent text-center h5">Vaccines</CardTitle>
                             </Col>
                             <Col sm="1" md="1" lg="1">
                                 <Button
                                     onClick={() => { setModalTitle("Add Vaccine"); toggle(); setVaccine(null); }}
-                                    className=" btn-sm btn-icon btn-accent btn-round pull-right">
+                                    className=" btn-sm btn-icon  btn-round pull-right btn-info">
                                     <i className="fas fa-plus"></i>
                                 </Button>
                             </Col>
@@ -61,7 +61,7 @@ const VaccineTable = ({
                                     <Table className="table" hover responsive>
 
                                         <thead >
-                                            <tr className="text-center ">
+                                            <tr className="text-center text-accent ">
                                                 <th>Vaccine Brand</th>
                                                 <th>Available Doses</th>
                                                 <th>Appointments</th>
@@ -76,13 +76,13 @@ const VaccineTable = ({
                                                         <td>{vaccine.vaccineBrand}</td>
                                                         <td>{vaccine.doses}</td>
                                                         <td>{vaccine.appointments}</td>
-                                                        <td><Button className=" btn-simple btn-sm  btn-round btn-icon"><i className="far fa-edit"></i></Button></td>
+                                                        <td><Button className=" btn-simple btn-sm btn-info  btn-round btn-icon"><i className="far fa-edit"></i></Button></td>
                                                     </tr>
                                                 )
                                             }))}
                                         </tbody>
                                     </Table>
-                                ) : (<p className=" text-center">There no vaccines yet. Please add one to start!</p>)}
+                                ) : (<p className=" text-center p-5">There no vaccines yet. Please add one to start!</p>)}
                             </Col>
                         </Row>
                     </CardBody>
