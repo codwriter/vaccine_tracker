@@ -1,4 +1,4 @@
-const PieChartforSEX = (patientsMale, patientsFemale) => {
+const PieChartForSEX = (patientsMale, patientsFemale) => {
   return ({
     data: (canvas) => {
       return {
@@ -61,4 +61,4 @@ const PieChartforSEX = (patientsMale, patientsFemale) => {
   })
 };
   
-module.exports = { PieChartforSEX };
+module.exports = { PieChartForSEX };

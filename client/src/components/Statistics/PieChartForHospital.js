@@ -1,4 +1,4 @@
-const PieChartOneHospital = (patientsCompleted, patientsPending, patientsCancelled) => {
+const PieChartForHospital = (patientsCompleted, patientsPending, patientsCancelled) => {
   return ({
     data: (canvas) => {
       return {
@@ -7,7 +7,7 @@ const PieChartOneHospital = (patientsCompleted, patientsPending, patientsCancell
           {
             pointRadius: 0,
             pointHoverRadius: 0,
-            backgroundColor: ["#7982B9", "#A5C1DC","#F54F52" ],
+            backgroundColor: ["#7982B9", "#A5C1DC", "#9E1F1F"],
             borderWidth: 0,
             data: [patientsCompleted, patientsPending, patientsCancelled]
           },
@@ -62,4 +62,4 @@ const PieChartOneHospital = (patientsCompleted, patientsPending, patientsCancell
 }
 
 
-module.exports = { PieChartOneHospital };
+module.exports = { PieChartForHospital };
