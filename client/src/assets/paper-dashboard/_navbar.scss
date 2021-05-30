@@ -307,9 +307,9 @@
 
 
 @media (min-width: 768px){
-.col-md-2 {
-    padding-top: 3rem !important;
-}}
+    .col-md-2 {
+        padding-top: 3rem !important;
+    }}
 
 @media only screen and (max-width: 991px){
     .navbar .dropdown.show .dropdown-menu{
@@ -334,6 +334,33 @@
 @media screen and (max-width: 600px){
     .navbar a:not(.btn):not(.dropdown-item){
         text-align: center !important;
+    }
+} 
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 1200px){
+    .pieMaleFem {
+        font-size: 21px !important;
+    }
+} 
+
+@media screen and (max-width: 990px){
+    .pieforBrands {
+        font-size: 28px !important;
+    }
+} 
+
+@media screen and (max-width: 990px){
+    .pieMaleFem {
+        font-size: 22.6px !important;
     }
 } 
 

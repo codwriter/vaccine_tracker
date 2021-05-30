@@ -1,7 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Row, Col, CardBody, Card, CardTitle, CardHeader, CustomInput, CardFooter, Spinner } from "reactstrap";
-import { PieChartOneHospital } from '../Statistics/PieChartOneHospital';
-import { PieChartforSEX } from '../Statistics/PieChartforSEX';
+import { PieChartForHospital } from '../Statistics/PieChartForHospital';
+import { PieChartForSEX } from '../Statistics/PieChartForSEX';
+import { PieChartForBrands } from '../Statistics/PieChartForBrands';
 import { LineChart } from '../Statistics/LineChart' ;
 import { Line, Pie } from "react-chartjs-2";
 
@@ -43,6 +44,8 @@ const Statistics = ({
   }
     
   //Pie Chart for Completed Vaccinated
+  var allPatients = patients.length;
+
   var patientsCompleted = 0;
   var patientsCancelled = 0;
   var patientsPending = 0;
@@ -58,8 +61,6 @@ const Statistics = ({
       }
     }
   }
-    
-  var allPatients = patients.length;
 
   //Pie Chart for Sex
   var patientsMale = 0;
@@ -67,177 +68,293 @@ const Statistics = ({
   
   if (loadingPat === false && patients[0]) {
     for (let i = 0; i<patients.length; i++) {
-      if (patients[i].sex === "Male" && patients[i].vaccineStatus != "Cancelled") {
+      if (patients[i].sex === "Male" && 
+          patients[i].vaccineStatus !== "Cancelled") {
         patientsMale = patientsMale + 1;
-      } else if (patients[i].sex === "Female" && patients[i].vaccineStatus != "Cancelled") {
+      } else if (patients[i].sex === "Female" && 
+                patients[i].vaccineStatus !== "Cancelled") {
         patientsFemale = patientsFemale + 1;
       }
     }
   }
 
-  //Line Chart
-  var age20 = {};
-  var age30 = {};
-  var age40 = {};
-  var age50 = {};
-  var age60 = {};
-  var age70 = {};
-  var age80 = {};
-  var age90 = {};
-  var age100 = {};
+  //Pie Chart for Brands
+  var patientsPfizer = 0;
+  var patientsAstra = 0;
+  var patientsJohnson = 0;
+  var patientsModerna = 0;
 
-  for (let patient of patients) {
-    if (patient.age <= 20) {
-      if (age20[patient.vaccineBrand] == null) {
-        age20[patient.vaccineBrand] = 0;
+  if (loadingPat === false && patients[0]) {
+    for (let i = 0; i<patients.length; i++) {
+      if (patients[i].vaccineBrand === "Pfizer" && 
+          patients[i].vaccineStatus === "Completed") {
+        patientsPfizer = patientsPfizer + 1;
+      } else if (patients[i].vaccineBrand === "AstraZeneca" && 
+                patients[i].vaccineStatus === "Completed") {
+        patientsAstra = patientsAstra + 1;
+      } else if (patients[i].vaccineBrand === "Johnson & Johnson" && 
+                patients[i].vaccineStatus === "Completed") {
+        patientsJohnson = patientsJohnson + 1;
+      } else if (patients[i].vaccineBrand === "Moderna" && 
+                patients[i].vaccineStatus === "Completed") {
+        patientsModerna = patientsModerna + 1;
       }
-      age20[patient.vaccineBrand] += 1;
-    } else if (patient.age > 20 && patient.age <= 30) {
-      if (age30[patient.vaccineBrand] == null) {
-        age30[patient.vaccineBrand] = 0;
-      }
-      age30[patient.vaccineBrand] += 1;
-    } else if (patient.age > 30 && patient.age <= 40) {
-      if (age40[patient.vaccineBrand] == null) {
-        age40[patient.vaccineBrand] = 0;
-      }
-      age40[patient.vaccineBrand] += 1;
-    } else if (patient.age > 40 && patient.age <= 50) {
-      if (age50[patient.vaccineBrand] == null) {
-        age50[patient.vaccineBrand] = 0;
-      }
-      age50[patient.vaccineBrand] += 1;
-    } else if (patient.age > 50 && patient.age <= 60) {
-      if (age60[patient.vaccineBrand] == null) {
-        age60[patient.vaccineBrand] = 0;
-      }
-      age60[patient.vaccineBrand] += 1;
-    } else if (patient.age > 60 && patient.age <= 70) {
-      if (age70[patient.vaccineBrand] == null) {
-        age70[patient.vaccineBrand] = 0;
-      }
-      age70[patient.vaccineBrand] += 1;
-    } else if (patient.age > 70 && patient.age <= 80) {
-      if (age80[patient.vaccineBrand] == null) {
-        age80[patient.vaccineBrand] = 0;
-      }
-      age80[patient.vaccineBrand] += 1;
-    } else if (patient.age > 80 && patient.age <= 90) {
-      if (age90[patient.vaccineBrand] == null) {
-        age90[patient.vaccineBrand] = 0;
-      }
-      age90[patient.vaccineBrand] += 1;
-    } else if (patient.age > 90) {
-      if (age100[patient.vaccineBrand] == null) {
-        age100[patient.vaccineBrand] = 0;
-      }
-      age100[patient.vaccineBrand] += 1;
     }
   }
 
+  //Line Chart
+  var patientsPfizer20 = 0;
+  var patientsPfizer30 = 0;
+  var patientsPfizer40 = 0;
+  var patientsPfizer50 = 0;
+  var patientsPfizer60 = 0;
+  var patientsPfizer70 = 0;
+  var patientsPfizer80 = 0;
+  var patientsPfizer90 = 0;
+  var patientsPfizer100 = 0;
 
-  console.log(age20, age30, age40, age50, age60, age70, age80, age90, age100);
+  var patientsAstraZeneca20 = 0;
+  var patientsAstraZeneca30 = 0;
+  var patientsAstraZeneca40 = 0;
+  var patientsAstraZeneca50 = 0;
+  var patientsAstraZeneca60 = 0;
+  var patientsAstraZeneca70 = 0;
+  var patientsAstraZeneca80 = 0;
+  var patientsAstraZeneca90 = 0;
+  var patientsAstraZeneca100 = 0;
+
+  var patientsJohnson20 = 0;
+  var patientsJohnson30 = 0;
+  var patientsJohnson40 = 0;
+  var patientsJohnson50 = 0;
+  var patientsJohnson60 = 0;
+  var patientsJohnson70 = 0;
+  var patientsJohnson80 = 0;
+  var patientsJohnson90 = 0;
+  var patientsJohnson100 = 0;
+
+  var patientsModerna20 = 0;
+  var patientsModerna30 = 0;
+  var patientsModerna40 = 0;
+  var patientsModerna50 = 0;
+  var patientsModerna60 = 0;
+  var patientsModerna70 = 0;
+  var patientsModerna80 = 0;
+  var patientsModerna90 = 0;
+  var patientsModerna100 = 0;
+
+  if (loadingPat === false && patients[0]) {
+    for (let i = 0; i<patients.length; i++){
+      if(patients[i].vaccineBrand === "Pfizer" && patients[i].age <= 20 && patients[i].vaccineStatus === "Completed") {
+        patientsPfizer20 = patientsPfizer20 + 1;
+      } else if (patients[i].vaccineBrand === "Pfizer" && patients[i].age <= 30 && patients[i].vaccineStatus === "Completed") {
+        patientsPfizer30 = patientsPfizer30 + 1;
+      } else if (patients[i].vaccineBrand === "Pfizer" && patients[i].age <= 40 && patients[i].vaccineStatus === "Completed") {
+        patientsPfizer40 = patientsPfizer40 + 1;
+      } else if (patients[i].vaccineBrand === "Pfizer" && patients[i].age <= 50 && patients[i].vaccineStatus === "Completed") {
+        patientsPfizer50 = patientsPfizer50 + 1;
+      } else if (patients[i].vaccineBrand === "Pfizer" && patients[i].age <= 60 && patients[i].vaccineStatus === "Completed") {
+        patientsPfizer60 = patientsPfizer60 + 1;
+      } else if (patients[i].vaccineBrand === "Pfizer" && patients[i].age <= 70 && patients[i].vaccineStatus === "Completed") {
+        patientsPfizer70 = patientsPfizer70 + 1;
+      } else if (patients[i].vaccineBrand === "Pfizer" && patients[i].age <= 80 && patients[i].vaccineStatus === "Completed") {
+        patientsPfizer80 = patientsPfizer80 + 1;
+      } else if (patients[i].vaccineBrand === "Pfizer" && patients[i].age <= 90 && patients[i].vaccineStatus === "Completed") {
+        patientsPfizer90 = patientsPfizer90 + 1;
+      } else if (patients[i].vaccineBrand === "Pfizer" && patients[i].age >= 100 && patients[i].vaccineStatus === "Completed") {
+        patientsPfizer100 = patientsPfizer100 + 1;
+      }
+
+      if (patients[i].vaccineBrand === "AstraZeneca" && patients[i].age <= 20 && patients[i].vaccineStatus === "Completed"){
+        patientsAstraZeneca20 = patientsAstraZeneca20 + 1;
+      } else if (patients[i].vaccineBrand === "AstraZeneca" && patients[i].age <= 30 && patients[i].vaccineStatus === "Completed") {
+        patientsAstraZeneca30 = patientsAstraZeneca30 + 1;
+      } else if (patients[i].vaccineBrand === "AstraZeneca" && patients[i].age <= 40 && patients[i].vaccineStatus === "Completed") {
+        patientsAstraZeneca40 = patientsAstraZeneca40 + 1;
+      } else if (patients[i].vaccineBrand === "AstraZeneca" && patients[i].age <= 50 && patients[i].vaccineStatus === "Completed") {
+        patientsAstraZeneca50 = patientsAstraZeneca50 + 1;
+      } else if (patients[i].vaccineBrand === "AstraZeneca" && patients[i].age <= 60 && patients[i].vaccineStatus === "Completed") {
+        patientsAstraZeneca60 = patientsAstraZeneca60 + 1;
+      } else if (patients[i].vaccineBrand === "AstraZeneca" && patients[i].age <= 70 && patients[i].vaccineStatus === "Completed") {
+        patientsAstraZeneca70 = patientsAstraZeneca70 + 1;
+      } else if (patients[i].vaccineBrand === "AstraZeneca" && patients[i].age <= 80 && patients[i].vaccineStatus === "Completed") {
+        patientsAstraZeneca80 = patientsAstraZeneca80 + 1;
+      } else if (patients[i].vaccineBrand === "AstraZeneca" && patients[i].age <= 90 && patients[i].vaccineStatus === "Completed" ) {
+        patientsAstraZeneca90 = patientsAstraZeneca90 + 1;
+      } else if (patients[i].vaccineBrand === "AstraZeneca" && patients[i].age >= 100 && patients[i].vaccineStatus === "Completed") {
+        patientsAstraZeneca100 = patientsAstraZeneca100 + 1;
+      }
+      
+      if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age <= 20 && patients[i].vaccineStatus === "Completed"){
+        patientsJohnson20 = patientsJohnson20 + 1;
+      } else if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age <= 30 && patients[i].vaccineStatus === "Completed") {
+        patientsJohnson30 = patientsJohnson30 + 1;
+      } else if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age <= 40 &&  patients[i].vaccineStatus === "Completed") {
+        patientsJohnson40 = patientsJohnson40 + 1;
+      } else if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age <= 50 && patients[i].vaccineStatus === "Completed") {
+        patientsJohnson50 = patientsJohnson50 + 1;
+      } else if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age <= 60 && patients[i].vaccineStatus === "Completed") {
+        patientsJohnson60 = patientsJohnson60 + 1;
+      } else if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age <= 70 && patients[i].vaccineStatus === "Completed") {
+        patientsJohnson70 = patientsJohnson70 + 1;
+      } else if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age <= 80 && patients[i].vaccineStatus === "Completed") {
+        patientsJohnson80 = patientsJohnson80 + 1;
+      } else if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age <= 90 && patients[i].vaccineStatus === "Completed") {
+        patientsJohnson90 = patientsJohnson90 + 1;
+      } else if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age >= 100 && patients[i].vaccineStatus === "Completed") {
+        patientsJohnson100 = patientsJohnson100 + 1;
+      }
+
+      if(patients[i].vaccineBrand === "Moderna" && patients[i].age <= 20 && patients[i].vaccineStatus === "Completed") {
+        patientsModerna20 = patientsModerna20 + 1;
+      } else if (patients[i].vaccineBrand === "Moderna" && patients[i].age <= 30 && patients[i].vaccineStatus === "Completed") {
+        patientsModerna30 = patientsModerna30 + 1;
+      } else if (patients[i].vaccineBrand === "Moderna" && patients[i].age <= 40 && patients[i].vaccineStatus === "Completed") {
+        patientsModerna40 = patientsModerna40 + 1;
+      } else if (patients[i].vaccineBrand === "Moderna" && patients[i].age <= 50 && patients[i].vaccineStatus === "Completed" ) {
+        patientsModerna50 = patientsModerna50 + 1;
+      } else if (patients[i].vaccineBrand === "Moderna" && patients[i].age <= 60 && patients[i].vaccineStatus === "Completed") {
+        patientsModerna60 = patientsModerna60 + 1;
+      } else if (patients[i].vaccineBrand === "Moderna" && patients[i].age <= 70 && patients[i].vaccineStatus === "Completed") {
+        patientsModerna70 = patientsModerna70 + 1;
+      } else if (patients[i].vaccineBrand === "Moderna" && patients[i].age <= 80 && patients[i].vaccineStatus === "Completed") {
+        patientsModerna80 = patientsModerna80 + 1;
+      } else if (patients[i].vaccineBrand === "Moderna" && patients[i].age <= 90 && patients[i].vaccineStatus === "Completed") {
+        patientsModerna90 = patientsModerna90 + 1;
+      } else if (patients[i].vaccineBrand === "Moderna" && patients[i].age >= 100 && patients[i].vaccineStatus === "Completed") {
+        patientsModerna100 = patientsModerna100 + 1;
+      }
+    }
+  }
+
+  //Estimated Vaccine Doses (Average)
+  var estimatedDoses = 0;
+
+  if (loadingPat === false && patients[0]) {
+    for (let patient of patients) {
+      if (patient.vaccineStatus === "Pending") {
+        if (patient.appointmentB) {
+          estimatedDoses += 2;
+        } else
+          estimatedDoses += 1;
+      }
+    }
+  }
+
+  /* const time = Object.entries(estimatedDoses) */
+
   
-  return ( loadingVac || loadingPat || loadingHos?<Spinner/>:( 
+
+  console.log(estimatedDoses)
+  
+  return ( loadingVac && loadingPat && loadingHos?<Spinner/>:( 
     patients[0] && vaccines[0]?(
-    <Fragment>
-      <Row>
-        <Col >
-          <Card>
-            <CardHeader>
-              <h1 className="text-center">{title?title:'My Hospital Statistics'}</h1>
-            </CardHeader>
-            <CardFooter >
-              { <span className="float-right ">
-                <CustomInput
-                  checked={switchHospital}
-                  className="hospital-switch "
-                  type="switch"
-                  name="customSwitch"
-                  id="cudtomHospitalSwitch"
-                  label="All Hospital"
-                  onChange={allhospitalVaccination}
+      <Fragment>
+        <Row>
+          <Col >
+            <Card>
+              <CardHeader>
+                <h1 className="text-center">{title?title:'My Hospital Statistics'}</h1>
+              </CardHeader>
+              
+              
+              <CardFooter>
+                <Row>
+                  {!switchHospital?
+                    <h6>Estimated Vaccine Doses: {estimatedDoses?estimatedDoses :''}</h6> 
+                  :''}
+                  { <span className="ml-auto">
+                    <CustomInput
+                      checked={switchHospital}
+                      className="hospital-switch "
+                      type="switch"
+                      name="customSwitch"
+                      id="cudtomHospitalSwitch"
+                      label="All Hospital"
+                      onChange={allhospitalVaccination}
+                    />
+                  </span> }
+                </Row>
+              </CardFooter>
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col md="4">
+            <Card>
+              <CardHeader>
+                <CardTitle tag="h5">Completed, Pending & Cancelled Vaccinations</CardTitle>
+              </CardHeader>
+              <CardBody>
+                <Pie
+                  data={PieChartForHospital(patientsCompleted, patientsPending, patientsCancelled).data}
+                  options={PieChartForHospital.options}
                 />
-              </span> }
-            </CardFooter>
-          </Card>
-        </Col>
-      </Row>
-      <Row>
-        <Col md="4">
-          <Card>
-            <CardHeader>
-              <CardTitle tag="h5">Completed, Pending & Cancelled Vaccinations</CardTitle>
-            </CardHeader>
-            <CardBody>
-              <Pie
-                data={PieChartOneHospital(patientsCompleted, patientsPending, patientsCancelled).data}
-                options={PieChartOneHospital.options}
-              />
-            </CardBody>
-          </Card>
-        </Col>
-        <Col md="4">
-          <Card>
-            <CardHeader>
-              <CardTitle tag="h5">Completed Vaccinations for Male or Female</CardTitle>
-            </CardHeader>
-            <CardBody>
-              <Pie
-                data={PieChartforSEX(patientsMale, patientsFemale).data}
-                options={PieChartforSEX.options}
-              />
-            </CardBody>
-          </Card>
-        </Col>
-        <Col md="4">
-          <Card>
-            <CardHeader>
-              <CardTitle tag="h5">Completed Vaccinations for Brands</CardTitle>
-            </CardHeader>
-            <CardBody>
-              <Pie
-                data={PieChartforSEX(patientsMale, patientsFemale).data}
-                options={PieChartforSEX.options}
-              />
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
-      <Row>
-        <Col md="12">
-          <Card className="card-chart">
-            <CardHeader>
-              <CardTitle tag="h5">Vaccinations </CardTitle>
-            </CardHeader>
-            <CardBody>
-              <Line
-                data={LineChart(age20, 
-                                age30, 
-                                age40, 
-                                age50, 
-                                age60, 
-                                age70, 
-                                age80, 
-                                age90, 
-                                age100).data}
-                options={LineChart.options}
-                width={400}
-                height={100}
-              />
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
-    </Fragment >
-    ):(
-    <Fragment>
-      <Card>
-        <h1>There are no Statistics yet...!</h1>
-      </Card>
-    </Fragment>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col md="4">
+            <Card>
+              <CardHeader>
+                <CardTitle tag="h5" className="pieMaleFem">Completed Vaccinations for Male or Female</CardTitle>
+              </CardHeader>
+              <CardBody>
+                <Pie
+                  data={PieChartForSEX(patientsMale, patientsFemale).data}
+                  options={PieChartForSEX.options}
+                />
+              </CardBody>
+            </Card>
+          </Col>
+          <Col md="4">
+            <Card>
+              <CardHeader>
+                <CardTitle tag="h5" className="pieforBrands">Completed Vaccinations for Brands</CardTitle>
+              </CardHeader>
+              <CardBody>
+                <Pie
+                  data={PieChartForBrands(patientsPfizer, patientsAstra, patientsJohnson, patientsModerna).data}
+                  options={PieChartForBrands.options}
+                />
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col md="12">
+            <Card className="card-chart">
+              <CardHeader>
+                <CardTitle tag="h5">Vaccinations </CardTitle>
+              </CardHeader>
+              <CardBody>
+                <Line
+                  data={LineChart(patientsPfizer20, patientsAstraZeneca20, patientsJohnson20, patientsModerna20,
+                                  patientsPfizer30, patientsAstraZeneca30, patientsJohnson30, patientsModerna30,
+                                  patientsPfizer40, patientsAstraZeneca40, patientsJohnson40, patientsModerna40,
+                                  patientsPfizer50, patientsAstraZeneca50, patientsJohnson50, patientsModerna50,
+                                  patientsPfizer60, patientsAstraZeneca60, patientsJohnson60, patientsModerna60,
+                                  patientsPfizer70, patientsAstraZeneca70, patientsJohnson70, patientsModerna70,
+                                  patientsPfizer80, patientsAstraZeneca80, patientsJohnson80, patientsModerna80,
+                                  patientsPfizer90, patientsAstraZeneca90, patientsJohnson90, patientsModerna90,
+                                  patientsPfizer100, patientsAstraZeneca100, patientsJohnson100, patientsModerna100
+                                  ).data}
+                  options={LineChart.options}
+                  width={400}
+                  height={100}
+                />
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </Fragment >
+      ):(
+      <Fragment>
+        <Card>
+          <h1 className="text-center mx-auto p-5">There are no Statistics yet...!</h1>
+        </Card>
+      </Fragment>
     )
-  )
+    )
   );
 };
 
