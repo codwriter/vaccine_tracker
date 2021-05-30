@@ -1,37 +1,40 @@
 import React, { useState } from 'react';
 import VaccineLogo from '../../assets/images/Vaccine-Tracker_logo.png';
-import {
-  TabContent, TabPane, Nav, NavItem, NavLink, Container, Row, Col, Card,
-  CardImg,
-} from 'reactstrap';
-import classnames from 'classnames';
+import { Container, Row, Col, Card, CardImg, Button } from 'reactstrap';
+
 import Alert from '../layout/Alert';
 import Login from '../auth/Login';
 import Register from '../auth/Register';
-
+import useModal from '../Modals/useModal';
+import RegisterModal from '../Modals/RegisterModal';
 
 const Landing = () => {
-  const [activeTab, setActiveTab] = useState('1');
-
-  const toggle = (tab) => {
-    if (activeTab !== tab) setActiveTab(tab);
-  };
+  const { isShowing, toggle } = useModal();
 
   return (
-    <div className="container-fluid w-100">
-      <div className="row">
-        <div className="col-sm"><div className="d-flex justify-content-center "><img src={VaccineLogo} width="45%" /></div></div>
-        <div className="col-sm">
-          <Login /></div>
-      </div>
 
+    <Container fluid className='bg h-100'>
+      <RegisterModal isShowing={isShowing} hide={toggle} />
+      <Row className='h-100  justify-content-center'>
+        <Col
+          className='d-flex justify-content-md-end justify-content-lg-end justify-content-center  align-self-center'
+          sm='12'
+          md='4'
+          lg='7'
+        >
+          <img src={VaccineLogo} width='65%' height='auto' />
+        </Col>
+        <Col
+          sm='12'
+          md='4'
+          lg='5'
+          className='d-flex align-self-center justify-content-md-start justify-content-lg-start justify-content-center'
+        >
+          <Login />
+        </Col>
+      </Row>
+    </Container>
 
-
-
-
-
-
-    </div>
   );
 };
 

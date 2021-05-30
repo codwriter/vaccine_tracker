@@ -7,17 +7,18 @@ import { getHospitals, linkHospital } from '../../redux/action/hospital';
 import HospitalProfileForm from '../Forms/HospitalProfileForm';
 
 const Intro = ({
-    history,
-    linkHospital,
-    getHospitals,
-    hospitals: { hospitals, loading }
+  history,
+  linkHospital,
+  getHospitals,
+  hospitals: { hospitals, loading },
 }) => {
-    useEffect(() => {
-        getHospitals();
-    }, [getHospitals]);
+  useEffect(() => {
+    getHospitals();
+  }, [getHospitals]);
 
+  const [isOpen, setIsOpen] = useState(false);
 
-    const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
 
     const toggle = () => setIsOpen(!isOpen);
 
@@ -35,6 +36,7 @@ const Intro = ({
                             <h2 className='text-primary'> Select your hospital</h2>
                         </Col>
                         {/* <ListGroup >
+
                             {hospitals ? hospitals.map(hospital =>
                                 <ListGroupItem tag="a"
                                     onClick={() => { linkHospital(hospital._id, history); }}>
@@ -79,10 +81,13 @@ const Intro = ({
 Intro.propTypes = {
     getHospitals: PropTypes.func.isRequired,
     linkHospital: PropTypes.func.isRequired
+
 };
 
 const mapStateToProps = (state) => ({
-    hospitals: state.hospitalReducer
+  hospitals: state.hospitalReducer,
 });
 
+
 export default connect(mapStateToProps, { getHospitals, linkHospital })(withRouter(Intro));
+

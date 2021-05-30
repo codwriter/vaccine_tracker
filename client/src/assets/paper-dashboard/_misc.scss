@@ -5,7 +5,7 @@ body {
   font-family: $sans-serif-family;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .main {
@@ -20,7 +20,7 @@ body {
 .sidebar .nav a i,
 .animation-transition-general,
 .tag,
-.tag [data-role="remove"],
+.tag [data-role='remove'],
 .animation-transition-general {
   @include transition($general-transition-time, $transition-ease);
 }
@@ -97,7 +97,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
     }
     &:after {
       background-color: rgba(0, 0, 0, 0.5);
-      content: "";
+      content: '';
       display: block;
       height: 100%;
       left: 0;
@@ -148,4 +148,19 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
       margin-bottom: 20px;
     }
   }
+}
+.bg {
+  background-image: url('../../assets/images/background.png');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: scroll;
+
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
 }
