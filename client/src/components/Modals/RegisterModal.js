@@ -7,8 +7,13 @@ const RegisterModal = ({ isShowing, hide }) =>
     ? ReactDOM.createPortal(
         <>
           <div>
-            <Modal isOpen={isShowing}>
-              <ModalHeader toggle={hide}></ModalHeader>
+            <Modal isOpen={isShowing} size='lg'>
+              <ModalHeader toggle={hide}>
+                <h7 className='mb-2 text-accent'>
+                  <i className='mr-1 fas fa-user' />
+                  Create Your Account
+                </h7>
+              </ModalHeader>
               <ModalBody>
                 <Register hide={hide} />
               </ModalBody>

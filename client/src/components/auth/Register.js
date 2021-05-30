@@ -60,152 +60,147 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   }
 
   return (
-    <AvForm className='form' onValidSubmit={onSubmit}>
-      <Card>
-        <CardBody>
-          <CardSubtitle tag='h6' className='mb-2 text-muted'>
-            <i className='fas fa-user' /> Create Your Account
-          </CardSubtitle>
-
-          <br></br>
-
+    <AvForm className='form p-2' onValidSubmit={onSubmit}>
+      <AvGroup className='mb-3'>
+        <Label className='text-muted'>Email</Label>
+        <InputGroup className='input-group-alternative'>
+          <InputGroupAddon addonType='prepend'>
+            <InputGroupText>
+              <i class='fas fa-envelope'></i>
+            </InputGroupText>
+          </InputGroupAddon>
+          <AvInput
+            type='email'
+            placeholder='Enter Email'
+            name='email'
+            value={email}
+            onChange={onChange}
+            required
+          />
+        </InputGroup>
+        <AvFeedback>Email is required!</AvFeedback>
+      </AvGroup>
+      <Row>
+        <Col>
           <AvGroup className='mb-3'>
-            <Label className='text-muted'>Email</Label>
+            <Label className='text-muted'>Password</Label>
             <InputGroup className='input-group-alternative'>
               <InputGroupAddon addonType='prepend'>
                 <InputGroupText>
-                  <i class='fas fa-envelope'></i>
+                  <i class='fas fa-key'></i>
                 </InputGroupText>
               </InputGroupAddon>
               <AvInput
-                type='email'
-                placeholder='Enter Email'
-                name='email'
-                value={email}
+                type='password'
+                placeholder='Your Password'
+                name='password'
                 onChange={onChange}
                 required
               />
             </InputGroup>
-            <AvFeedback>Email is required!</AvFeedback>
           </AvGroup>
-          <Row>
-            <Col>
-              <AvGroup className='mb-3'>
-                <Label className='text-muted'>Password</Label>
-                <InputGroup className='input-group-alternative'>
-                  <InputGroupAddon addonType='prepend'>
-                    <InputGroupText>
-                      <i class='fas fa-key'></i>
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <AvInput
-                    type='password'
-                    placeholder='Your Password'
-                    name='password'
-                    onChange={onChange}
-                    required
-                  />
-                </InputGroup>
-              </AvGroup>
-            </Col>
-            <Col>
-              <AvGroup className='mb-3'>
-                <Label className='text-muted'>Retype Password</Label>
-                <InputGroup className='input-group-alternative'>
-                  <InputGroupAddon addonType='prepend'>
-                    <InputGroupText>
-                      <i class='fas fa-key'></i>
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <AvInput
-                    type='password'
-                    placeholder='Retype Your Password'
-                    name='password2'
-                    onChange={onChange}
-                    required
-                  />
-                </InputGroup>
-              </AvGroup>
-            </Col>
-          </Row>
-          <hr />
-          <FormText className='h6 mb-3'>User info</FormText>
-          <Row>
-            <Col>
-              <AvGroup>
-                <Label for='firstname'>Firstname:</Label>
-                <AvInput
-                  type='text'
-                  placeholder='Firstname '
-                  name='firstname'
-                  onChange={onChange}
-                  required
-                />
-                <AvFeedback>
-                  The firstname name of the patient is required!
-                </AvFeedback>
-              </AvGroup>
-            </Col>
-
-            <Col>
-              <AvGroup>
-                <Label for='lastname'>Lastname:</Label>
-                <AvInput
-                  type='text'
-                  placeholder='Lastname '
-                  name='lastname'
-                  onChange={onChange}
-                  required
-                />
-                <AvFeedback>
-                  The lastname name of the patient is required!
-                </AvFeedback>
-              </AvGroup>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <AvGroup>
-                <Label for='amkaUser'>AMKA:</Label>
-                <AvInput
-                  type='text'
-                  id='amkaUser'
-                  placeholder='Amka'
-                  name='amkaUser'
-                  onChange={onChange}
-                  minLength='11'
-                  maxLength='11'
-                  pattern='^[0-9]+$'
-                  required
-                />
-                <AvFeedback>
-                  The AMKA is required and must be 11 numbers in length!
-                </AvFeedback>
-              </AvGroup>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <AvGroup>
-                <Label for='birthdate'>Birthdate:</Label>
-                <AvInput
-                  type='date'
-                  id='birthdate'
-                  name='birthdate'
-                  onChange={onChange}
-                  required
-                />
-                <AvFeedback>The Birthdate is required!</AvFeedback>
-              </AvGroup>
-            </Col>
-          </Row>
+        </Col>
+        <Col>
+          <AvGroup className='mb-3'>
+            <Label className='text-muted'>Retype Password</Label>
+            <InputGroup className='input-group-alternative'>
+              <InputGroupAddon addonType='prepend'>
+                <InputGroupText>
+                  <i class='fas fa-key'></i>
+                </InputGroupText>
+              </InputGroupAddon>
+              <AvInput
+                type='password'
+                placeholder='Retype Your Password'
+                name='password2'
+                onChange={onChange}
+                required
+              />
+            </InputGroup>
+          </AvGroup>
+        </Col>
+      </Row>
+      <hr />
+      <FormText className='h6 mb-3'>User info</FormText>
+      <Row>
+        <Col>
           <AvGroup>
-            <Button color='secondary' round outline type='submit'>
-              Sign Up
-            </Button>
+            <Label for='firstname'>Firstname:</Label>
+            <AvInput
+              type='text'
+              placeholder='Firstname '
+              name='firstname'
+              onChange={onChange}
+              required
+            />
+            <AvFeedback>
+              The firstname name of the patient is required!
+            </AvFeedback>
           </AvGroup>
-        </CardBody>
-      </Card>
+        </Col>
+
+        <Col>
+          <AvGroup>
+            <Label for='lastname'>Lastname:</Label>
+            <AvInput
+              type='text'
+              placeholder='Lastname '
+              name='lastname'
+              onChange={onChange}
+              required
+            />
+            <AvFeedback>
+              The lastname name of the patient is required!
+            </AvFeedback>
+          </AvGroup>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <AvGroup>
+            <Label for='amkaUser'>AMKA:</Label>
+            <AvInput
+              type='text'
+              id='amkaUser'
+              placeholder='Amka'
+              name='amkaUser'
+              onChange={onChange}
+              minLength='11'
+              maxLength='11'
+              pattern='^[0-9]+$'
+              required
+            />
+            <AvFeedback>
+              The AMKA is required and must be 11 numbers in length!
+            </AvFeedback>
+          </AvGroup>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <AvGroup>
+            <Label for='birthdate'>Birthdate:</Label>
+            <AvInput
+              type='date'
+              id='birthdate'
+              name='birthdate'
+              onChange={onChange}
+              required
+            />
+            <AvFeedback>The Birthdate is required!</AvFeedback>
+          </AvGroup>
+        </Col>
+      </Row>
+      <AvGroup>
+        <Button
+          className='btn-primary btn-block d-block gap-2'
+          round
+          outline
+          type='submit'
+        >
+          Sign Up
+        </Button>
+      </AvGroup>
     </AvForm>
   );
 };

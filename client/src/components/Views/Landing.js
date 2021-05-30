@@ -12,19 +12,27 @@ const Landing = () => {
   const { isShowing, toggle } = useModal();
 
   return (
-    <div className='bg'>
-      <Container fluid>
-        <RegisterModal isShowing={isShowing} hide={toggle} />
-        <Row>
-          <Col>
-            <img src={VaccineLogo} className='logo' />
-          </Col>
-          <Col>
-            <Login />
-          </Col>
-        </Row>
-      </Container>
-    </div>
+    <Container fluid className='bg h-100'>
+      <RegisterModal isShowing={isShowing} hide={toggle} />
+      <Row className='h-100  justify-content-center'>
+        <Col
+          className='d-flex justify-content-md-end justify-content-lg-end justify-content-center  align-self-center'
+          sm='12'
+          md='4'
+          lg='7'
+        >
+          <img src={VaccineLogo} width='65%' height='auto' />
+        </Col>
+        <Col
+          sm='12'
+          md='4'
+          lg='5'
+          className='d-flex align-self-center justify-content-md-start justify-content-lg-start justify-content-center'
+        >
+          <Login />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

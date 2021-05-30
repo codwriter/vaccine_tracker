@@ -5,12 +5,19 @@ import {
   FormGroup,
   Label,
   Input,
-  Button,
   InputGroupAddon,
   InputGroupText,
   InputGroup,
 } from 'reactstrap';
-
+import {
+  Button,
+  Row,
+  Col,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from 'reactstrap';
 import { Card, CardBody, CardSubtitle, CardFooter } from 'reactstrap';
 
 import { login } from '../../redux/action/auth';
@@ -42,15 +49,13 @@ const Login = ({ login, isAuthenticated }) => {
   }
 
   return (
-    <Form onSubmit={onSubmit} className='logins'>
-      <Card>
+    <Form onSubmit={onSubmit} className='w-75 mr-5 ml-5'>
+      <Card className='p-4'>
         <CardBody>
           <CardSubtitle tag='h6' className='mb-2 text-muted'>
             <i className='fas fa-user' /> Sign Into Your Account
           </CardSubtitle>
-
           <br></br>
-
           <FormGroup className='mb-3'>
             <Label className='text-muted'>Email</Label>
             <InputGroup className='input-group-alternative'>
@@ -69,7 +74,6 @@ const Login = ({ login, isAuthenticated }) => {
               />
             </InputGroup>
           </FormGroup>
-
           <FormGroup className='mb-3'>
             <Label className='text-muted'>Password</Label>
             <InputGroup className='input-group-alternative'>
@@ -88,21 +92,36 @@ const Login = ({ login, isAuthenticated }) => {
               />
             </InputGroup>
           </FormGroup>
-
-          <Button className='new' round outline type='submit'>
-            Sign In
-          </Button>
-
-          {/*  <div className="my-3">
-            Don't have an account? <Link to="/register">Sign Up</Link>
+          {/* <div className='d-flex gap-2'>
+            <button className='d-block btn btn-primary' type='submit'>
+              Sign in
+            </button>
           </div> */}
+          <Row>
+            <Col>
+              <Button
+                className='btn-primary btn-block d-block gap-2'
+                round
+                outline
+                type='submit'
+              >
+                Sign In
+              </Button>
+            </Col>
+          </Row>
+          <hr className='w-50' />
+          <Row>
+            <Col>
+              <Button
+                className='btn-outline-primary btn-block d-block gap-2'
+                onClick={toggle}
+              >
+                <RegisterModal isShowing={isShowing} hide={toggle} />
+                Create New Account
+              </Button>
+            </Col>
+          </Row>
         </CardBody>
-        <CardFooter>
-          <RegisterModal isShowing={isShowing} hide={toggle} />
-          <Button className='new' onClick={toggle}>
-            Create New Account
-          </Button>
-        </CardFooter>
       </Card>
     </Form>
   );
