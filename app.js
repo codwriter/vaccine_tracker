@@ -7,7 +7,7 @@ var indexRouter = require('./routes/api/index');
 var usersRouter = require('./routes/api/users');
 var patientsRouter = require('./routes/api/patientsRouter');
 var hospitalRouter = require('./routes/api/hospitalRouter');
-var vaccineRouter = require('./routes/api/vaccineRouter');
+//var vaccineRouter = require('./routes/api/vaccineRouter');
 var authRouter = require('./routes/api/auth');
 
 const connectDB = require('./config/db');
@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
-app.use('/api/vaccines', vaccineRouter);
+//app.use('/api/vaccines', vaccineRouter);
 app.use('/api/hospital', hospitalRouter);
 app.use('/api/patients', patientsRouter);
 app.use('/api/auth', authRouter);

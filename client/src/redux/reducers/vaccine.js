@@ -4,7 +4,8 @@ import {
     ADD_VACCINE,
     UPDATE_VACCINE,
     REMOVE_VACCINE,
-    VACCINE_ERROR
+    VACCINE_ERROR,
+    VACCINE_CLEAR
 } from '../action/types';
 
 const initialState = {
@@ -33,23 +34,29 @@ function vaccineReducer(state = initialState, action) {
         case ADD_VACCINE:
             return {
                 ...state,
-                vaccines: [payload, ...state.vaccines],
+                vaccines: payload,
                 loading: false
             };
         case UPDATE_VACCINE:
             return {
                 ...state,
                 vaccines: state.vaccines.map((vaccine) =>
-                    vaccine._id === payload.id ? { ...vaccine, vaccine: payload.vaccine } : vaccine
+                    vaccine._id === payload.id ? vaccine = payload.vaccine : vaccine
                 ),
                 loading: false
-
             };
         case REMOVE_VACCINE:
             return {
                 ...state,
                 vaccines: state.vaccines.filter((vaccine) => vaccine._id !== payload),
                 loading: false
+            };
+        case VACCINE_CLEAR:
+            return {
+                ...state,
+                vaccines: [],
+                vaccine: null,
+                loading:false
             };
         case VACCINE_ERROR:
             return {

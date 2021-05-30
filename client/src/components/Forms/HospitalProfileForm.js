@@ -4,13 +4,15 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AvForm, AvGroup, AvFeedback, AvInput } from 'availity-reactstrap-validation';
 import { createHospital, updateHospital, getCurrentHospital } from '../../redux/action/hospital';
-import { Button, Label, Spinner, Card, CardHeader, CardBody, Row, Col } from 'reactstrap';
-import Alert from '../../components/layout/Alert';
+import { Button, Label, Spinner, Card, CardHeader, CardBody, Row, Col, CardTitle } from 'reactstrap';
+
+
 const initialState = {
   name: '',
   afm: '',
   address: '',
-  numberOfDosesAvailable: null
+  city: '',
+  country: '',
 };
 
 const Hospitalregister = ({
@@ -19,6 +21,7 @@ const Hospitalregister = ({
   updateHospital,
   title,
   history,
+  isAuthenticated: { user },
   hospital: { hospital, loading }
 }) => {
   const [formData, setFormData] = useState(initialState);
@@ -30,17 +33,25 @@ const Hospitalregister = ({
       for (const key in hospital) {
         if (key in hospitalData) hospitalData[key] = hospital[key];
       }
+      isAdmin();
       setFormData(hospitalData);
+    }
+  }, [loading, getCurrentHospital, hospital,]);
+
+
+  const { name, address, afm, city, country } = formData;
+
+  const onChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
+
+  const isAdmin = () => {
+    if (user._id === hospital.admin) {
+      setdisabled(false)
+    } else {
       setdisabled(true);
     }
-  }, [loading, getCurrentHospital, hospital]);
-
-
-  const { name, address, afm, numberOfDosesAvailable } = formData;
-
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
+  }
 
   const handleValidSubmit = async (e) => {
     console.log(formData);
@@ -54,15 +65,15 @@ const Hospitalregister = ({
     <Fragment>
       {loading ? <Spinner /> : (
         <Card>
-          <CardHeader>
-            <h1 className="large text-primary">{title}</h1>
+          <CardHeader /* className="bg-accent" */>
+            <CardTitle className="text-accent text-center h5">{disabled ? "Hospital Info" : title}</CardTitle>
           </CardHeader>
           <CardBody>
-            <AvForm className="form text-white" onValidSubmit={handleValidSubmit}>
+            <AvForm className="form" onValidSubmit={handleValidSubmit} onChange={onChange} disabled={disabled}>
               <AvGroup>
                 <Label>Hospital Name</Label>
                 <AvInput
-                  autocomplete="true"
+                  autoComplete="true"
                   type="text"
                   placeholder="The name of the hospital"
                   name="name"
@@ -74,9 +85,9 @@ const Hospitalregister = ({
               </AvGroup>
 
               <AvGroup>
-                <Label>Hospital Address</Label>
+                <Label>Address</Label>
                 <AvInput
-                  autocomplete="true"
+                  autoComplete="true"
                   type="text"
                   placeholder="Hospital Address"
                   name="address"
@@ -86,11 +97,43 @@ const Hospitalregister = ({
                 />
                 <AvFeedback>The address of the hospital is required!</AvFeedback>
               </AvGroup>
+              <Row>
+                <Col>
+                  <AvGroup>
+                    <Label>City</Label>
+                    <AvInput
+                      autoComplete="true"
+                      type="text"
+                      placeholder="Hospital City"
+                      name="city"
+                      value={city}
+                      onChange={onChange}
+                      required
+                    />
+                    <AvFeedback>The city of the hospital is required!</AvFeedback>
+                  </AvGroup>
+                </Col>
+                <Col>
+                  <AvGroup>
+                    <Label>Country</Label>
+                    <AvInput
+                      autoComplete="true"
+                      type="text"
+                      placeholder="Hospital Country"
+                      name="country"
+                      value={country}
+                      onChange={onChange}
+                      required
+                    />
+                    <AvFeedback>The country of the hospital is required!</AvFeedback>
+                  </AvGroup>
+                </Col>
+              </Row>
 
               <AvGroup>
                 <Label for="afm">Tax Identification Number</Label>
                 <AvInput
-                  autocomplete="true"
+                  autoComplete="true"
                   type="text"
                   id="afm"
                   placeholder="Tax Identification Number(AFM)"
@@ -101,27 +144,18 @@ const Hospitalregister = ({
                   maxLength="9"
                   pattern="^[0-9]+$"
                   required
-                  disabled={disabled}
                 />
                 <AvFeedback>The afm is required and must be 9 numbers in length!</AvFeedback>
               </AvGroup>
-
-              <AvGroup>
-                <Label for="numberOfDosesAvailable">Number of Doses</Label>
-                <AvInput
-                  autocomplete="true"
-                  id="numberOfDosesAvailable"
-                  type="number"
-                  placeholder="Number of Doses"
-                  name="numberOfDosesAvailable"
-                  value={numberOfDosesAvailable}
-                  onChange={onChange}
-                  min="0"
-                />
-              </AvGroup>
-              <AvGroup>
-                <Button color="primary" type="submit">Submit</Button>
-              </AvGroup>
+              <Row>
+                <Col>
+                  <Row>
+                    <Col className="text-center">
+                      {!disabled ? <Button className="btn-wd btn-primary" type="submit">Submit</Button> : ""}
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
             </AvForm>
           </CardBody>
         </Card>

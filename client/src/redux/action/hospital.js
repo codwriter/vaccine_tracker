@@ -5,12 +5,11 @@ import { setAlert } from './alert';
 import {
   GET_HOSPITAL,
   GET_HOSPITALS,
-  LINK_HOSPITAL,
   HOSPITAL_ERROR,
   UPDATE_HOSPITAL,
   CLEAR_HOSPITAL,
-  DELETE_HOSPITAL
-
+  PATIENT_CLEAR,
+  VACCINE_CLEAR,
 } from './types';
 
 //Get current users Hospital profile info
@@ -45,7 +44,7 @@ export const createHospital = (formData, history) => async (dispatch) => {  //H 
     dispatch(setAlert('Hospital Created', 'success'));
 
     //Αν δημιουργήσω ενα καινιούργιο νοσοκομείο θα πρέπει να κάνει redirect 
-    history.push('/dashboard');
+    history.push('/vaccines');
 
   } catch (err) {
     const errors = err.response.data.errors;    //Σε περίπτωση που ξεχάσω καποια απο τα υποχρεωτικά πεδία θα μου βγάλει alert
@@ -87,7 +86,7 @@ export const updateHospital = (formdata) => async (dispatch) => {
 export const getHospitals = () => async (dispatch) => {
 
   try {
-    const res = await api.get('/hospital/'); 
+    const res = await api.get('/hospital/');
 
     dispatch({
       type: GET_HOSPITALS,
@@ -110,10 +109,11 @@ export const linkHospital = (id, history) => async (dispatch) => {
       type: GET_HOSPITAL,
       payload: res.data
     });
-    
+
     dispatch(setAlert('User linked to hospital!', 'success'));
     history.push('/dashboard');
   } catch (err) {
+    console.log(err);
     dispatch({
       type: HOSPITAL_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }
@@ -124,10 +124,16 @@ export const linkHospital = (id, history) => async (dispatch) => {
 //UNLINK HOSPITAL
 export const unlinkHospital = () => async (dispatch) => {
   try {
-    const res = await api.put('/hospital/unlink'); 
+    await api.put('/hospital/unlink');
 
     dispatch({
       type: CLEAR_HOSPITAL,
+    });
+    dispatch({
+      type: PATIENT_CLEAR,
+    });
+    dispatch({
+      type: VACCINE_CLEAR,
     });
     dispatch(setAlert('User unlinked from Hospital', 'success'));
   } catch (err) {

@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { Row, Col, Container, Spinner, Card, CardTitle, CardFooter, CardHeader } from "reactstrap";
@@ -28,9 +28,9 @@ const Dashboard = ({
                         <>
                             <Row>
                                 <Col >
-                                    <Card >
+                                    <Card>
                                         <CardHeader >
-                                            <CardTitle className="align-self-center" ><h1 className="large text-primary text-center" >{hospital && hospital.name} Hospital</h1>
+                                                <CardTitle className="align-self-center" ><h1 className="text-primary large text-center">{hospital && hospital.name} Hospital</h1>
                                             </CardTitle>
                                         </CardHeader>
                                         <CardFooter></CardFooter>

@@ -8,17 +8,18 @@ import HospitalProfileForm from '../Forms/HospitalProfileForm';
 
 
 const Intro = ({
-    history,
-    linkHospital,
-    getHospitals,
-    hospitals: { hospitals, loading }
+  history,
+  linkHospital,
+  getHospitals,
+  hospitals: { hospitals, loading },
 }) => {
-    useEffect(() => {
-        getHospitals();
-    }, [getHospitals]);
+  useEffect(() => {
+    getHospitals();
+  }, [getHospitals]);
 
+  const [isOpen, setIsOpen] = useState(false);
 
-    const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
 
     const toggle = () => setIsOpen(!isOpen);
 
@@ -74,12 +75,12 @@ const Intro = ({
                 <div className="text-center">
                     <Button color="primary" onClick={toggle} className="mt-4">{isOpen ? 'Select Hospital' : 'Create Hospital'}</Button>
                 </div>
+
                 <Collapse isOpen={isOpen}>
                     <hr />
                     <HospitalProfileForm title="Create New Hospital" />
                 </Collapse>
             </Fragment >
-
         )
     );
 };
@@ -87,10 +88,12 @@ const Intro = ({
 Intro.propTypes = {
     getHospitals: PropTypes.func.isRequired,
     linkHospital: PropTypes.func.isRequired
+
 };
 
 const mapStateToProps = (state) => ({
-    hospitals: state.hospitalReducer
+  hospitals: state.hospitalReducer,
 });
+
 
 export default connect(mapStateToProps, { getHospitals, linkHospital })(withRouter(Intro));

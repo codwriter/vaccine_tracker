@@ -17,7 +17,7 @@ var patientsSchema = new Schema({
         required: true
 
     }, 
-    birthday: {
+    birthdate: {
         type: Date,
         default: Date.now,
         required: true
@@ -56,27 +56,24 @@ var patientsSchema = new Schema({
         trim: true,
         required: true
     },
-    apointmentA: {
+    appointmentA: {
         type: Date,
         trim: true,
-        default: Date.now
+        required:true
     },
-    apointmentB: {
+    appointmentB: {
         type: Date,
         trim: true,
-        default: Date.now
     },
     // Pending, Completed, Cancelled
     vaccineStatus: {
         type: String,
         trim: true,
-        default:"",
         required: true
     },
     vaccineBrand: {
         type: String,
         trim: true,
-        default: "-",
         required: true
     },
     hospital: {
@@ -86,7 +83,6 @@ var patientsSchema = new Schema({
     additionalInfo: {
         type: String,
         trim:true,
-        default: "..."
     }
 }, {
     timestamps: true

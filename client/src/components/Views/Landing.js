@@ -1,86 +1,40 @@
 import React, { useState } from 'react';
 import VaccineLogo from '../../assets/images/Vaccine-Tracker_logo.png';
-import {
-  TabContent, TabPane, Nav, NavItem, NavLink, Container, Row, Col, Card,
-  CardImg,
-} from 'reactstrap';
-import classnames from 'classnames';
+import { Container, Row, Col, Card, CardImg, Button } from 'reactstrap';
+
 import Alert from '../layout/Alert';
 import Login from '../auth/Login';
 import Register from '../auth/Register';
-
+import useModal from '../Modals/useModal';
+import RegisterModal from '../Modals/RegisterModal';
 
 const Landing = () => {
-  const [activeTab, setActiveTab] = useState('1');
-
-  const toggle = (tab) => {
-    if (activeTab !== tab) setActiveTab(tab);
-  };
+  const { isShowing, toggle } = useModal();
 
   return (
-    <Container className='landing_margin'>
-      <Row>
-        <Col>
-          <Card>
-            <Row>
-              <CardImg src={VaccineLogo} />
-            </Row>
-          </Card>
+
+    <Container fluid className='bg h-100'>
+      <RegisterModal isShowing={isShowing} hide={toggle} />
+      <Row className='h-100  justify-content-center'>
+        <Col
+          className='d-flex justify-content-md-end justify-content-lg-end justify-content-center  align-self-center'
+          sm='12'
+          md='4'
+          lg='7'
+        >
+          <img src={VaccineLogo} width='65%' height='auto' />
         </Col>
-
-        <Col >
-          <Card>
-            <Nav tabs className='loginRegister'>
-              <Row>
-                <Col >
-                  <NavItem tag='h3' className='tab_button'>
-                    <NavLink
-                      className={classnames({ active: activeTab === '1' })}
-                      onClick={() => {
-                        toggle('1');
-                      }}
-                    >
-                      Login
-                    </NavLink>
-                  </NavItem>
-                </Col>
-
-                <Col  >
-                  <NavItem tag='h3' className='tab_button'>
-                    <NavLink
-                      className={classnames({ active: activeTab === '2' })}
-                      onClick={() => {
-                        toggle('2');
-                      }}
-                    >
-                      Register
-                </NavLink>
-                  </NavItem>
-                </Col>
-              </Row>
-            </Nav>
-          </Card>
-
-          <TabContent activeTab={activeTab}>
-            <Alert/>
-            <TabPane tabId='1'>
-              <Row className='justify_center'>
-                <Col>
-                  <Login />
-                </Col>
-              </Row>
-            </TabPane>
-            <TabPane tabId='2'>
-              <Row className='justify_center'>
-                <Col>
-                  <Register />
-                </Col>
-              </Row>
-            </TabPane>
-          </TabContent>
+        <Col
+          sm='12'
+          md='4'
+          lg='5'
+          className='d-flex align-self-center justify-content-md-start justify-content-lg-start justify-content-center'
+        >
+          <Login />
         </Col>
       </Row>
     </Container>
+
   );
 };
 

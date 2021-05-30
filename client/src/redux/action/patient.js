@@ -1,5 +1,6 @@
 import api from '../../utils/api';
 import { setAlert } from './alert';
+import { getCurrentHospital } from './hospital';
 import {
     GET_PATIENTS,
     GET_HOSPITAL_PATIENTS,
@@ -7,14 +8,15 @@ import {
     ADD_PATIENT,
     UPDATE_PATIENT,
     DELETE_PATIENT,
-    PATIENT_ERROR
+    PATIENT_ERROR,
+    GET_HOSPITAL
 } from './types';
 
 // Get hospital patients  from Server
 export const getHospitalPatients = () => async dispatch => {
     try {
         // Wait for the server response with the patients
-        const res = await api.get('/patients');
+        const res = await api.get('/patients/hospital');
 
         // Save it to payload
         dispatch({
@@ -29,7 +31,7 @@ export const getHospitalPatients = () => async dispatch => {
     }
 };
 
-// Get hospital patients  from Server
+// Get All patients  from Server
 export const getPatients = () => async dispatch => {
     try {
         // Wait for the server response with the patients
@@ -68,12 +70,14 @@ export const getPatient = id => async dispatch => {
 // Add Patient 
 export const addPatient = (formData) => async dispatch => {
     try {
-        const res = await api.post('/patients', formData);
+        const res = await api.post('/patients/hospital', formData);
 
         dispatch({
             type: ADD_PATIENT,
             payload: res.data
         });
+
+        dispatch(getCurrentHospital());
 
         dispatch(setAlert('Patient Created', 'success'));
 
@@ -91,15 +95,15 @@ export const addPatient = (formData) => async dispatch => {
 };
 
 // Update Patient
-export const updatePatient = (id,formData) => async dispatch => {
+export const updatePatient = (id, formData) => async dispatch => {
     try {
-        const res = await api.put(`/patients/${id}`,formData);
+        const res = await api.put(`/patients/${id}`, formData);
 
         dispatch({
             type: UPDATE_PATIENT,
-            payload: {id, patient: res.data}
+            payload: { id, patient: res.data }
         });
-
+        dispatch(getCurrentHospital());
         dispatch(setAlert('Patient Updated', 'success'));
 
     } catch (err) {
@@ -118,7 +122,7 @@ export const updatePatient = (id,formData) => async dispatch => {
 // Remove patient
 export const removePatient = id => async dispatch => {
     try {
-        const res = await api.delete(`/patients/${id}`);
+        await api.delete(`/patients/${id}`);
 
         dispatch({
             type: DELETE_PATIENT,

@@ -8,7 +8,7 @@ import {
     // useAsyncDebounce,
 } from "react-table";
 
-import { Spinner, Table } from "reactstrap";
+import { Spinner, Table, Button } from "reactstrap";
 import {
     Label,
     Input,
@@ -46,7 +46,7 @@ function fuzzyTextFilterFn(rows, id, filterValue) {
 
 fuzzyTextFilterFn.autoRemove = (val) => !val;
 
-const XTable = ({ columns, data, loading = true, toggle, setTitle, setPatient}) => {
+const XTable = ({ columns, data, loading = true, toggle, setTitle, setPatient }) => {
     const [switchSearch, setSwitchSearch] = useState(false);
     const toggleSwitchSearch = () => {
         setAllFilters([]);
@@ -123,34 +123,34 @@ const XTable = ({ columns, data, loading = true, toggle, setTitle, setPatient}) 
             </div>
             <Table {...getTableProps()} hover responsive className="table">
                 <thead>
-                    {headerGroups.map((headerGroup) => (
+                    {headerGroups.map((headerGroup, i) => (
                         <>
-                            <tr className="theader" {...headerGroup.getHeaderGroupProps()}>
-                                {headerGroup.headers.map((column) => (
-                                    <th className="text-center" {...column.getHeaderProps(column.getSortByToggleProps())}>
+                            <tr key={i} className="theader" {...headerGroup.getHeaderGroupProps()}>
+                                {headerGroup.headers.map((column, j) => (
+                                    <th key={j} className="text-accent text-center" {...column.getHeaderProps(column.getSortByToggleProps())}>
                                         {column.render("Header")}
-                                             <span className="float-right">
+                                        <span className="float-right">
                                             {!column.notShowSortingDisplay ? (
                                                 column.isSorted ? (
                                                     column.isSortedDesc ? (
                                                         <i className="fas fa-sort-down"></i>
                                                     ) : (
-                                                            <i className="fas fa-sort-up"></i>
+                                                        <i className="fas fa-sort-up"></i>
                                                     )
                                                 ) : (
-                                                        <i className="fas fa-sort"></i>
+                                                    <i className="fas fa-sort"></i>
                                                 )
                                             ) : (
                                                 ''
                                             )}
-                                        </span> 
+                                        </span>
                                     </th>
                                 ))}
                             </tr>
                             {switchSearch ? (
                                 <tr style={{ backgroundColor: "aliceBlue" }}>
                                     {headerGroup.headers.map((column, index) => (
-                                        <th className="tfilter">
+                                        <th key={index} className="tfilter">
                                             {column.canFilter ? (
                                                 <FormGroup className="mb-1">
                                                     <Label className="divFilter mb-0">Filter {column.render("Header")} :</Label>
@@ -179,7 +179,7 @@ const XTable = ({ columns, data, loading = true, toggle, setTitle, setPatient}) 
                             <tbody>
                                 <tr>
                                     <td colSpan="10000" className="text-left">
-                                      ** No values with that filter
+                                        ** No values with that filter
                   </td>
                                 </tr>
                             </tbody>
@@ -188,16 +188,17 @@ const XTable = ({ columns, data, loading = true, toggle, setTitle, setPatient}) 
                                 {page.map((row, i) => {
                                     prepareRow(row);
                                     return (
-                                        <tr {...row.getRowProps()}>
-                                            {row.cells.map((cell) => {
+                                        <tr key={ i} {...row.getRowProps()}>
+                                            {row.cells.map((cell, k) => {
                                                 return (
-                                                    <td onClick={() => { setTitle("Edit Vaccination"); setPatient(row.original); toggle(); }}
+                                                    <td key={k} onClick={() => { setTitle("Edit Vaccination"); setPatient(row.original); toggle(); }}
                                                         {...cell.getCellProps({
                                                             className: cell.column.className
                                                         })}
                                                     >
                                                         {cell.render("Cell")}
                                                     </td>
+                                                    
                                                 );
                                             })}
                                         </tr>

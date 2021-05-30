@@ -22,8 +22,8 @@ router.post('/signup',
     .withMessage('Is not an Amka type')
     .notEmpty()
     .withMessage('Amka of User is required'),
-  check('birthday', 'Birthday of User is required')
-    .matches(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/([12][0-9]{3})$/)
+  check('birthdate')
+    .isDate()
     .withMessage('Is not a date type dd/mm/yyyy')
     .notEmpty()
     .withMessage('Date of birth required'),
@@ -33,7 +33,7 @@ router.post('/signup',
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password } = req.body;
+    const { email, password,firstname,lastname,amkaUser,birthdate } = req.body;
 
     try {
       let user = await User.findOne({ email });
@@ -46,7 +46,11 @@ router.post('/signup',
       //Create the user
       user = new User({
         email,
-        password
+        password,
+        firstname,
+        lastname,
+        amkaUser,
+        birthdate
       });
 
       //Hash the password
@@ -129,7 +133,7 @@ router.post('/login',
     }
   });
 
-router.put('/:userId', auth,
+router.put('/', auth,
   check('firstname', 'The firstname of the user is required').notEmpty(),
   check('lastname', 'The lastname of the user is required').notEmpty(),
   check('amkaUser')
@@ -139,8 +143,8 @@ router.put('/:userId', auth,
     .withMessage('Is not an Amka type')
     .notEmpty()
     .withMessage('Amka of User is required'),
-  check('birthday', 'Birthday of User is required')
-    .matches(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/([12][0-9]{3})$/)
+  check('birthdate')
+    .isDate()
     .withMessage('Is not a date type dd/mm/yyyy')
     .notEmpty()
     .withMessage('Date of birth required'),
@@ -149,30 +153,27 @@ router.put('/:userId', auth,
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     } else {
-      User.findByIdAndUpdate(req.params.userId, {
+      User.findByIdAndUpdate(req.user.id, {
         $set: req.body
       }, { new: true })
         .then((user) => {
           res.statusCode = 200;
           res.setHeader('Content-type', 'application/json');
-          res.json(user);
+          console.log(user);
+          res.status(200).json({msg:"User Updated"});
         }, (err) => next(err))
         .catch((err) => next(err));
     }
   })
 
-router.delete('/:userId', auth, async (req, res) => {
-  if (req.user.id = req.params.userId) {
-    User.findByIdAndRemove(req.params.userId)
-      .then((resp) => {
-        res.statusCode = 200;
-        res.setHeader('Content-type', 'application/json');
-        res.json(resp);
-      }, (err) => next(err))
-      .catch((err) => next(err));
-  } else {
-    return res.status(401).json({ "msg": "You are not authorized to delete other accounts!" })
-  }
+router.delete('/', auth, async (req, res) => {
+    try{
+      await User.findOneAndRemove({ _id : req.user.id});
+      res.json({ msg:'User Deleted'});
+    } catch(err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
 });
 
 module.exports = router;

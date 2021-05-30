@@ -5,11 +5,12 @@ import {
     ADD_PATIENT,
     UPDATE_PATIENT,
     DELETE_PATIENT,
+    PATIENT_CLEAR,
     PATIENT_ERROR
 } from '../action/types';
 
 const initialState = {
-    patients: [],
+    patients:[],
     patient: null,
     loading: true,
     error: {}
@@ -50,6 +51,13 @@ function patientReducer(state = initialState, action) {
             return {
                 ...state,
                 patients: state.patients.filter((patient) => patient._id !== payload),
+                loading: false
+            };
+        case PATIENT_CLEAR:
+            return {
+                ...state,
+                patients: [],
+                patient: null,
                 loading: false
             };
         case PATIENT_ERROR:
