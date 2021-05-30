@@ -1,5 +1,6 @@
 import api from '../../utils/api';
 import { setAlert } from './alert';
+import { getCurrentHospital } from './hospital';
 import {
     GET_PATIENTS,
     GET_HOSPITAL_PATIENTS,
@@ -7,7 +8,8 @@ import {
     ADD_PATIENT,
     UPDATE_PATIENT,
     DELETE_PATIENT,
-    PATIENT_ERROR
+    PATIENT_ERROR,
+    GET_HOSPITAL
 } from './types';
 
 // Get hospital patients  from Server
@@ -75,6 +77,8 @@ export const addPatient = (formData) => async dispatch => {
             payload: res.data
         });
 
+        dispatch(getCurrentHospital());
+
         dispatch(setAlert('Patient Created', 'success'));
 
     } catch (err) {
@@ -91,15 +95,15 @@ export const addPatient = (formData) => async dispatch => {
 };
 
 // Update Patient
-export const updatePatient = (id,formData) => async dispatch => {
+export const updatePatient = (id, formData) => async dispatch => {
     try {
-        const res = await api.put(`/patients/${id}`,formData);
+        const res = await api.put(`/patients/${id}`, formData);
 
         dispatch({
             type: UPDATE_PATIENT,
-            payload: {id, patient: res.data}
+            payload: { id, patient: res.data }
         });
-
+        dispatch(getCurrentHospital());
         dispatch(setAlert('Patient Updated', 'success'));
 
     } catch (err) {

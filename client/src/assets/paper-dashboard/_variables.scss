@@ -74,26 +74,26 @@ $success-states-color: darken($success-color, 10%) !default;
 $info-color: #0a1c6e !default;
 $info-states-color: darken($info-color, 10%) !default;
 
-$warning-color: #cd8e2a !default;
-$warning-states-color: darken($warning-color, 10%) !default;
 
-$danger-color: #f44336 !default;
-$danger-states-color: darken($danger-color, 8%) !default;
+$primary-color:              #28e0bb !default;
+$primary-states-color:       darken($primary-color, 10%) !default;
 
-$link-disabled-color: #666666 !default;
+$success-color:              #26532b !default;
+$success-states-color:       darken($success-color, 10%) !default;
 
-$purple-color: #c178c1 !default;
-$purple-states-color: darken($purple-color, 8%) !default;
+$info-color:                 #4392f1 !default;
+$info-states-color:          darken($info-color, 10%) !default;
 
-$medium-pale-bg: #f1eae0 !default;
+$warning-color:              #ca8824 !default;
+$warning-states-color:       darken($warning-color, 10%) !default;
 
-$brown-color: #dcb285 !default;
-$default-color-opacity: rgba(182, 182, 182, 0.6) !default;
-$primary-color-opacity: rgba(249, 99, 50, 0.3) !default;
-$success-color-opacity: rgba(24, 206, 15, 0.3) !default;
-$info-color-opacity: rgba(44, 168, 255, 0.3) !default;
-$warning-color-opacity: rgba(255, 178, 54, 0.3) !default;
-$danger-color-opacity: rgba(255, 54, 54, 0.3) !default;
+$danger-color:               #bf1a2f !default;
+$danger-states-color:        darken($danger-color, 8%) !default;
+
+$accent-color:               #0b4f6c !default;
+$accent-states-color:        darken($accent-color, 8%) !default;
+
+$link-disabled-color:        #666666 !default;
 
 $new-blue: #1dc7ea;
 $new-purple: #9368e9;
@@ -117,15 +117,18 @@ $bg-brown: lighten($brown-color, 7%) !default;
 $bg-purple: lighten($purple-color, 7%) !default;
 
 //     brand Colors
-$brand-primary: $primary-color !default;
-$brand-info: $info-color !default;
-$brand-success: $success-color !default;
-$brand-warning: $warning-color !default;
-$brand-danger: $danger-color !default;
-$brand-inverse: $black-color !default;
 
-$link-disabled-color: #666666 !default;
-$dark-color: #212120 !default;
+$brand-primary:              $primary-color !default;
+$brand-info:                 $info-color !default;
+$brand-success:              $success-color !default;
+$brand-warning:              $warning-color !default;
+$brand-danger:               $danger-color !default;
+$brand-accent:               $accent-color !default;
+$brand-inverse:              $black-color !default;
+
+$link-disabled-color:        #666666 !default;
+$dark-color:                 #212120 !default;
+
 //     light colors
 $light-blue: rgba($primary-color, 0.2);
 $light-azure: rgba($info-color, 0.2);

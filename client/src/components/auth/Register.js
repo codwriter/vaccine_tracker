@@ -16,6 +16,7 @@ import {
 } from 'availity-reactstrap-validation';
 import { Row, Col, Card, CardBody, CardSubtitle } from 'reactstrap';
 
+
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { setAlert } from '../../redux/action/alert';
@@ -60,6 +61,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   }
 
   return (
+
     <AvForm className='form p-2' onValidSubmit={onSubmit}>
       <AvGroup className='mb-3'>
         <Label className='text-muted'>Email</Label>
@@ -86,6 +88,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             <Label className='text-muted'>Password</Label>
             <InputGroup className='input-group-alternative'>
               <InputGroupAddon addonType='prepend'>
+
                 <InputGroupText>
                   <i class='fas fa-key'></i>
                 </InputGroupText>
@@ -99,6 +102,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
               />
             </InputGroup>
           </AvGroup>
+
         </Col>
         <Col>
           <AvGroup className='mb-3'>
@@ -124,6 +128,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
       <FormText className='h6 mb-3'>User info</FormText>
       <Row>
         <Col>
+
           <AvGroup>
             <Label for='firstname'>Firstname:</Label>
             <AvInput

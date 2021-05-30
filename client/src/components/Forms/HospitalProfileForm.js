@@ -5,9 +5,7 @@ import { connect } from 'react-redux';
 import { AvForm, AvGroup, AvFeedback, AvInput } from 'availity-reactstrap-validation';
 import { createHospital, updateHospital, getCurrentHospital } from '../../redux/action/hospital';
 import { Button, Label, Spinner, Card, CardHeader, CardBody, Row, Col, CardTitle } from 'reactstrap';
-import VaccineTable from '../profile/VaccineTable';
-import useModal from '../Modals/useModal';
-import VaccineModal from '../Modals/vaccineModal';
+
 
 const initialState = {
   name: '',
@@ -23,14 +21,11 @@ const Hospitalregister = ({
   updateHospital,
   title,
   history,
+  isAuthenticated: { user },
   hospital: { hospital, loading }
 }) => {
   const [formData, setFormData] = useState(initialState);
-  const { isShowing, toggle } = useModal();
-  const [vaccine, setVaccine] = useState(null);
-  const [modalTitle, setModalTitle] = useState("");
-  //const [disabled, setdisabled] = useState(false);
-
+  const [disabled, setdisabled] = useState(false);
   useEffect(() => {
     if (!hospital) getCurrentHospital();
     if (!loading && hospital) {
@@ -38,6 +33,7 @@ const Hospitalregister = ({
       for (const key in hospital) {
         if (key in hospitalData) hospitalData[key] = hospital[key];
       }
+      isAdmin();
       setFormData(hospitalData);
     }
   }, [loading, getCurrentHospital, hospital,]);
@@ -49,6 +45,13 @@ const Hospitalregister = ({
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
+  const isAdmin = () => {
+    if (user._id === hospital.admin) {
+      setdisabled(false)
+    } else {
+      setdisabled(true);
+    }
+  }
 
   const handleValidSubmit = async (e) => {
     console.log(formData);
@@ -62,11 +65,11 @@ const Hospitalregister = ({
     <Fragment>
       {loading ? <Spinner /> : (
         <Card>
-          <CardHeader>
-            <CardTitle className="text-primary text-center h6">{title}</CardTitle>
+          <CardHeader /* className="bg-accent" */>
+            <CardTitle className="text-accent text-center h5">{disabled ? "Hospital Info" : title}</CardTitle>
           </CardHeader>
           <CardBody>
-            <AvForm className="form" onValidSubmit={handleValidSubmit} onChange={onChange}>
+            <AvForm className="form" onValidSubmit={handleValidSubmit} onChange={onChange} disabled={disabled}>
               <AvGroup>
                 <Label>Hospital Name</Label>
                 <AvInput
@@ -148,41 +151,15 @@ const Hospitalregister = ({
                 <Col>
                   <Row>
                     <Col className="text-center">
-                      <Button className="btn-primary" type="submit">Submit</Button>
+                      {!disabled ? <Button className="btn-wd btn-primary" type="submit">Submit</Button> : ""}
                     </Col>
                   </Row>
                 </Col>
               </Row>
             </AvForm>
-
           </CardBody>
         </Card>
       )}
-      <Card className="card">
-        <CardHeader>
-
-          <Row>
-            <Col>
-              <CardTitle className="text-primary text-center h6">Vaccines</CardTitle>
-            </Col>
-            <Col sm="1" md="1" lg="1">
-              <Button
-                onClick={() => { setModalTitle("Add Vaccine"); toggle(); setVaccine(null); }}
-                className=" btn-sm btn-icon btn-primary btn-round pull-right">
-                <i className="fas fa-plus"></i>
-              </Button>
-            </Col>
-          </Row>
-        </CardHeader>
-        <CardBody>
-          <Row className="mt-4">
-            <VaccineModal isShowing={isShowing} hide={toggle} vaccine={vaccine} title={modalTitle} />
-            <Col>
-              <VaccineTable loading={loading} toggle={toggle} setTitle={setModalTitle} setVaccine={setVaccine} />
-            </Col>
-          </Row>
-        </CardBody>
-      </Card>
     </Fragment>
   );
 };

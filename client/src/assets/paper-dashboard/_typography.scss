@@ -125,6 +125,10 @@ a.text-danger:focus, a.text-danger:hover {
   color: $brand-danger !important;
 }
 
+.text-accent,
+a.text-accent:focus, a.text-accent:hover {
+  color: $brand-accent !important;
+}
 .text-gray,
 a.text-gray:focus, a.text-gray:hover{
     color: $light-gray !important;

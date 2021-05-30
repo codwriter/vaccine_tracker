@@ -144,7 +144,7 @@ router.put('/', auth,
     .notEmpty()
     .withMessage('Amka of User is required'),
   check('birthdate')
-    .matches(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/([12][0-9]{3})$/)
+    .isDate()
     .withMessage('Is not a date type dd/mm/yyyy')
     .notEmpty()
     .withMessage('Date of birth required'),
@@ -159,24 +159,21 @@ router.put('/', auth,
         .then((user) => {
           res.statusCode = 200;
           res.setHeader('Content-type', 'application/json');
-          res.json(user);
+          console.log(user);
+          res.status(200).json({msg:"User Updated"});
         }, (err) => next(err))
         .catch((err) => next(err));
     }
   })
 
 router.delete('/', auth, async (req, res) => {
-  if (req.user.id == req.params.userId) {
-    User.findByIdAndRemove(req.params.userId)
-      .then((resp) => {
-        res.statusCode = 200;
-        res.setHeader('Content-type', 'application/json');
-        res.json(resp);
-      }, (err) => next(err))
-      .catch((err) => next(err));
-  } else {
-    return res.status(401).json({ "msg": "You are not authorized to delete other accounts!" })
-  }
+    try{
+      await User.findOneAndRemove({ _id : req.user.id});
+      res.json({ msg:'User Deleted'});
+    } catch(err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
 });
 
 module.exports = router;

@@ -12,6 +12,7 @@ const Landing = () => {
   const { isShowing, toggle } = useModal();
 
   return (
+
     <Container fluid className='bg h-100'>
       <RegisterModal isShowing={isShowing} hide={toggle} />
       <Row className='h-100  justify-content-center'>
@@ -33,6 +34,7 @@ const Landing = () => {
         </Col>
       </Row>
     </Container>
+
   );
 };
 

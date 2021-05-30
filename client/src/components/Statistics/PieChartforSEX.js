@@ -7,7 +7,7 @@ const PieChartforSEX = (patientsMale, patientsFemale) => {
           {
             pointRadius: 0,
             pointHoverRadius: 0,
-            backgroundColor: ["#e3e3e3", "#4acccd"],
+            backgroundColor: ["#003f5c", "#4acccd"],
             borderWidth: 0,
             data: [patientsMale, patientsFemale],
           },
