@@ -120,7 +120,7 @@ const Hospitalregister = ({
                 />
               </AvGroup>
               <AvGroup>
-                <Button type="submit">Submit</Button>
+                <Button color="primary" type="submit">Submit</Button>
               </AvGroup>
             </AvForm>
           </CardBody>
