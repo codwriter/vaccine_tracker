@@ -4,6 +4,7 @@ import {
     REGISTER_SUCCESS,
     REGISTER_FAIL,
     USER_LOADED,
+    USER_UPDATED,
     AUTH_ERROR,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
@@ -51,6 +52,22 @@ export const register = formData => async dispatch => {
         });
     }
 }
+
+// Update User
+export const updateUser = () => async dispatch => {
+    try {
+        const res = await api.get('/auth');
+
+        dispatch({
+            type: USER_UPDATED,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: AUTH_ERROR
+        });
+    }
+};
 
 // Login User
 export const login = (email, password) => async dispatch => {

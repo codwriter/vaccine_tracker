@@ -13,7 +13,6 @@ import {
   Col,
   Spinner,
 } from "reactstrap";
-
 import { getCurrentHospital, unlinkHospital } from '../../redux/action/hospital';
 import { deleteUser } from '../../redux/action/auth';
 import { Redirect } from "react-router";
@@ -39,6 +38,7 @@ const Hospital = ({
           {hospital ? (<div className="content" >
             <Row>
               <Col md="4">
+
                 <UserInfoForm />
               </Col>
               <Col md="8">
@@ -47,6 +47,9 @@ const Hospital = ({
                 
                   <VaccineTable />
              
+              </Col>
+              <Col>
+              <Button onClick={unlinkHospital}>Unlink</Button>
               </Col>
             </Row>
           </div>)
@@ -72,4 +75,3 @@ const mapStateToProps = (state) => ({
 
 
 export default connect(mapStateToProps, { getCurrentHospital, unlinkHospital, deleteUser })(Hospital);
-
