@@ -8,22 +8,22 @@ import HospitalProfileForm from '../Forms/HospitalProfileForm';
 
 
 const Intro = ({
-  history,
-  linkHospital,
-  getHospitals,
-  hospitals: { hospitals, loading },
+    history,
+    linkHospital,
+    getHospitals,
+    hospitals: { hospitals, loading },
 }) => {
-  useEffect(() => {
-    getHospitals();
-  }, [getHospitals]);
+    useEffect(() => {
+        getHospitals();
+    }, [getHospitals]);
 
-  const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
-    
+
     return (
         loading ? (<><Spinner /></>) : (
-            <Fragment>
+            <Container className="pb-5">
                 <Card className="p-5">
                     <Row>
                         <Col lg="12" md="6" sm="6">
@@ -39,15 +39,11 @@ const Intro = ({
                                     <h3 className='text-primary'> Select an existing hospital:</h3>
                                 </Col>
                             </CardHeader>
-                            {/* <ListGroup >
-                            {hospitals ? hospitals.map(hospital =>
-                                <ListGroupItem tag="a"
-                                    onClick={() => { linkHospital(hospital._id, history); }}>
-                                    {hospital.name} Hospital
-                        </ListGroupItem>) : ''}
-                            </ListGroup> */}
+
                             <CardBody>
-                                <Input type="select" >
+                                <Input type="select" onChange={(e) => {
+                                    linkHospital(e.target.value, history);
+                                }}>
                                     <option>Select hospital</option>
                                     {hospitals ? hospitals.map(hospital =>
                                         <option value={hospital._id} tag="a" key={hospital._id}>
@@ -75,10 +71,11 @@ const Intro = ({
                 </div>
 
                 <Collapse isOpen={isOpen}>
-                    <hr />
-                    <HospitalProfileForm title="Create New Hospital" />
+                    <div className="mt-2">
+                        <HospitalProfileForm title="Create New Hospital" />
+                    </div>
                 </Collapse>
-            </Fragment >
+            </Container >
         )
     );
 };
@@ -90,7 +87,7 @@ Intro.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  hospitals: state.hospitalReducer,
+    hospitals: state.hospitalReducer,
 });
 
 

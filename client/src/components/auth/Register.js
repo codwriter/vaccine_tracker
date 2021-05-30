@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import {
   Label,
   Button,
@@ -14,7 +13,7 @@ import {
   AvFeedback,
   AvInput,
 } from 'availity-reactstrap-validation';
-import { Row, Col, Card, CardBody, CardSubtitle } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 
 
 import { connect } from 'react-redux';
@@ -22,6 +21,7 @@ import { Redirect } from 'react-router-dom';
 import { setAlert } from '../../redux/action/alert';
 import { register } from '../../redux/action/auth';
 import PropTypes from 'prop-types';
+import Alert from '../layout/Alert';
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -60,9 +60,10 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     return <Redirect to='/dashboard' />;
   }
 
-  return (
-
+  return ( 
     <AvForm className='form p-2' onValidSubmit={onSubmit}>
+      <Alert />
+
       <AvGroup className='mb-3'>
         <Label className='text-muted'>Email</Label>
         <InputGroup className='input-group-alternative'>
@@ -101,6 +102,9 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 required
               />
             </InputGroup>
+            <AvFeedback>
+              The password is required and must be at least 6 characters!
+            </AvFeedback>
           </AvGroup>
 
         </Col>
@@ -118,10 +122,13 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 placeholder='Retype Your Password'
                 name='password2'
                 onChange={onChange}
+                minLength="6"
                 required
               />
             </InputGroup>
+            
           </AvGroup>
+
         </Col>
       </Row>
       <hr />
@@ -190,6 +197,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
               id='birthdate'
               name='birthdate'
               onChange={onChange}
+              className="custom-date"
               required
             />
             <AvFeedback>The Birthdate is required!</AvFeedback>

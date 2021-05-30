@@ -3,7 +3,7 @@ import { Row, Col, CardBody, Card, CardTitle, CardHeader, CustomInput, CardFoote
 import { PieChartForHospital } from '../Statistics/PieChartForHospital';
 import { PieChartForSEX } from '../Statistics/PieChartforSEX';
 import { PieChartForBrands } from '../Statistics/PieChartForBrands';
-import { LineChart } from '../Statistics/LineChart' ;
+import { LineChart } from '../Statistics/LineChart';
 import { Line, Pie } from "react-chartjs-2";
 
 import PropTypes from 'prop-types';
@@ -11,8 +11,9 @@ import { connect } from 'react-redux';
 import { getHospitalPatients, getPatients } from '../../redux/action/patient';
 import { getVaccines } from '../../redux/action/vaccine';
 import { getCurrentHospital } from '../../redux/action/hospital';
+import { Redirect } from 'react-router';
 
-const Statistics = ({ 
+const Statistics = ({
   hospitalReducer: { loading: loadingHos, hospital },
   getPatients,
   getCurrentHospital,
@@ -32,26 +33,26 @@ const Statistics = ({
 
   const allhospitalVaccination = () => {
     if (!switchHospital) {
-        settitle("All Hospitals Statistics");
-        getPatients();
-        setSwitchHospital(!switchHospital);
+      settitle("All Hospitals Statistics");
+      getPatients();
+      setSwitchHospital(!switchHospital);
     }
     else {
-        settitle(`My Hospital Statistics`);
-        getHospitalPatients();
-        setSwitchHospital(!switchHospital);
+      settitle(`My Hospital Statistics`);
+      getHospitalPatients();
+      setSwitchHospital(!switchHospital);
     }
   }
-    
+  if (!loadingHos && !hospital) {
+    return <Redirect to="/intro" />
+  }
   //Pie Chart for Completed Vaccinated
-  var allPatients = patients.length;
-
   var patientsCompleted = 0;
   var patientsCancelled = 0;
   var patientsPending = 0;
-  
+
   if (loadingPat === false && patients[0]) {
-    for (let i = 0; i<patients.length; i++){
+    for (let i = 0; i < patients.length; i++) {
       if (patients[i].vaccineStatus === "Completed") {
         patientsCompleted = patientsCompleted + 1;
       } else if (patients[i].vaccineStatus === "Pending") {
@@ -62,17 +63,18 @@ const Statistics = ({
     }
   }
 
+
   //Pie Chart for Sex
   var patientsMale = 0;
   var patientsFemale = 0;
-  
+
   if (loadingPat === false && patients[0]) {
-    for (let i = 0; i<patients.length; i++) {
-      if (patients[i].sex === "Male" && 
-          patients[i].vaccineStatus !== "Cancelled") {
+    for (let i = 0; i < patients.length; i++) {
+      if (patients[i].sex === "Male" &&
+        patients[i].vaccineStatus !== "Cancelled") {
         patientsMale = patientsMale + 1;
-      } else if (patients[i].sex === "Female" && 
-                patients[i].vaccineStatus !== "Cancelled") {
+      } else if (patients[i].sex === "Female" &&
+        patients[i].vaccineStatus !== "Cancelled") {
         patientsFemale = patientsFemale + 1;
       }
     }
@@ -85,18 +87,18 @@ const Statistics = ({
   var patientsModerna = 0;
 
   if (loadingPat === false && patients[0]) {
-    for (let i = 0; i<patients.length; i++) {
-      if (patients[i].vaccineBrand === "Pfizer" && 
-          patients[i].vaccineStatus === "Completed") {
+    for (let i = 0; i < patients.length; i++) {
+      if (patients[i].vaccineBrand === "Pfizer" &&
+        patients[i].vaccineStatus === "Completed") {
         patientsPfizer = patientsPfizer + 1;
-      } else if (patients[i].vaccineBrand === "AstraZeneca" && 
-                patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "AstraZeneca" &&
+        patients[i].vaccineStatus === "Completed") {
         patientsAstra = patientsAstra + 1;
-      } else if (patients[i].vaccineBrand === "Johnson & Johnson" && 
-                patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "Johnson & Johnson" &&
+        patients[i].vaccineStatus === "Completed") {
         patientsJohnson = patientsJohnson + 1;
-      } else if (patients[i].vaccineBrand === "Moderna" && 
-                patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "Moderna" &&
+        patients[i].vaccineStatus === "Completed") {
         patientsModerna = patientsModerna + 1;
       }
     }
@@ -144,8 +146,8 @@ const Statistics = ({
   var patientsModerna100 = 0;
 
   if (loadingPat === false && patients[0]) {
-    for (let i = 0; i<patients.length; i++){
-      if(patients[i].vaccineBrand === "Pfizer" && patients[i].age <= 20 && patients[i].vaccineStatus === "Completed") {
+    for (let i = 0; i < patients.length; i++) {
+      if (patients[i].vaccineBrand === "Pfizer" && patients[i].age <= 20 && patients[i].vaccineStatus === "Completed") {
         patientsPfizer20 = patientsPfizer20 + 1;
       } else if (patients[i].vaccineBrand === "Pfizer" && patients[i].age <= 30 && patients[i].vaccineStatus === "Completed") {
         patientsPfizer30 = patientsPfizer30 + 1;
@@ -165,7 +167,7 @@ const Statistics = ({
         patientsPfizer100 = patientsPfizer100 + 1;
       }
 
-      if (patients[i].vaccineBrand === "AstraZeneca" && patients[i].age <= 20 && patients[i].vaccineStatus === "Completed"){
+      if (patients[i].vaccineBrand === "AstraZeneca" && patients[i].age <= 20 && patients[i].vaccineStatus === "Completed") {
         patientsAstraZeneca20 = patientsAstraZeneca20 + 1;
       } else if (patients[i].vaccineBrand === "AstraZeneca" && patients[i].age <= 30 && patients[i].vaccineStatus === "Completed") {
         patientsAstraZeneca30 = patientsAstraZeneca30 + 1;
@@ -179,39 +181,39 @@ const Statistics = ({
         patientsAstraZeneca70 = patientsAstraZeneca70 + 1;
       } else if (patients[i].vaccineBrand === "AstraZeneca" && patients[i].age <= 80 && patients[i].vaccineStatus === "Completed") {
         patientsAstraZeneca80 = patientsAstraZeneca80 + 1;
-      } else if (patients[i].vaccineBrand === "AstraZeneca" && patients[i].age <= 90 && patients[i].vaccineStatus === "Completed" ) {
+      } else if (patients[i].vaccineBrand === "AstraZeneca" && patients[i].age <= 90 && patients[i].vaccineStatus === "Completed") {
         patientsAstraZeneca90 = patientsAstraZeneca90 + 1;
       } else if (patients[i].vaccineBrand === "AstraZeneca" && patients[i].age >= 100 && patients[i].vaccineStatus === "Completed") {
         patientsAstraZeneca100 = patientsAstraZeneca100 + 1;
       }
-      
-      if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age <= 20 && patients[i].vaccineStatus === "Completed"){
+
+      if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age <= 20 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson20 = patientsJohnson20 + 1;
-      } else if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age <= 30 && patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age <= 30 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson30 = patientsJohnson30 + 1;
-      } else if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age <= 40 &&  patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age <= 40 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson40 = patientsJohnson40 + 1;
-      } else if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age <= 50 && patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age <= 50 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson50 = patientsJohnson50 + 1;
-      } else if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age <= 60 && patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age <= 60 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson60 = patientsJohnson60 + 1;
-      } else if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age <= 70 && patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age <= 70 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson70 = patientsJohnson70 + 1;
-      } else if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age <= 80 && patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age <= 80 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson80 = patientsJohnson80 + 1;
-      } else if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age <= 90 && patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age <= 90 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson90 = patientsJohnson90 + 1;
-      } else if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age >= 100 && patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age >= 100 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson100 = patientsJohnson100 + 1;
       }
 
-      if(patients[i].vaccineBrand === "Moderna" && patients[i].age <= 20 && patients[i].vaccineStatus === "Completed") {
+      if (patients[i].vaccineBrand === "Moderna" && patients[i].age <= 20 && patients[i].vaccineStatus === "Completed") {
         patientsModerna20 = patientsModerna20 + 1;
       } else if (patients[i].vaccineBrand === "Moderna" && patients[i].age <= 30 && patients[i].vaccineStatus === "Completed") {
         patientsModerna30 = patientsModerna30 + 1;
       } else if (patients[i].vaccineBrand === "Moderna" && patients[i].age <= 40 && patients[i].vaccineStatus === "Completed") {
         patientsModerna40 = patientsModerna40 + 1;
-      } else if (patients[i].vaccineBrand === "Moderna" && patients[i].age <= 50 && patients[i].vaccineStatus === "Completed" ) {
+      } else if (patients[i].vaccineBrand === "Moderna" && patients[i].age <= 50 && patients[i].vaccineStatus === "Completed") {
         patientsModerna50 = patientsModerna50 + 1;
       } else if (patients[i].vaccineBrand === "Moderna" && patients[i].age <= 60 && patients[i].vaccineStatus === "Completed") {
         patientsModerna60 = patientsModerna60 + 1;
@@ -243,27 +245,25 @@ const Statistics = ({
 
   /* const time = Object.entries(estimatedDoses) */
 
-  
 
-  console.log(estimatedDoses)
-  
-  return ( loadingVac && loadingPat && loadingHos?<Spinner/>:( 
-    patients[0] && vaccines[0]?(
+
+  return (loadingVac && loadingPat && loadingHos ? <Spinner /> : (
+    patients[0] && vaccines[0] ? (
       <Fragment>
         <Row>
           <Col >
             <Card>
               <CardHeader>
-                <h1 className="text-center">{title?title:'My Hospital Statistics'}</h1>
+                <h1 className="text-center text-accent">{title ? title : 'My Hospital Statistics'}</h1>
               </CardHeader>
-              
-              
+
+
               <CardFooter>
                 <Row>
-                  {!switchHospital?
-                    <h6>Estimated Vaccine Doses: {estimatedDoses?estimatedDoses :''}</h6> 
-                  :''}
-                  { <span className="ml-auto">
+                  {!switchHospital ?
+                    <p className="h6 text-accent ml-2">Estimated Vaccine Doses: {estimatedDoses ? estimatedDoses : ''}</p>
+                    : ''}
+                  {<span className="ml-auto">
                     <CustomInput
                       checked={switchHospital}
                       className="hospital-switch "
@@ -273,7 +273,7 @@ const Statistics = ({
                       label="All Hospital"
                       onChange={allhospitalVaccination}
                     />
-                  </span> }
+                  </span>}
                 </Row>
               </CardFooter>
             </Card>
@@ -283,7 +283,7 @@ const Statistics = ({
           <Col md="4">
             <Card>
               <CardHeader>
-                <CardTitle tag="h5">Completed, Pending & Cancelled Vaccinations</CardTitle>
+                <CardTitle className="text-center" tag="h5">Completed, Pending & Cancelled Vaccinations</CardTitle>
               </CardHeader>
               <CardBody>
                 <Pie
@@ -296,7 +296,7 @@ const Statistics = ({
           <Col md="4">
             <Card>
               <CardHeader>
-                <CardTitle tag="h5" className="pieMaleFem">Completed Vaccinations for Male or Female</CardTitle>
+                <CardTitle tag="h5" className="text-center pieMaleFem">Completed vaccinations for Male or Female</CardTitle>
               </CardHeader>
               <CardBody>
                 <Pie
@@ -309,7 +309,7 @@ const Statistics = ({
           <Col md="4">
             <Card>
               <CardHeader>
-                <CardTitle tag="h5" className="pieforBrands">Completed Vaccinations for Brands</CardTitle>
+                <CardTitle tag="h5" className="text-center pieforBrands">Completed vaccinations for every vaccine brand</CardTitle>
               </CardHeader>
               <CardBody>
                 <Pie
@@ -329,15 +329,15 @@ const Statistics = ({
               <CardBody>
                 <Line
                   data={LineChart(patientsPfizer20, patientsAstraZeneca20, patientsJohnson20, patientsModerna20,
-                                  patientsPfizer30, patientsAstraZeneca30, patientsJohnson30, patientsModerna30,
-                                  patientsPfizer40, patientsAstraZeneca40, patientsJohnson40, patientsModerna40,
-                                  patientsPfizer50, patientsAstraZeneca50, patientsJohnson50, patientsModerna50,
-                                  patientsPfizer60, patientsAstraZeneca60, patientsJohnson60, patientsModerna60,
-                                  patientsPfizer70, patientsAstraZeneca70, patientsJohnson70, patientsModerna70,
-                                  patientsPfizer80, patientsAstraZeneca80, patientsJohnson80, patientsModerna80,
-                                  patientsPfizer90, patientsAstraZeneca90, patientsJohnson90, patientsModerna90,
-                                  patientsPfizer100, patientsAstraZeneca100, patientsJohnson100, patientsModerna100
-                                  ).data}
+                    patientsPfizer30, patientsAstraZeneca30, patientsJohnson30, patientsModerna30,
+                    patientsPfizer40, patientsAstraZeneca40, patientsJohnson40, patientsModerna40,
+                    patientsPfizer50, patientsAstraZeneca50, patientsJohnson50, patientsModerna50,
+                    patientsPfizer60, patientsAstraZeneca60, patientsJohnson60, patientsModerna60,
+                    patientsPfizer70, patientsAstraZeneca70, patientsJohnson70, patientsModerna70,
+                    patientsPfizer80, patientsAstraZeneca80, patientsJohnson80, patientsModerna80,
+                    patientsPfizer90, patientsAstraZeneca90, patientsJohnson90, patientsModerna90,
+                    patientsPfizer100, patientsAstraZeneca100, patientsJohnson100, patientsModerna100
+                  ).data}
                   options={LineChart.options}
                   width={400}
                   height={100}
@@ -347,14 +347,14 @@ const Statistics = ({
           </Col>
         </Row>
       </Fragment >
-      ):(
+    ) : (
       <Fragment>
         <Card>
           <h1 className="text-center mx-auto p-5">There are no Statistics yet...!</h1>
         </Card>
       </Fragment>
     )
-    )
+  )
   );
 };
 
@@ -373,6 +373,6 @@ const mapStateToProps = (state) => ({
   vaccines: state.vaccineReducer,
   hospitalReducer: state.hospitalReducer
 });
-                        
 
-export default connect(mapStateToProps, { getPatients, getHospitalPatients, getCurrentHospital, getVaccines })( Statistics );
+
+export default connect(mapStateToProps, { getPatients, getHospitalPatients, getCurrentHospital, getVaccines })(Statistics);

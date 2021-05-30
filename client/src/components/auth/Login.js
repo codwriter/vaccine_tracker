@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-
 import {
-  Form,
-  FormGroup,
   Label,
-  Input,
   InputGroupAddon,
   InputGroupText,
   InputGroup,
@@ -13,13 +9,14 @@ import {
   Button,
   Row,
   Col,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
 } from 'reactstrap';
-import { Card, CardBody, CardSubtitle, CardFooter } from 'reactstrap';
-
+import {
+  AvForm,
+  AvGroup,
+  AvFeedback,
+  AvInput,
+} from 'availity-reactstrap-validation';
+import { Card, CardBody, CardSubtitle } from 'reactstrap';
 import { login } from '../../redux/action/auth';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -49,81 +46,82 @@ const Login = ({ login, isAuthenticated }) => {
   }
 
   return (
-    <Form onSubmit={onSubmit} className='w-75 mr-5 ml-5'>
-      <Card className='p-4'>
-        <CardBody>
-          <CardSubtitle tag='h6' className='mb-2 text-muted'>
-            <i className='fas fa-user' /> Sign Into Your Account
+    <>
+      <RegisterModal isShowing={isShowing} hide={toggle} />
+      <AvForm onValidSubmit={onSubmit} className='w-75 mr-5 ml-5'>
+        <Card className='p-4'>
+          <CardBody>
+            <CardSubtitle tag='h6' className='mb-2 text-muted'>
+              <i className='fas fa-user' /> Sign Into Your Account
           </CardSubtitle>
-          <br></br>
-          <FormGroup className='mb-3'>
-            <Label className='text-muted'>Email</Label>
-            <InputGroup className='input-group-alternative'>
-              <InputGroupAddon addonType='prepend'>
-                <InputGroupText>
-                  <i class='fas fa-envelope'></i>
-                </InputGroupText>
-              </InputGroupAddon>
-              <Input
-                type='email'
-                placeholder='Enter Email'
-                name='email'
-                value={email}
-                onChange={onChange}
-                required
-              />
-            </InputGroup>
-          </FormGroup>
-          <FormGroup className='mb-3'>
-            <Label className='text-muted'>Password</Label>
-            <InputGroup className='input-group-alternative'>
-              <InputGroupAddon addonType='prepend'>
-                <InputGroupText>
-                  <i class='fas fa-key'></i>
-                </InputGroupText>
-              </InputGroupAddon>
-              <Input
-                type='password'
-                placeholder='Your Password'
-                name='password'
-                value={password}
-                onChange={onChange}
-                minLength='6'
-              />
-            </InputGroup>
-          </FormGroup>
-          {/* <div className='d-flex gap-2'>
-            <button className='d-block btn btn-primary' type='submit'>
-              Sign in
-            </button>
-          </div> */}
-          <Row>
-            <Col>
-              <Button
-                className='btn-primary btn-block d-block gap-2'
-                round
-                outline
-                type='submit'
-              >
-                Sign In
+            <br></br>
+            <AvGroup className='mb-3'>
+              <Label className='text-muted'>Email</Label>
+              <InputGroup className='input-group-alternative'>
+                <InputGroupAddon addonType='prepend'>
+                  <InputGroupText>
+                    <i class='fas fa-envelope'></i>
+                  </InputGroupText>
+                </InputGroupAddon>
+                <AvInput
+                  type='email'
+                  placeholder='Enter Email'
+                  name='email'
+                  value={email}
+                  onChange={onChange}
+                  required
+                />
+              </InputGroup>
+              <AvFeedback>Email is required!</AvFeedback>
+            </AvGroup>
+            <AvGroup className='mb-3'>
+              <Label className='text-muted'>Password</Label>
+              <InputGroup className='input-group-alternative'>
+                <InputGroupAddon addonType='prepend'>
+                  <InputGroupText>
+                    <i class='fas fa-key'></i>
+                  </InputGroupText>
+                </InputGroupAddon>
+                <AvInput
+                  type='password'
+                  placeholder='Your Password'
+                  name='password'
+                  value={password}
+                  onChange={onChange}
+                  minLength='6'
+                />
+              </InputGroup>
+              <AvFeedback>Password is required!</AvFeedback>
+            </AvGroup>
+
+            <Row>
+              <Col>
+                <Button
+                  className='btn-primary btn-block d-block gap-2'
+                  round
+                  outline
+                  type='submit'
+                >
+                  Sign In
               </Button>
-            </Col>
-          </Row>
-          <hr className='w-50' />
-          <Row>
-            <Col>
-              <Button
-                className='btn-outline-primary btn-block d-block gap-2'
-                onClick={toggle}
-              >
-                <RegisterModal isShowing={isShowing} hide={toggle} />
-                Create New Account
+              </Col>
+            </Row>
+            <hr className='w-50' />
+            <Row>
+              <Col>
+                <Button
+                  className='btn-outline-primary btn-block d-block gap-2'
+                  onClick={toggle}
+                >
+
+                  Create New Account
               </Button>
-            </Col>
-          </Row>
-        </CardBody>
-      </Card>
-    </Form>
+              </Col>
+            </Row>
+          </CardBody>
+        </Card>
+      </AvForm>
+    </>
   );
 };
 

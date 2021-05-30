@@ -4,7 +4,6 @@ import { Container, Row, Col, Card, CardImg, Button } from 'reactstrap';
 
 import Alert from '../layout/Alert';
 import Login from '../auth/Login';
-import Register from '../auth/Register';
 import useModal from '../Modals/useModal';
 import RegisterModal from '../Modals/RegisterModal';
 
@@ -12,8 +11,8 @@ const Landing = () => {
   const { isShowing, toggle } = useModal();
 
   return (
-
     <Container fluid className='bg h-100'>
+      <Alert/>
       <RegisterModal isShowing={isShowing} hide={toggle} />
       <Row className='h-100  justify-content-center'>
         <Col
