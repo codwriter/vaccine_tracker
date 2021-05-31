@@ -71,10 +71,10 @@ const Statistics = ({
   if (loadingPat === false && patients[0]) {
     for (let i = 0; i < patients.length; i++) {
       if (patients[i].sex === "Male" &&
-        patients[i].vaccineStatus !== "Cancelled") {
+        patients[i].vaccineStatus === "Completed") {
         patientsMale = patientsMale + 1;
       } else if (patients[i].sex === "Female" &&
-        patients[i].vaccineStatus !== "Cancelled") {
+        patients[i].vaccineStatus === "Completed") {
         patientsFemale = patientsFemale + 1;
       }
     }
@@ -94,7 +94,7 @@ const Statistics = ({
       } else if (patients[i].vaccineBrand === "AstraZeneca" &&
         patients[i].vaccineStatus === "Completed") {
         patientsAstra = patientsAstra + 1;
-      } else if (patients[i].vaccineBrand === "Johnson & Johnson" &&
+      } else if (patients[i].vaccineBrand === "Johnson&Johnson" &&
         patients[i].vaccineStatus === "Completed") {
         patientsJohnson = patientsJohnson + 1;
       } else if (patients[i].vaccineBrand === "Moderna" &&
@@ -187,7 +187,7 @@ const Statistics = ({
         patientsAstraZeneca100 = patientsAstraZeneca100 + 1;
       }
 
-      if (patients[i].vaccineBrand === "Johnson & Johnson" && patients[i].age <= 20 && patients[i].vaccineStatus === "Completed") {
+      if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age <= 20 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson20 = patientsJohnson20 + 1;
       } else if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age <= 30 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson30 = patientsJohnson30 + 1;
@@ -247,113 +247,123 @@ const Statistics = ({
 
 
 
-  return (loadingVac && loadingPat && loadingHos ? <Spinner /> : (
-    patients[0] && vaccines[0] ? (
-      <Fragment>
-        <Row>
-          <Col >
-            <Card>
-              <CardHeader>
-                <h1 className="text-center text-accent">{title ? title : 'My Hospital Statistics'}</h1>
-              </CardHeader>
+  return (loadingVac || loadingPat || loadingHos ? <Spinner /> : (
+    <Fragment>
+      <Row>
+        <Col >
+          <Card>
+            <CardHeader>
+              <h1 className="text-center text-accent">{title ? title : 'My Hospital Statistics'}</h1>
+            </CardHeader>
 
+            <CardFooter>
+              <Row>
+                {!switchHospital ?
+                  <p className="h6 text-accent ml-2">Estimated Vaccine Doses: {estimatedDoses ? estimatedDoses : '0'}</p>
+                  : ''}
+                {<span className="ml-auto">
+                  <CustomInput
+                    checked={switchHospital}
+                    className="hospital-switch "
+                    type="switch"
+                    name="customSwitch"
+                    id="cudtomHospitalSwitch"
+                    label="All Hospital"
+                    onChange={allhospitalVaccination}
+                  />
+                </span>}
+              </Row>
+            </CardFooter>
+          </Card>
+        </Col>
+      </Row>
 
-              <CardFooter>
-                <Row>
-                  {!switchHospital ?
-                    <p className="h6 text-accent ml-2">Estimated Vaccine Doses: {estimatedDoses ? estimatedDoses : ''}</p>
-                    : ''}
-                  {<span className="ml-auto">
-                    <CustomInput
-                      checked={switchHospital}
-                      className="hospital-switch "
-                      type="switch"
-                      name="customSwitch"
-                      id="cudtomHospitalSwitch"
-                      label="All Hospital"
-                      onChange={allhospitalVaccination}
+      {patients[0] && vaccines[0] && hospital ?
+        (
+          <>
+            <Row>
+              <Col md="4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-center" tag="h5">Completed, Pending & Cancelled Vaccinations</CardTitle>
+                    <hr />
+                  </CardHeader>
+                  <CardBody>
+                    <Pie
+                      data={PieChartForHospital(patientsCompleted, patientsPending, patientsCancelled).data}
+                      options={PieChartForHospital.options}
+                      className="p-2"
                     />
-                  </span>}
-                </Row>
-              </CardFooter>
-            </Card>
-          </Col>
-        </Row>
-        <Row>
-          <Col md="4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-center" tag="h5">Completed, Pending & Cancelled Vaccinations</CardTitle>
-              </CardHeader>
-              <CardBody>
-                <Pie
-                  data={PieChartForHospital(patientsCompleted, patientsPending, patientsCancelled).data}
-                  options={PieChartForHospital.options}
-                />
-              </CardBody>
-            </Card>
-          </Col>
-          <Col md="4">
-            <Card>
-              <CardHeader>
-                <CardTitle tag="h5" className="text-center pieMaleFem">Completed vaccinations for Male or Female</CardTitle>
-              </CardHeader>
-              <CardBody>
-                <Pie
-                  data={PieChartForSEX(patientsMale, patientsFemale).data}
-                  options={PieChartForSEX.options}
-                />
-              </CardBody>
-            </Card>
-          </Col>
-          <Col md="4">
-            <Card>
-              <CardHeader>
-                <CardTitle tag="h5" className="text-center pieforBrands">Completed vaccinations for every vaccine brand</CardTitle>
-              </CardHeader>
-              <CardBody>
-                <Pie
-                  data={PieChartForBrands(patientsPfizer, patientsAstra, patientsJohnson, patientsModerna).data}
-                  options={PieChartForBrands.options}
-                />
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-        <Row>
-          <Col md="12">
-            <Card className="card-chart">
-              <CardHeader>
-                <CardTitle tag="h5">Vaccinations </CardTitle>
-              </CardHeader>
-              <CardBody>
-                <Line
-                  data={LineChart(patientsPfizer20, patientsAstraZeneca20, patientsJohnson20, patientsModerna20,
-                    patientsPfizer30, patientsAstraZeneca30, patientsJohnson30, patientsModerna30,
-                    patientsPfizer40, patientsAstraZeneca40, patientsJohnson40, patientsModerna40,
-                    patientsPfizer50, patientsAstraZeneca50, patientsJohnson50, patientsModerna50,
-                    patientsPfizer60, patientsAstraZeneca60, patientsJohnson60, patientsModerna60,
-                    patientsPfizer70, patientsAstraZeneca70, patientsJohnson70, patientsModerna70,
-                    patientsPfizer80, patientsAstraZeneca80, patientsJohnson80, patientsModerna80,
-                    patientsPfizer90, patientsAstraZeneca90, patientsJohnson90, patientsModerna90,
-                    patientsPfizer100, patientsAstraZeneca100, patientsJohnson100, patientsModerna100
-                  ).data}
-                  options={LineChart.options}
-                  width={400}
-                  height={100}
-                />
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-      </Fragment >
-    ) : (
-      <Fragment>
-        <Card>
-          <h1 className="text-center mx-auto p-5">There are no Statistics yet...!</h1>
-        </Card>
-      </Fragment>
-    )
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col md="4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle tag="h5" className="text-center pieMaleFem">Completed vaccinations for Male or Female</CardTitle>
+                    <hr />
+                  </CardHeader>
+                  <CardBody>
+                    {patientsMale === 0 && patientsFemale === 0 ? <p className="my-5 text-center h6">There is no data yet..!</p> : <Pie
+                      data={PieChartForSEX(patientsMale, patientsFemale).data}
+                      options={PieChartForSEX.options}
+                      className="p-2"
+                    />
+                    }
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col md="4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle tag="h5" className="text-center pieforBrands">Completed vaccinations for every vaccine brand</CardTitle>
+                    <hr />
+                  </CardHeader>
+                  <CardBody>
+                    {patientsPfizer === 0 && patientsAstra === 0 && patientsJohnson===0 && patientsModerna===0 ? <p className="my-5 text-center h6">There is no data yet..!</p> : <Pie
+                      data={PieChartForBrands(patientsPfizer, patientsAstra, patientsJohnson, patientsModerna).data}
+                      options={PieChartForBrands.options}
+                      className="p-2"
+                    />
+                    }
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+            <Row>
+              <Col md="12" >
+                <Card className="card-chart">
+                  <CardHeader>
+                    <CardTitle tag="h5">Completed vaccinations per age and brand </CardTitle>
+                  </CardHeader>
+                  <CardBody>
+                    <Line
+                      data={LineChart(patientsPfizer20, patientsAstraZeneca20, patientsJohnson20, patientsModerna20,
+                        patientsPfizer30, patientsAstraZeneca30, patientsJohnson30, patientsModerna30,
+                        patientsPfizer40, patientsAstraZeneca40, patientsJohnson40, patientsModerna40,
+                        patientsPfizer50, patientsAstraZeneca50, patientsJohnson50, patientsModerna50,
+                        patientsPfizer60, patientsAstraZeneca60, patientsJohnson60, patientsModerna60,
+                        patientsPfizer70, patientsAstraZeneca70, patientsJohnson70, patientsModerna70,
+                        patientsPfizer80, patientsAstraZeneca80, patientsJohnson80, patientsModerna80,
+                        patientsPfizer90, patientsAstraZeneca90, patientsJohnson90, patientsModerna90,
+                        patientsPfizer100, patientsAstraZeneca100, patientsJohnson100, patientsModerna100
+                      ).data}
+                      options={LineChart.options}
+                      width={50}
+                      height={15}
+                    />
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          </>
+        ) : <>
+          <Card>
+            <p className="h3 text-center mx-auto p-5">There are no Statistics yet...!</p>
+          </Card>
+        </>}
+
+    </Fragment >
   )
   );
 };

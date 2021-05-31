@@ -60,7 +60,7 @@ const Login = ({ login, isAuthenticated }) => {
               <InputGroup className='input-group-alternative'>
                 <InputGroupAddon addonType='prepend'>
                   <InputGroupText>
-                    <i class='fas fa-envelope'></i>
+                    <i class=' mr-2 fas fa-envelope'></i>
                   </InputGroupText>
                 </InputGroupAddon>
                 <AvInput
@@ -79,7 +79,7 @@ const Login = ({ login, isAuthenticated }) => {
               <InputGroup className='input-group-alternative'>
                 <InputGroupAddon addonType='prepend'>
                   <InputGroupText>
-                    <i class='fas fa-key'></i>
+                    <i class=' mr-2 fas fa-key'></i>
                   </InputGroupText>
                 </InputGroupAddon>
                 <AvInput

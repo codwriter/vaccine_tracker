@@ -321,7 +321,7 @@
 
 @media screen and (max-width: 768px){
     .navbar a:not(.btn):not(.dropdown-item){
-        text-align: center !important;
+        text-align: right !important;
     }
 
     .navbar .dropdown.show .dropdown-menu {
@@ -333,39 +333,9 @@
 
 @media screen and (max-width: 600px){
     .navbar a:not(.btn):not(.dropdown-item){
-        text-align: center !important;
+        text-align: right !important;
     }
 } 
-
-
-
-
-
-
-
-
-
-
-@media screen and (max-width: 1200px){
-    .pieMaleFem {
-        font-size: 21px !important;
-    }
-} 
-
-@media screen and (max-width: 990px){
-    .pieforBrands {
-        font-size: 28px !important;
-    }
-} 
-
-@media screen and (max-width: 990px){
-    .pieMaleFem {
-        font-size: 22.6px !important;
-    }
-} 
-
-
-
 
 .bg-default{
     background-color: $default-color !important;

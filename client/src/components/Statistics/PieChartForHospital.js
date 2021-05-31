@@ -7,7 +7,7 @@ const PieChartForHospital = (patientsCompleted, patientsPending, patientsCancell
           {
             pointRadius: 0,
             pointHoverRadius: 0,
-            backgroundColor: ["#7982B9", "#A5C1DC", "#9E1F1F"],
+            backgroundColor: ["#12cc8b", "#A5C1DC", "#9E1F1F"],
             borderWidth: 0,
             data: [patientsCompleted, patientsPending, patientsCancelled]
           },

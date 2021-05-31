@@ -60,73 +60,56 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     return <Redirect to='/dashboard' />;
   }
 
-  return ( 
+  return (
     <AvForm className='form p-2' onValidSubmit={onSubmit}>
       <Alert />
+      <Row>
+        <Col>
+          <AvGroup className='mb-3'>
+            <Label className='text-muted'>Email</Label>
+            <AvInput
+              type='email'
+              placeholder='Enter Email'
+              name='email'
+              value={email}
+              onChange={onChange}
+              required
+            />
+            <AvFeedback>Email is required!</AvFeedback>
+          </AvGroup>
+        </Col>
+      </Row>
 
-      <AvGroup className='mb-3'>
-        <Label className='text-muted'>Email</Label>
-        <InputGroup className='input-group-alternative'>
-          <InputGroupAddon addonType='prepend'>
-            <InputGroupText>
-              <i class='fas fa-envelope'></i>
-            </InputGroupText>
-          </InputGroupAddon>
-          <AvInput
-            type='email'
-            placeholder='Enter Email'
-            name='email'
-            value={email}
-            onChange={onChange}
-            required
-          />
-        </InputGroup>
-        <AvFeedback>Email is required!</AvFeedback>
-      </AvGroup>
       <Row>
         <Col>
           <AvGroup className='mb-3'>
             <Label className='text-muted'>Password</Label>
-            <InputGroup className='input-group-alternative'>
-              <InputGroupAddon addonType='prepend'>
-
-                <InputGroupText>
-                  <i class='fas fa-key'></i>
-                </InputGroupText>
-              </InputGroupAddon>
-              <AvInput
-                type='password'
-                placeholder='Your Password'
-                name='password'
-                onChange={onChange}
-                required
-              />
-            </InputGroup>
+            <AvInput
+              type='password'
+              placeholder='Your Password'
+              name='password'
+              onChange={onChange}
+              required
+            />
             <AvFeedback>
               The password is required and must be at least 6 characters!
             </AvFeedback>
           </AvGroup>
-
         </Col>
         <Col>
           <AvGroup className='mb-3'>
             <Label className='text-muted'>Retype Password</Label>
-            <InputGroup className='input-group-alternative'>
-              <InputGroupAddon addonType='prepend'>
-                <InputGroupText>
-                  <i class='fas fa-key'></i>
-                </InputGroupText>
-              </InputGroupAddon>
-              <AvInput
-                type='password'
-                placeholder='Retype Your Password'
-                name='password2'
-                onChange={onChange}
-                minLength="6"
-                required
-              />
-            </InputGroup>
-            
+            <AvInput
+              type='password'
+              placeholder='Retype Your Password'
+              name='password2'
+              onChange={onChange}
+              minLength="6"
+              required
+            />
+            <AvFeedback>
+              The password is required and must be at least 6 characters!
+            </AvFeedback>
           </AvGroup>
 
         </Col>

@@ -27,11 +27,11 @@ const NavbarComponent = ({ auth: { isAuthenticated }, logout }) => {
   const authLinks = (
     <>
       <NavItem>
-        <Link to="/profile" className="nav-link btn-magnify">Hospital</Link>
+        <Link to="/profile" className="nav-link btn-magnify"><i className="fas fa-hospital-user mr-2"></i>Hospital</Link>
       </NavItem>
       <NavItem>
         <Link onClick={logout} className="nav-link btn-magnify" to="/">
-          <i className="fas fa-sign-out-alt" />{' '}
+          <i className="fas fa-sign-out-alt mr-2" />{' '}
           <span className="hide-sm">Logout</span>
         </Link>
       </NavItem>

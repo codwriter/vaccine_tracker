@@ -11,15 +11,22 @@ const Intro = ({
     history,
     linkHospital,
     getHospitals,
-    hospitals: { hospitals, loading },
+    hospitals: { hospitals, hospital, loading },
 }) => {
     useEffect(() => {
         getHospitals();
+        if (!loading && !hospitals[0]) {
+            setIsOpen(true)
+        } else { setIsOpen(false) }
     }, [getHospitals]);
 
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
+
+    if (hospital) {
+        return <Redirect to="/dashboard" />
+    }
 
     return (
         loading ? (<><Spinner /></>) : (
