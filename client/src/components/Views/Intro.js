@@ -15,9 +15,10 @@ const Intro = ({
 }) => {
     useEffect(() => {
         getHospitals();
-        if (!loading && !hospitals[0]) {
-            setIsOpen(true)
-        } else { setIsOpen(false) }
+        if (loading && hospitals[0]) {
+            setIsOpen(false)
+        } else { setIsOpen(true) }
+
     }, [getHospitals]);
 
     const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +35,7 @@ const Intro = ({
                 <Card className="p-5">
                     <Row>
                         <Col lg="12" md="6" sm="6">
-                            <h1 className="large text-primary text-center">Let's get started! </h1>
+                            <h1 className="user-select-none large text-primary text-center">Let's get started! </h1>
                         </Col>
                     </Row>
                 </Card>

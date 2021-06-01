@@ -6,7 +6,7 @@ const VaccineModal = ({ isShowing, hide, vaccine, title, }) => isShowing ? React
     <>
         <div>
             <Modal isOpen={isShowing} size="lg">
-                <ModalHeader toggle={hide}>{title}</ModalHeader>
+                <ModalHeader toggle={hide} className="user-select-none">{title}</ModalHeader>
                 <ModalBody>
                     <VaccineForm hide={hide} vaccine={vaccine} />
                 </ModalBody>

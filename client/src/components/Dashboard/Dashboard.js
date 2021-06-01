@@ -30,7 +30,7 @@ const Dashboard = ({
                                 <Col >
                                     <Card>
                                         <CardHeader >
-                                                <CardTitle className="align-self-center" ><h1 className="text-accent large text-center">{hospital && hospital.name} Hospital</h1>
+                                                <CardTitle className="align-self-center user-select-none" ><h1 className="text-accent large text-center">{hospital && hospital.name} Hospital</h1>
                                             </CardTitle>
                                         </CardHeader>
                                         <CardFooter></CardFooter>

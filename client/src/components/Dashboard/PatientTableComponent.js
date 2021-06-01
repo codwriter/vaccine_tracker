@@ -139,7 +139,7 @@ const PatientTable = ({
                             <CardHeader className="card-header">
                                 <Row>
                                     <Col>
-                                        <CardTitle tag="h4" className="text-accent card-title">
+                                        <CardTitle tag="h4" className="user-select-none text-accent card-title">
                                             {tableTitle}
                                         </CardTitle>
                                     </Col>

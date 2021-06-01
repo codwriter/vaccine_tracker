@@ -9,10 +9,10 @@ const RegisterModal = ({ isShowing, hide }) =>
           <div>
             <Modal isOpen={isShowing} size='lg'>
               <ModalHeader toggle={hide}>
-                <h7 className='mb-2 text-accent'>
-                  <i className='mr-1 fas fa-user' />
+              <p className='user-select-none mb-1 text-accent'>
+                  <i className='mr-2 fas fa-user' />
                   Create Your Account
-                </h7>
+                </p>
               </ModalHeader>
               <ModalBody>
                 <Register hide={hide} />

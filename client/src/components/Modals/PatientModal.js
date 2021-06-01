@@ -7,7 +7,7 @@ const PatientModal = ({ isShowing, hide, patient, title, switchHospital }) => is
   <>
     <div>
       <Modal isOpen={isShowing} size="lg">
-        <ModalHeader toggle={hide}>{!switchHospital ?  title  : "Vaccination Details"}</ModalHeader>
+        <ModalHeader toggle={hide} className="user-select-none">{!switchHospital ?  title  : "Vaccination Details"}</ModalHeader>
         <ModalBody>
           <PatientForm hide={hide} patient={patient} switchHospital={switchHospital} />
         </ModalBody>

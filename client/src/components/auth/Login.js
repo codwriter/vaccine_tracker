@@ -51,7 +51,7 @@ const Login = ({ login, isAuthenticated }) => {
       <AvForm onValidSubmit={onSubmit} className='w-75 mr-5 ml-5'>
         <Card className='p-4'>
           <CardBody>
-            <CardSubtitle tag='h6' className='mb-2 text-muted'>
+            <CardSubtitle tag='h6' className='user-select-none mb-2 text-muted'>
               <i className='fas fa-user' /> Sign Into Your Account
           </CardSubtitle>
             <br></br>

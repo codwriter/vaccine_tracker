@@ -115,7 +115,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
         </Col>
       </Row>
       <hr />
-      <FormText className='h6 mb-3'>User info</FormText>
+      <FormText className='h6 mb-3 user-select-none'>User info</FormText>
       <Row>
         <Col>
 

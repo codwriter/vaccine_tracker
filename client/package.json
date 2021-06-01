@@ -44,7 +44,8 @@
     "eject": "react-scripts eject",
     "compile-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css",
     "minify-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.min.css --output-style compressed",
-    "map-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css --source-map true"
+    "map-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css --source-map true",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "eslintConfig": {
     "extends": [
