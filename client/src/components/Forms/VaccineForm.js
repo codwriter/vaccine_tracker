@@ -107,7 +107,7 @@ const VaccineForm = ({
                 </Col>
             </Row>
             <AvGroup>
-                <Button className="pull-right" type="submit">Submit</Button>
+                <Button className=" btn-primary pull-right" type="submit">Submit</Button>
                 {vaccine ? <Button className="pull-right btn-danger mr-2" onClick={deleteVaccine} type="submit"><i className="far fa-trash-alt"></i></Button> : ''}
             </AvGroup>
         </AvForm>
