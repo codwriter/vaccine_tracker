@@ -9,7 +9,9 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     DELETE_USER,
-    LOGOUT
+    LOGOUT,
+    CLEAR_HOSPITAL,
+    PATIENT_CLEAR,
 } from './types';
 
 
@@ -131,4 +133,17 @@ export const editUser = (formData) => async dispatch => {
 
 
 // Logout
-export const logout = () => ({ type: LOGOUT });
+export const logout = () => async dispatch => {
+
+    dispatch({
+        type: CLEAR_HOSPITAL
+    });
+
+    dispatch({
+        type: PATIENT_CLEAR
+    });
+
+    dispatch({
+        type: LOGOUT
+    });
+}

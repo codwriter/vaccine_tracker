@@ -9,7 +9,6 @@ import {
     UPDATE_PATIENT,
     DELETE_PATIENT,
     PATIENT_ERROR,
-    GET_HOSPITAL,
     PATIENT_CLEAR
 } from './types';
 

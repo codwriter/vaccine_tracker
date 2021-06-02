@@ -292,7 +292,7 @@ patientsRouter.route('/:patientId')
                         var bgPatient = await bgchain.editPatient(req.params.patientId, patient);
 
                         if (!bgPatient) {
-                            return res.status(400).json({ errors: [{ msg: 'The patient was not edited in BigChainDB' }] });
+                            return res.status(400).json({ errors: [{ msg: 'The patient was not updated in BigChainDB' }] });
                         }
                     }
                     console.log(patient)
