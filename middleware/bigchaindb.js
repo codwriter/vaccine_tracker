@@ -100,7 +100,7 @@ exports.editPatient = async (patientId, editedPatient) => {
         // Take the most recent metadata of the patient
         patient = patient[patient.length - 1];
         // Get the keypair from Hospital
-        const hospital = await Hospitals.findById(patient.metadata.hospital);
+        const hospital = await Hospitals.findById(patient.metadata.hospital._id);
         // Find the latest transaction
         let transaction = await conn.getTransaction(patient.id);
 
@@ -128,8 +128,10 @@ exports.deletePatient = async (patientId) => {
         let patient = await conn.searchMetadata(patientId);
         // Take the most recent metadata of the patient
         patient = patient[patient.length - 1];
+        console.log(patient);
         // Get the keypair from Hospital
-        const hospital = await Hospitals.findById(patient.metadata.hospital);
+        const hospital = await Hospitals.findById(patient.metadata.hospital._id);
+        console.log(hospital)
         // Find the latest transaction
         let transaction = await conn.getTransaction(patient.id);
         // Random Keypair

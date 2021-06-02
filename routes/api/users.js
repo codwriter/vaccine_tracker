@@ -33,7 +33,7 @@ router.post('/signup',
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password,firstname,lastname,amkaUser,birthdate } = req.body;
+    const { email, password, firstname, lastname, amkaUser, birthdate } = req.body;
 
     try {
       let user = await User.findOne({ email });
@@ -153,6 +153,7 @@ router.put('/', auth,
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     } else {
+      console.log(req.user);
       User.findByIdAndUpdate(req.user.id, {
         $set: req.body
       }, { new: true })
@@ -160,20 +161,20 @@ router.put('/', auth,
           res.statusCode = 200;
           res.setHeader('Content-type', 'application/json');
           console.log(user);
-          res.status(200).json({msg:"User Updated"});
+          res.status(200).json({ msg: "User Updated" });
         }, (err) => next(err))
         .catch((err) => next(err));
     }
   })
 
 router.delete('/', auth, async (req, res) => {
-    try{
-      await User.findOneAndRemove({ _id : req.user.id});
-      res.json({ msg:'User Deleted'});
-    } catch(err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
-    }
+  try {
+    await User.findOneAndRemove({ _id: req.user.id });
+    res.json({ msg: 'User Deleted' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
 });
 
 module.exports = router;
