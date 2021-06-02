@@ -286,7 +286,7 @@ patientsRouter.route('/:patientId')
                             $set: req.body
                         }, { new: true });
                     }
-
+                    // Update bigchainDB
                     if (!mongo) {
                         patient = await Patients.findById(patient._id).populate('hospital', ['name', 'city', 'address', 'country', '_id', 'afm']);
                         var bgPatient = await bgchain.editPatient(req.params.patientId, patient);

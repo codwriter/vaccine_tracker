@@ -15,9 +15,11 @@ const Intro = ({
 }) => {
     useEffect(() => {
         getHospitals();
-        if (loading && hospitals[0]) {
-            setIsOpen(false)
-        } else { setIsOpen(true) }
+      /*   if (!loading) {
+            if (hospitals[0]) {
+                setIsOpen(false)
+            } else { setIsOpen(true) }
+        } */
 
     }, [getHospitals]);
 
