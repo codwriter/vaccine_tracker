@@ -159,7 +159,7 @@ const PatientTable = ({
                                         type="switch"
                                         name="customSwitch"
                                         id="cudtomHospitalSwitch"
-                                        label="All Hospital"
+                                        label="All Hospitals"
                                         onChange={allhospitalVaccination}
                                     />
                                 </span>
