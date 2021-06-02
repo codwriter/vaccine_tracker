@@ -264,11 +264,11 @@ const Statistics = ({
                 {<span className="ml-auto">
                   <CustomInput
                     checked={switchHospital}
-                    className="hospital-switch "
+                    className="hospital-switch pr-1 "
                     type="switch"
                     name="customSwitch"
                     id="cudtomHospitalSwitch"
-                    label="All Hospital"
+                    label="All Hospitals"
                     onChange={allhospitalVaccination}
                   />
                 </span>}
@@ -320,7 +320,7 @@ const Statistics = ({
                     <hr />
                   </CardHeader>
                   <CardBody>
-                    {patientsPfizer === 0 && patientsAstra === 0 && patientsJohnson===0 && patientsModerna===0 ? <p className="my-5 text-center h6">There is no data yet..!</p> : <Pie
+                    {patientsPfizer === 0 && patientsAstra === 0 && patientsJohnson === 0 && patientsModerna === 0 ? <p className="my-5 text-center h6">There is no data yet..!</p> : <Pie
                       data={PieChartForBrands(patientsPfizer, patientsAstra, patientsJohnson, patientsModerna).data}
                       options={PieChartForBrands.options}
                       className="p-2"
