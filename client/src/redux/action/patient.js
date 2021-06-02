@@ -9,14 +9,21 @@ import {
     UPDATE_PATIENT,
     DELETE_PATIENT,
     PATIENT_ERROR,
-    GET_HOSPITAL
+    GET_HOSPITAL,
+    PATIENT_CLEAR
 } from './types';
 
 // Get hospital patients  from Server
 export const getHospitalPatients = () => async dispatch => {
     try {
+
         // Wait for the server response with the patients
         const res = await api.get('/patients/hospital');
+        // Clear the patients
+        dispatch({
+            type: PATIENT_CLEAR,
+            payload: res.data
+        });
 
         // Save it to payload
         dispatch({
@@ -36,6 +43,12 @@ export const getPatients = () => async dispatch => {
     try {
         // Wait for the server response with the patients
         const res = await api.get('/patients');
+
+        // Clear the patients
+        dispatch({
+            type: PATIENT_CLEAR,
+            payload: res.data
+        });
 
         // Save it to payload
         dispatch({
