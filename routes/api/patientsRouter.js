@@ -8,7 +8,7 @@ const User = require('../../models/user');
 const patientsRouter = express.Router();
 
 patientsRouter.use(express.json());
-const mongo = false;
+const mongo = true;
 
 // @route    GET api/patients/
 // @desc     Get All patients

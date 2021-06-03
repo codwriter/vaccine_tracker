@@ -6,7 +6,7 @@ const AvailableDoses = ({ vaccines }) => {
     return (
         <> <Row >
             {vaccines.map(vaccine =>
-                <Col lg="3" md="6" sm="6"className=" col-3" key={vaccine._id}>
+                <Col lg="3" md="6" sm="6" xs="12" key={vaccine._id}>
                     <Card className="card-stats">
 
                         <CardBody  className="card-body">

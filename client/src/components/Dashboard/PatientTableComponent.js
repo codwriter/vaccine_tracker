@@ -143,14 +143,14 @@ const PatientTable = ({
                                             {tableTitle}
                                         </CardTitle>
                                     </Col>
-                                    <Col>
+                                    {switchHospital ? "" : (<Col>
                                         <CardSubtitle className="text-right">
                                             <Button
                                                 onClick={checkVaccines}
                                                 className=" btn-sm btn-primary  btn-round pull-right">Add Vaccination
                                         </Button>
                                         </CardSubtitle>
-                                    </Col>
+                                    </Col>)}
                                 </Row>
                                 <span className="float-right ">
                                     <CustomInput
