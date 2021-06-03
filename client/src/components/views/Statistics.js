@@ -18,6 +18,7 @@ const Statistics = ({
   getPatients,
   getCurrentHospital,
   getHospitalPatients,
+  user: { user },
   getVaccines,
   vaccines: { loading: loadingVac, vaccines },
   patients: { loading: loadingPat, patients }
@@ -26,9 +27,9 @@ const Statistics = ({
   const [switchHospital, setSwitchHospital] = useState(false);
 
   useEffect(() => {
-    getCurrentHospital();
+    /*  getCurrentHospital(); */
     getHospitalPatients();
-    getVaccines();
+    /* getVaccines(); */
   }, []);
 
   const allhospitalVaccination = () => {
@@ -43,9 +44,11 @@ const Statistics = ({
       setSwitchHospital(!switchHospital);
     }
   }
-  if (!loadingHos && !hospital) {
+  console.log(user.hospital);
+  if (!user.hospital) {
     return <Redirect to="/intro" />
   }
+
   //Pie Chart for Completed Vaccinated
   var patientsCompleted = 0;
   var patientsCancelled = 0;
@@ -94,7 +97,7 @@ const Statistics = ({
       } else if (patients[i].vaccineBrand === "AstraZeneca" &&
         patients[i].vaccineStatus === "Completed") {
         patientsAstra = patientsAstra + 1;
-      } else if (patients[i].vaccineBrand === "Johnson&Johnson" &&
+      } else if (patients[i].vaccineBrand === "J&J" &&
         patients[i].vaccineStatus === "Completed") {
         patientsJohnson = patientsJohnson + 1;
       } else if (patients[i].vaccineBrand === "Moderna" &&
@@ -187,23 +190,23 @@ const Statistics = ({
         patientsAstraZeneca100 = patientsAstraZeneca100 + 1;
       }
 
-      if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age <= 20 && patients[i].vaccineStatus === "Completed") {
+      if (patients[i].vaccineBrand === "J&J" && patients[i].age <= 20 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson20 = patientsJohnson20 + 1;
-      } else if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age <= 30 && patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "J&J" && patients[i].age <= 30 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson30 = patientsJohnson30 + 1;
-      } else if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age <= 40 && patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "J&J" && patients[i].age <= 40 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson40 = patientsJohnson40 + 1;
-      } else if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age <= 50 && patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "J&J" && patients[i].age <= 50 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson50 = patientsJohnson50 + 1;
-      } else if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age <= 60 && patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "J&J" && patients[i].age <= 60 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson60 = patientsJohnson60 + 1;
-      } else if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age <= 70 && patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "J&J" && patients[i].age <= 70 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson70 = patientsJohnson70 + 1;
-      } else if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age <= 80 && patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "J&J" && patients[i].age <= 80 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson80 = patientsJohnson80 + 1;
-      } else if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age <= 90 && patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "J&J" && patients[i].age <= 90 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson90 = patientsJohnson90 + 1;
-      } else if (patients[i].vaccineBrand === "Johnson&Johnson" && patients[i].age >= 100 && patients[i].vaccineStatus === "Completed") {
+      } else if (patients[i].vaccineBrand === "J&J" && patients[i].age >= 100 && patients[i].vaccineStatus === "Completed") {
         patientsJohnson100 = patientsJohnson100 + 1;
       }
 
@@ -247,7 +250,7 @@ const Statistics = ({
 
 
 
-  return (loadingVac || loadingPat || loadingHos ? <Spinner /> : (
+  return (/* loadingVac ||  */loadingPat /* || loadingHos */ ? <Spinner /> : (
     <Fragment>
       <Row>
         <Col >
@@ -278,7 +281,7 @@ const Statistics = ({
         </Col>
       </Row>
 
-      {patients[0] && vaccines[0] && hospital ?
+      {patients[0]  /* && vaccines[0]  && hospital */ ?
         (
           <>
             <Row>
@@ -370,18 +373,19 @@ const Statistics = ({
 
 Statistics.propTypes = {
   getHospitalPatients: PropTypes.func.isRequired,
-  getCurrentHospital: PropTypes.func.isRequired,
+  //getCurrentHospital: PropTypes.func.isRequired,
   getPatients: PropTypes.func.isRequired,
   patients: PropTypes.object.isRequired,
-  getVaccines: PropTypes.func.isRequired,
-  vaccines: PropTypes.object.isRequired,
-  hospital: PropTypes.object.isRequired
+  //getVaccines: PropTypes.func.isRequired,
+  //vaccines: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
   patients: state.patientReducer,
   vaccines: state.vaccineReducer,
-  hospitalReducer: state.hospitalReducer
+  hospitalReducer: state.hospitalReducer,
+  user: state.auth
 });
 
 
