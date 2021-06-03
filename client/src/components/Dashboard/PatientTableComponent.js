@@ -62,8 +62,8 @@ const PatientTable = ({
 
         },
         {
-            Header: "City",
-            accessor: "city",
+            Header: "Vaccine Brand",
+            accessor: "vaccineBrand",
             className: "t-cell-3 text-center"
         },
         {
