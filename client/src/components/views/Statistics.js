@@ -285,7 +285,7 @@ const Statistics = ({
         (
           <>
             <Row>
-              <Col md="4">
+              <Col md="6" lg="4">
                 <Card>
                   <CardHeader>
                     <CardTitle className="text-center" tag="h5">Completed, Pending & Cancelled Vaccinations</CardTitle>
@@ -300,7 +300,7 @@ const Statistics = ({
                   </CardBody>
                 </Card>
               </Col>
-              <Col md="4">
+              <Col md="6" lg="4">
                 <Card>
                   <CardHeader>
                     <CardTitle tag="h5" className="text-center pieMaleFem">Completed vaccinations for Male or Female</CardTitle>
@@ -316,7 +316,7 @@ const Statistics = ({
                   </CardBody>
                 </Card>
               </Col>
-              <Col md="4">
+              <Col md="6" lg="4">
                 <Card>
                   <CardHeader>
                     <CardTitle tag="h5" className="text-center pieforBrands">Completed vaccinations for every vaccine brand</CardTitle>
