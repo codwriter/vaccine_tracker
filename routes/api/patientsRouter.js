@@ -247,13 +247,14 @@ patientsRouter.route('/:patientId')
                 try {
                     const user = await User.findById(req.user.id).select('-password');
                     const _hospital = await Hospital.findById(user.hospital);
-                    var patient = await Patients.findById(req.params.patientId);
+                    let previousPatient = await Patients.findById(req.params.patientId);
+                    req.body.hospital = _hospital._id;
 
-                    if (patient.vaccineStatus === "Cancelled") {
+                    if (previousPatient.vaccineStatus === "Cancelled") {
                         if (req.body.vaccineStatus === "Pending") {
                             //Update from Cancelled to pending
                             for (let vaccine of _hospital.vaccines) {
-                                if (vaccine.vaccineBrand == patient.vaccineBrand) {
+                                if (vaccine.vaccineBrand == previousPatient.vaccineBrand) {
                                     vaccine.doses = vaccine.doses - vaccine.appointments;
                                     await _hospital.save();
                                 }
@@ -276,7 +277,7 @@ patientsRouter.route('/:patientId')
                         }, { new: true });
 
                         for (let vaccine of _hospital.vaccines) {
-                            if (vaccine.vaccineBrand === patient.vaccineBrand) {
+                            if (vaccine.vaccineBrand === previousPatient.vaccineBrand) {
                                 vaccine.doses = vaccine.doses + vaccine.appointments;
                                 await _hospital.save();
                             }
@@ -288,8 +289,8 @@ patientsRouter.route('/:patientId')
                     }
                     // Update bigchainDB
                     if (!mongo) {
-                        patient = await Patients.findById(patient._id).populate('hospital', ['name', 'city', 'address', 'country', '_id', 'afm']);
-                        var bgPatient = await bgchain.editPatient(req.params.patientId, patient);
+                       let  patientNew = await Patients.findById(patient._id).populate('hospital', ['name', 'city', 'address', 'country', '_id', 'afm']);
+                        var bgPatient = await bgchain.editPatient(req.params.patientId, patientNew);
 
                         if (!bgPatient) {
                             return res.status(400).json({ errors: [{ msg: 'The patient was not updated in BigChainDB' }] });

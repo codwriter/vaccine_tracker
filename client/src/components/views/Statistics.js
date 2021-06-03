@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Row, Col, CardBody, Card, CardTitle, CardHeader, CustomInput, CardFooter, Spinner } from "reactstrap";
 import { PieChartForHospital } from '../Statistics/PieChartForHospital';
-import { PieChartForSEX } from '../Statistics/PieChartForSEX';
+import { PieChartForSEX } from '../Statistics/PieChartforSEX';
 import { PieChartForBrands } from '../Statistics/PieChartForBrands';
 import { LineChart } from '../Statistics/LineChart';
 import { Line, Pie } from "react-chartjs-2";
