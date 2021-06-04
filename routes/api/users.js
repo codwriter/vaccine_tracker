@@ -154,7 +154,7 @@ router.put('/', auth,
       return res.status(400).json({ errors: errors.array() });
     } else {
       console.log(req.user);
-      User.findByIdAndUpdate(req.user.id, {
+      User.findByIdAndUpdate({ _id: req.user.id }, {
         $set: req.body
       }, { new: true })
         .then((user) => {

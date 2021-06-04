@@ -2,6 +2,7 @@
 //παίρνει/διαγράφει διευθύνσεις URL μέσω τις GET/DELETE 
 import api from '../../utils/api';
 import { setAlert } from './alert';
+import { loadUser } from './auth';
 import {
   GET_HOSPITAL,
   GET_HOSPITALS,
@@ -109,7 +110,7 @@ export const linkHospital = (id, history) => async (dispatch) => {
       type: GET_HOSPITAL,
       payload: res.data
     });
-
+    dispatch(loadUser());
     dispatch(setAlert('User linked to hospital!', 'success'));
     history.push('/dashboard');
   } catch (err) {
@@ -135,6 +136,7 @@ export const unlinkHospital = () => async (dispatch) => {
     dispatch({
       type: VACCINE_CLEAR,
     });
+    dispatch(loadUser());
     dispatch(setAlert('User unlinked from Hospital', 'success'));
   } catch (err) {
     dispatch({

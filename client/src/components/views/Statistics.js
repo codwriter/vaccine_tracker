@@ -44,7 +44,6 @@ const Statistics = ({
       setSwitchHospital(!switchHospital);
     }
   }
-  console.log(user.hospital);
   if (!user.hospital) {
     return <Redirect to="/intro" />
   }
