@@ -259,7 +259,7 @@ patientsRouter.route('/:patientId')
                                     await _hospital.save();
                                 }
                             }
-                            let patient = await Patients.findOneAndUpdate({ _id: req.params.patientId }, {
+                            patient = await Patients.findOneAndUpdate({ _id: req.params.patientId }, {
                                 $set: req.body
                             }, { new: true });
                         }
@@ -283,8 +283,7 @@ patientsRouter.route('/:patientId')
                             }
                         }
                     } else {
-
-                        let patient = await Patients.findOneAndUpdate({ _id: req.params.patientId }, {
+                        patient = await Patients.findOneAndUpdate({ _id: req.params.patientId }, {
                             $set: req.body
                         }, { new: true });
                     }
