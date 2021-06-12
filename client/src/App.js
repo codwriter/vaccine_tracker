@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect } from 'react';
-import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { LOGOUT } from './redux/action/types';
