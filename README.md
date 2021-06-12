@@ -1,3 +1,3 @@
-# vaccine_tracker
+# vaccineTracker
 
-During SKGCode we created a covid vaccination tracker for hospitals.
+<p align="center">During SKG.Code we created a covid vaccination tracker for hospitals.</p>
