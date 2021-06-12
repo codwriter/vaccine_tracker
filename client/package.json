@@ -44,8 +44,7 @@
     "eject": "react-scripts eject",
     "compile-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css",
     "minify-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.min.css --output-style compressed",
-    "map-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css --source-map true",
-    
+    "map-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css --source-map true"
   },
   "eslintConfig": {
     "extends": [
