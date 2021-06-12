@@ -94,7 +94,7 @@ export const addPatient = (formData) => async dispatch => {
         dispatch(setAlert('Patient Created', 'success'));
 
     } catch (err) {
-        const errors = err.response.data.errors;    //Σε περίπτωση που ξεχάσω καποια απο τα υποχρεωτικά πεδία θα μου βγάλει alert
+        const errors = err.response.data.errors;
 
         if (errors) {
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
@@ -119,7 +119,7 @@ export const updatePatient = (id, formData) => async dispatch => {
         dispatch(setAlert('Patient Updated', 'success'));
 
     } catch (err) {
-        const errors = err.response.data.errors;    //Σε περίπτωση που ξεχάσω καποια απο τα υποχρεωτικά πεδία θα μου βγάλει alert
+        const errors = err.response.data.errors;  
 
         if (errors) {
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));

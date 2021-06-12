@@ -14,13 +14,13 @@ import {
 } from './types';
 
 //Get current users Hospital profile info
-export const getCurrentHospital = () => async dispatch => { // () σημαίνει οτι είναι μια συνάρτηση κενή με καθόλου ορίσματα 
+export const getCurrentHospital = () => async dispatch => {
   try {
-    const res = await api.get('/hospital/me'); //ΕΓΙΝΕ ΑΛΛΑΓΗ ΑΠΟ ΤΟ ΠΡΟΤΥΠΟ /api/hospital/me
+    const res = await api.get('/hospital/me');
 
     dispatch({
       type: GET_HOSPITAL,
-      payload: res.data //res = respond απο τον server 
+      payload: res.data 
     });
   } catch (err) {
     dispatch({
@@ -31,24 +31,22 @@ export const getCurrentHospital = () => async dispatch => { // () σημαίνε
 };
 
 //Create or update hospital
-//ΘΑ ΧΡΕΙΑΣΤΕΙ ΕΝΑ ΟΡΙΣΜΑ ID !!!!!! 
-export const createHospital = (formData, history) => async (dispatch) => {  //H edit μπαινει για να γνωρίζω αμα δημιουργω η κανω edit καποιο νοσοκομειο
+export const createHospital = (formData, history) => async (dispatch) => {
   try {
 
-    const res = await api.post('/hospital', formData);    //η διαδρομή που παίρνει για να κάνει update η να δημιουργήσει το καινουργιο profile νοσοκομειου
+    const res = await api.post('/hospital', formData);  
 
     dispatch({
       type: GET_HOSPITAL,
       payload: res.data
     });
-    //στην περίπτωση που έχουν γίνει edit τα στοιχεία του Hospital κάνει display το πρώτο αλλίως το δεύτερο
+    
     dispatch(setAlert('Hospital Created', 'success'));
 
-    //Αν δημιουργήσω ενα καινιούργιο νοσοκομείο θα πρέπει να κάνει redirect 
     history.push('/vaccines');
 
   } catch (err) {
-    const errors = err.response.data.errors;    //Σε περίπτωση που ξεχάσω καποια απο τα υποχρεωτικά πεδία θα μου βγάλει alert
+    const errors = err.response.data.errors; 
 
     if (errors) {
       errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));

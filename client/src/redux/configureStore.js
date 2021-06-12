@@ -1,8 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { createForms } from 'react-redux-form';
+
 import thunk from 'redux-thunk';
-//import { } from './forms';
 import  alert  from './reducers/alert';
 import  auth  from './reducers/auth';
 
@@ -11,8 +10,6 @@ export const ConfigureStore = () => {
         combineReducers({
             alert,
             auth,
-           // ...createForms({
-       // })
          }),
     composeWithDevTools(applyMiddleware(thunk))
     );
