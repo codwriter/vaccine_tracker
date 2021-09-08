@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "assert": "^2.0.0",
-    "axios": "^0.21.0",
+    "axios": "^0.21.2",
     "bcryptjs": "^2.4.3",
     "bigchaindb-driver": "^4.2.2",
     "bip39": "^3.0.3",
